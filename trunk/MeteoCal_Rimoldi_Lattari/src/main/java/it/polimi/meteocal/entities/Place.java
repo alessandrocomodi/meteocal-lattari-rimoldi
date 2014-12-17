@@ -12,6 +12,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -82,6 +84,7 @@ public class Place implements Serializable {
     @NotNull
     @Size(min = 1, max = 10)
     @Column(name = "place_id")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private String placeId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "placeId")
     private Collection<Event> eventCollection;
