@@ -12,6 +12,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
@@ -50,6 +52,7 @@ public class Event implements Serializable {
     @NotNull
     @Size(min = 1, max = 10)
     @Column(name = "id")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private String id;
     @Basic(optional = false)
     @NotNull
