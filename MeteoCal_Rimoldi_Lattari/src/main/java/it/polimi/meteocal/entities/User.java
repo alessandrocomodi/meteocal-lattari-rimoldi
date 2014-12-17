@@ -41,6 +41,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "User.findBySurname", query = "SELECT u FROM User u WHERE u.surname = :surname"),
     @NamedQuery(name = "User.findByPhoneNumber", query = "SELECT u FROM User u WHERE u.phoneNumber = :phoneNumber")})
 public class User implements Serializable {
+    @Lob
+    @Column(name = "avatar")
+    private byte[] avatar;
     private static final long serialVersionUID = 1L;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Id
@@ -64,9 +67,6 @@ public class User implements Serializable {
     @Size(min = 1, max = 20)
     @Column(name = "surname")
     private String surname;
-    @Lob
-    @Column(name = "avatar")
-    private byte[] avatar;
     @Column(name = "phone_number")
     private Integer phoneNumber;
     @JoinTable(name = "notification_addressee", joinColumns = {
@@ -135,13 +135,6 @@ public class User implements Serializable {
         this.surname = surname;
     }
 
-    public byte[] getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(byte[] avatar) {
-        this.avatar = avatar;
-    }
 
     public Integer getPhoneNumber() {
         return phoneNumber;
@@ -227,6 +220,14 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return "it.polimi.meteocal.entities.User[ email=" + email + " ]";
+    }
+
+    public byte[] getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(byte[] avatar) {
+        this.avatar = avatar;
     }
     
 }
