@@ -82,6 +82,9 @@ public class Event implements Serializable {
     private Collection<Calendar> calendarCollection;
     @ManyToMany(mappedBy = "eventCollection")
     private Collection<User> userCollection;
+    @JoinColumn(name = "place_id", referencedColumnName = "place_id")
+    @ManyToOne(optional = false)
+    private Place placeId;
     @JoinColumn(name = "organizer", referencedColumnName = "email")
     @ManyToOne(optional = false)
     private User organizer;
@@ -176,6 +179,14 @@ public class Event implements Serializable {
 
     public void setUserCollection(Collection<User> userCollection) {
         this.userCollection = userCollection;
+    }
+
+    public Place getPlaceId() {
+        return placeId;
+    }
+
+    public void setPlaceId(Place placeId) {
+        this.placeId = placeId;
     }
 
     public User getOrganizer() {
