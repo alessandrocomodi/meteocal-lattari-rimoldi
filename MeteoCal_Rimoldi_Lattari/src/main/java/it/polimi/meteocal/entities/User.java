@@ -5,6 +5,7 @@
  */
 package it.polimi.meteocal.entities;
 
+import it.polimi.meteocal.security.PasswordEncrypter;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -55,7 +56,7 @@ public class User implements Serializable {
     private String email;
     @Basic(optional = false)
     @NotNull(message = "password cannot be empty")
-    @Size(min = 1, max = 12)
+    @Size(min = 1, max = 255)
     @Column(name = "password")
     private String password;
     @Basic(optional = false)
@@ -70,6 +71,8 @@ public class User implements Serializable {
     private String surname;
     @Column(name = "phone_number")
     private Integer phoneNumber;
+    @NotNull(message = "May not be empty")
+    private String groupName;
     @JoinTable(name = "notification_addressee", joinColumns = {
         @JoinColumn(name = "user_id", referencedColumnName = "email")}, inverseJoinColumns = {
         @JoinColumn(name = "notification_id", referencedColumnName = "id")})
@@ -117,7 +120,15 @@ public class User implements Serializable {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = PasswordEncrypter.encryptPassword(password);
+    }
+    
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
+
+    public String getGroupName() {
+        return groupName;
     }
 
     public String getName() {
