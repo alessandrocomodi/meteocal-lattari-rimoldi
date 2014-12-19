@@ -7,20 +7,15 @@ package it.polimi.meteocal.entities;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -28,26 +23,38 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Alessandro
+ * @author Francesco
  */
 @Entity
 @Table(name = "place")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Place.findAll", query = "SELECT p FROM Place p"),
+    @NamedQuery(name = "Place.findById", query = "SELECT p FROM Place p WHERE p.id = :id"),
+    @NamedQuery(name = "Place.findByName", query = "SELECT p FROM Place p WHERE p.name = :name"),
     @NamedQuery(name = "Place.findByStreet", query = "SELECT p FROM Place p WHERE p.street = :street"),
     @NamedQuery(name = "Place.findByNumber", query = "SELECT p FROM Place p WHERE p.number = :number"),
     @NamedQuery(name = "Place.findByCity", query = "SELECT p FROM Place p WHERE p.city = :city"),
     @NamedQuery(name = "Place.findByCountry", query = "SELECT p FROM Place p WHERE p.country = :country"),
-    @NamedQuery(name = "Place.findByName", query = "SELECT p FROM Place p WHERE p.name = :name"),
-    @NamedQuery(name = "Place.findByWeatherUpdateTime", query = "SELECT p FROM Place p WHERE p.weatherUpdateTime = :weatherUpdateTime"),
-    @NamedQuery(name = "Place.findByWeatherInfo", query = "SELECT p FROM Place p WHERE p.weatherInfo = :weatherInfo"),
-    @NamedQuery(name = "Place.findByPlaceId", query = "SELECT p FROM Place p WHERE p.placeId = :placeId")})
+    @NamedQuery(name = "Place.findByWeather", query = "SELECT p FROM Place p WHERE p.weather = :weather")})
 public class Place implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "place")
+    private Collection<Event> eventCollection;
     private static final long serialVersionUID = 1L;
+    @Id
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 20)
+    @Size(min = 1, max = 45)
+    @Column(name = "id")
+    private String id;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "name")
+    private String name;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
     @Column(name = "street")
     private String street;
     @Basic(optional = false)
@@ -56,55 +63,51 @@ public class Place implements Serializable {
     private int number;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 20)
+    @Size(min = 1, max = 45)
     @Column(name = "city")
     private String city;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 20)
+    @Size(min = 1, max = 45)
     @Column(name = "country")
     private String country;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "name")
-    private String name;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "weather_update_time")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date weatherUpdateTime;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
-    @Column(name = "weather_info")
-    private String weatherInfo;
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 10)
-    @Column(name = "place_id")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private String placeId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "placeId")
-    private Collection<Event> eventCollection;
+    @Column(name = "weather")
+    private String weather;
 
     public Place() {
     }
 
-    public Place(String placeId) {
-        this.placeId = placeId;
+    public Place(String id) {
+        this.id = id;
     }
 
-    public Place(String placeId, String street, int number, String city, String country, String name, Date weatherUpdateTime, String weatherInfo) {
-        this.placeId = placeId;
+    public Place(String id, String name, String street, int number, String city, String country, String weather) {
+        this.id = id;
+        this.name = name;
         this.street = street;
         this.number = number;
         this.city = city;
         this.country = country;
+        this.weather = weather;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
         this.name = name;
-        this.weatherUpdateTime = weatherUpdateTime;
-        this.weatherInfo = weatherInfo;
     }
 
     public String getStreet() {
@@ -139,51 +142,18 @@ public class Place implements Serializable {
         this.country = country;
     }
 
-    public String getName() {
-        return name;
+    public String getWeather() {
+        return weather;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Date getWeatherUpdateTime() {
-        return weatherUpdateTime;
-    }
-
-    public void setWeatherUpdateTime(Date weatherUpdateTime) {
-        this.weatherUpdateTime = weatherUpdateTime;
-    }
-
-    public String getWeatherInfo() {
-        return weatherInfo;
-    }
-
-    public void setWeatherInfo(String weatherInfo) {
-        this.weatherInfo = weatherInfo;
-    }
-
-    public String getPlaceId() {
-        return placeId;
-    }
-
-    public void setPlaceId(String placeId) {
-        this.placeId = placeId;
-    }
-
-    @XmlTransient
-    public Collection<Event> getEventCollection() {
-        return eventCollection;
-    }
-
-    public void setEventCollection(Collection<Event> eventCollection) {
-        this.eventCollection = eventCollection;
+    public void setWeather(String weather) {
+        this.weather = weather;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (placeId != null ? placeId.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -194,7 +164,7 @@ public class Place implements Serializable {
             return false;
         }
         Place other = (Place) object;
-        if ((this.placeId == null && other.placeId != null) || (this.placeId != null && !this.placeId.equals(other.placeId))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -202,7 +172,16 @@ public class Place implements Serializable {
 
     @Override
     public String toString() {
-        return "it.polimi.meteocal.entities.Place[ placeId=" + placeId + " ]";
+        return "it.polimi.meteocal.entities.Place[ id=" + id + " ]";
+    }
+
+    @XmlTransient
+    public Collection<Event> getEventCollection() {
+        return eventCollection;
+    }
+
+    public void setEventCollection(Collection<Event> eventCollection) {
+        this.eventCollection = eventCollection;
     }
     
 }

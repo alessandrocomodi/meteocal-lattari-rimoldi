@@ -6,18 +6,11 @@
 package it.polimi.meteocal.entities;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -26,11 +19,10 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Alessandro
+ * @author Francesco
  */
 @Entity
 @Table(name = "notification")
@@ -39,38 +31,41 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Notification.findAll", query = "SELECT n FROM Notification n"),
     @NamedQuery(name = "Notification.findById", query = "SELECT n FROM Notification n WHERE n.id = :id"),
     @NamedQuery(name = "Notification.findByTimestamp", query = "SELECT n FROM Notification n WHERE n.timestamp = :timestamp"),
-    @NamedQuery(name = "Notification.findByType", query = "SELECT n FROM Notification n WHERE n.type = :type")})
+    @NamedQuery(name = "Notification.findByText", query = "SELECT n FROM Notification n WHERE n.text = :text"),
+    @NamedQuery(name = "Notification.findByType", query = "SELECT n FROM Notification n WHERE n.type = :type"),
+    @NamedQuery(name = "Notification.findByEvent", query = "SELECT n FROM Notification n WHERE n.event = :event"),
+    @NamedQuery(name = "Notification.findBySender", query = "SELECT n FROM Notification n WHERE n.sender = :sender")})
 public class Notification implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 10)
+    @Size(min = 1, max = 25)
     @Column(name = "id")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private String id;
     @Basic(optional = false)
     @NotNull
     @Column(name = "timestamp")
     @Temporal(TemporalType.TIMESTAMP)
     private Date timestamp;
-    @Lob
-    @Size(max = 16777215)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
     @Column(name = "text")
     private String text;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 20)
+    @Size(min = 1, max = 45)
     @Column(name = "type")
     private String type;
-    @ManyToMany(mappedBy = "notificationCollection")
-    private Collection<User> userCollection;
-    @JoinColumn(name = "sender", referencedColumnName = "email")
-    @ManyToOne
-    private User sender;
-    @JoinColumn(name = "event_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Event eventId;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "event")
+    private String event;
+    @Size(max = 45)
+    @Column(name = "sender")
+    private String sender;
 
     public Notification() {
     }
@@ -79,10 +74,12 @@ public class Notification implements Serializable {
         this.id = id;
     }
 
-    public Notification(String id, Date timestamp, String type) {
+    public Notification(String id, Date timestamp, String text, String type, String event) {
         this.id = id;
         this.timestamp = timestamp;
+        this.text = text;
         this.type = type;
+        this.event = event;
     }
 
     public String getId() {
@@ -117,29 +114,20 @@ public class Notification implements Serializable {
         this.type = type;
     }
 
-    @XmlTransient
-    public Collection<User> getUserCollection() {
-        return userCollection;
+    public String getEvent() {
+        return event;
     }
 
-    public void setUserCollection(Collection<User> userCollection) {
-        this.userCollection = userCollection;
+    public void setEvent(String event) {
+        this.event = event;
     }
 
-    public User getSender() {
+    public String getSender() {
         return sender;
     }
 
-    public void setSender(User sender) {
+    public void setSender(String sender) {
         this.sender = sender;
-    }
-
-    public Event getEventId() {
-        return eventId;
-    }
-
-    public void setEventId(Event eventId) {
-        this.eventId = eventId;
     }
 
     @Override
