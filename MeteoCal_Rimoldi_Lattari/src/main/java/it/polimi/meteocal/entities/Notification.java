@@ -6,11 +6,17 @@
 package it.polimi.meteocal.entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -19,30 +25,28 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Francesco
+ * @author Alessandro
  */
 @Entity
 @Table(name = "notification")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Notification.findAll", query = "SELECT n FROM Notification n"),
-    @NamedQuery(name = "Notification.findById", query = "SELECT n FROM Notification n WHERE n.id = :id"),
+    @NamedQuery(name = "Notification.findByIdnotification", query = "SELECT n FROM Notification n WHERE n.idnotification = :idnotification"),
     @NamedQuery(name = "Notification.findByTimestamp", query = "SELECT n FROM Notification n WHERE n.timestamp = :timestamp"),
-    @NamedQuery(name = "Notification.findByText", query = "SELECT n FROM Notification n WHERE n.text = :text"),
     @NamedQuery(name = "Notification.findByType", query = "SELECT n FROM Notification n WHERE n.type = :type"),
-    @NamedQuery(name = "Notification.findByEvent", query = "SELECT n FROM Notification n WHERE n.event = :event"),
-    @NamedQuery(name = "Notification.findBySender", query = "SELECT n FROM Notification n WHERE n.sender = :sender")})
+    @NamedQuery(name = "Notification.findByText", query = "SELECT n FROM Notification n WHERE n.text = :text")})
 public class Notification implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 25)
-    @Column(name = "id")
-    private String id;
+    @Column(name = "idnotification")
+    private Integer idnotification;
     @Basic(optional = false)
     @NotNull
     @Column(name = "timestamp")
@@ -51,43 +55,42 @@ public class Notification implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "text")
-    private String text;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
     @Column(name = "type")
     private String type;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
-    @Column(name = "event")
-    private String event;
-    @Size(max = 45)
-    @Column(name = "sender")
-    private String sender;
+    @Size(min = 1, max = 200)
+    @Column(name = "text")
+    private String text;
+    @ManyToMany(mappedBy = "notificationCollection")
+    private Collection<User> userCollection;
+    @JoinColumn(name = "sender", referencedColumnName = "email")
+    @ManyToOne
+    private User sender;
+    @JoinColumn(name = "event", referencedColumnName = "idevent")
+    @ManyToOne(optional = false)
+    private Event event;
 
     public Notification() {
     }
 
-    public Notification(String id) {
-        this.id = id;
+    public Notification(Integer idnotification) {
+        this.idnotification = idnotification;
     }
 
-    public Notification(String id, Date timestamp, String text, String type, String event) {
-        this.id = id;
+    public Notification(Integer idnotification, Date timestamp, String type, String text) {
+        this.idnotification = idnotification;
         this.timestamp = timestamp;
-        this.text = text;
         this.type = type;
-        this.event = event;
+        this.text = text;
     }
 
-    public String getId() {
-        return id;
+    public Integer getIdnotification() {
+        return idnotification;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setIdnotification(Integer idnotification) {
+        this.idnotification = idnotification;
     }
 
     public Date getTimestamp() {
@@ -98,14 +101,6 @@ public class Notification implements Serializable {
         this.timestamp = timestamp;
     }
 
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
     public String getType() {
         return type;
     }
@@ -114,26 +109,43 @@ public class Notification implements Serializable {
         this.type = type;
     }
 
-    public String getEvent() {
-        return event;
+    public String getText() {
+        return text;
     }
 
-    public void setEvent(String event) {
-        this.event = event;
+    public void setText(String text) {
+        this.text = text;
     }
 
-    public String getSender() {
+    @XmlTransient
+    public Collection<User> getUserCollection() {
+        return userCollection;
+    }
+
+    public void setUserCollection(Collection<User> userCollection) {
+        this.userCollection = userCollection;
+    }
+
+    public User getSender() {
         return sender;
     }
 
-    public void setSender(String sender) {
+    public void setSender(User sender) {
         this.sender = sender;
+    }
+
+    public Event getEvent() {
+        return event;
+    }
+
+    public void setEvent(Event event) {
+        this.event = event;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (idnotification != null ? idnotification.hashCode() : 0);
         return hash;
     }
 
@@ -144,7 +156,7 @@ public class Notification implements Serializable {
             return false;
         }
         Notification other = (Notification) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if ((this.idnotification == null && other.idnotification != null) || (this.idnotification != null && !this.idnotification.equals(other.idnotification))) {
             return false;
         }
         return true;
@@ -152,7 +164,7 @@ public class Notification implements Serializable {
 
     @Override
     public String toString() {
-        return "it.polimi.meteocal.entities.Notification[ id=" + id + " ]";
+        return "it.polimi.meteocal.entities.Notification[ idnotification=" + idnotification + " ]";
     }
     
 }
