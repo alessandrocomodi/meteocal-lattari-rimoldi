@@ -6,30 +6,20 @@
 package it.polimi.meteocal.entities;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Alessandro
+ * @author Francesco
  */
 @Entity
 @Table(name = "calendar")
@@ -37,30 +27,25 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Calendar.findAll", query = "SELECT c FROM Calendar c"),
     @NamedQuery(name = "Calendar.findById", query = "SELECT c FROM Calendar c WHERE c.id = :id"),
-    @NamedQuery(name = "Calendar.findByPrivate1", query = "SELECT c FROM Calendar c WHERE c.private1 = :private1")})
+    @NamedQuery(name = "Calendar.findByPrivate1", query = "SELECT c FROM Calendar c WHERE c.private1 = :private1"),
+    @NamedQuery(name = "Calendar.findByOwner", query = "SELECT c FROM Calendar c WHERE c.owner = :owner")})
 public class Calendar implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 10)
+    @Size(min = 1, max = 45)
     @Column(name = "id")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private String id;
     @Basic(optional = false)
     @NotNull
     @Column(name = "private")
     private boolean private1;
-    @JoinTable(name = "calendar_composition", joinColumns = {
-        @JoinColumn(name = "calendar_id", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "event_id", referencedColumnName = "id")})
-    @ManyToMany
-    private Collection<Event> eventCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "calendarId")
-    private Collection<User> userCollection;
-    @JoinColumn(name = "user", referencedColumnName = "email")
-    @ManyToOne(optional = false)
-    private User user;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "owner")
+    private String owner;
 
     public Calendar() {
     }
@@ -69,9 +54,10 @@ public class Calendar implements Serializable {
         this.id = id;
     }
 
-    public Calendar(String id, boolean private1) {
+    public Calendar(String id, boolean private1, String owner) {
         this.id = id;
         this.private1 = private1;
+        this.owner = owner;
     }
 
     public String getId() {
@@ -90,30 +76,12 @@ public class Calendar implements Serializable {
         this.private1 = private1;
     }
 
-    @XmlTransient
-    public Collection<Event> getEventCollection() {
-        return eventCollection;
+    public String getOwner() {
+        return owner;
     }
 
-    public void setEventCollection(Collection<Event> eventCollection) {
-        this.eventCollection = eventCollection;
-    }
-
-    @XmlTransient
-    public Collection<User> getUserCollection() {
-        return userCollection;
-    }
-
-    public void setUserCollection(Collection<User> userCollection) {
-        this.userCollection = userCollection;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 
     @Override

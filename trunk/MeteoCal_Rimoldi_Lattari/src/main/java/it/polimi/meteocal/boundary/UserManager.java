@@ -5,7 +5,7 @@
  */
 package it.polimi.meteocal.boundary;
 
-import it.polimi.meteocal.entities.Group;
+//import it.polimi.meteocal.entities.Group;
 import it.polimi.meteocal.entities.User;
 import java.security.Principal;
 import javax.ejb.Stateless;
@@ -27,7 +27,7 @@ public class UserManager {
     Principal principal;
 
     public void save(User user) {
-        user.setGroupName(Group.user);
+       //s user.setGroupName(Group.user);
         em.persist(user);
     }
 

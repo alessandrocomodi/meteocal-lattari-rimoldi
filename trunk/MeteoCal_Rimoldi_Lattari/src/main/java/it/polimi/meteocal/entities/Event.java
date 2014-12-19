@@ -12,13 +12,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -32,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Alessandro
+ * @author Francesco
  */
 @Entity
 @Table(name = "event")
@@ -43,17 +37,20 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Event.findByName", query = "SELECT e FROM Event e WHERE e.name = :name"),
     @NamedQuery(name = "Event.findByStartTime", query = "SELECT e FROM Event e WHERE e.startTime = :startTime"),
     @NamedQuery(name = "Event.findByEndTime", query = "SELECT e FROM Event e WHERE e.endTime = :endTime"),
+    @NamedQuery(name = "Event.findByDescription", query = "SELECT e FROM Event e WHERE e.description = :description"),
+    @NamedQuery(name = "Event.findByPrivate1", query = "SELECT e FROM Event e WHERE e.private1 = :private1"),
     @NamedQuery(name = "Event.findByIndoor", query = "SELECT e FROM Event e WHERE e.indoor = :indoor"),
-    @NamedQuery(name = "Event.findByPrivate1", query = "SELECT e FROM Event e WHERE e.private1 = :private1")})
+    @NamedQuery(name = "Event.findByCreator", query = "SELECT e FROM Event e WHERE e.creator = :creator"),
+    @NamedQuery(name = "Event.findByPlace", query = "SELECT e FROM Event e WHERE e.place = :place")})
 public class Event implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "event")
+    private Collection<Notification> notificationCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 10)
     @Column(name = "id")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private String id;
+    private Integer id;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
@@ -69,52 +66,51 @@ public class Event implements Serializable {
     @Column(name = "end_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date endTime;
-    @Lob
-    @Size(max = 16777215)
+    @Size(max = 45)
     @Column(name = "description")
     private String description;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "private")
+    private boolean private1;
     @Basic(optional = false)
     @NotNull
     @Column(name = "indoor")
     private boolean indoor;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "private")
-    private boolean private1;
-    @ManyToMany(mappedBy = "eventCollection")
-    private Collection<Calendar> calendarCollection;
-    @ManyToMany(mappedBy = "eventCollection")
-    private Collection<User> userCollection;
-    @JoinColumn(name = "place_id", referencedColumnName = "place_id")
-    @ManyToOne(optional = false)
-    private Place placeId;
-    @JoinColumn(name = "organizer", referencedColumnName = "email")
-    @ManyToOne(optional = false)
-    private User organizer;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eventId")
-    private Collection<Notification> notificationCollection;
+    @Size(min = 1, max = 45)
+    @Column(name = "creator")
+    private String creator;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "place")
+    private String place;
 
     public Event() {
     }
 
-    public Event(String id) {
+    public Event(Integer id) {
         this.id = id;
     }
 
-    public Event(String id, String name, Date startTime, Date endTime, boolean indoor, boolean private1) {
+    public Event(Integer id, String name, Date startTime, Date endTime, boolean private1, boolean indoor, String creator, String place) {
         this.id = id;
         this.name = name;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.indoor = indoor;
         this.private1 = private1;
+        this.indoor = indoor;
+        this.creator = creator;
+        this.place = place;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -150,14 +146,6 @@ public class Event implements Serializable {
         this.description = description;
     }
 
-    public boolean getIndoor() {
-        return indoor;
-    }
-
-    public void setIndoor(boolean indoor) {
-        this.indoor = indoor;
-    }
-
     public boolean getPrivate1() {
         return private1;
     }
@@ -166,47 +154,28 @@ public class Event implements Serializable {
         this.private1 = private1;
     }
 
-    @XmlTransient
-    public Collection<Calendar> getCalendarCollection() {
-        return calendarCollection;
+    public boolean getIndoor() {
+        return indoor;
     }
 
-    public void setCalendarCollection(Collection<Calendar> calendarCollection) {
-        this.calendarCollection = calendarCollection;
+    public void setIndoor(boolean indoor) {
+        this.indoor = indoor;
     }
 
-    @XmlTransient
-    public Collection<User> getUserCollection() {
-        return userCollection;
+    public String getCreator() {
+        return creator;
     }
 
-    public void setUserCollection(Collection<User> userCollection) {
-        this.userCollection = userCollection;
+    public void setCreator(String creator) {
+        this.creator = creator;
     }
 
-    public Place getPlaceId() {
-        return placeId;
+    public String getPlace() {
+        return place;
     }
 
-    public void setPlaceId(Place placeId) {
-        this.placeId = placeId;
-    }
-
-    public User getOrganizer() {
-        return organizer;
-    }
-
-    public void setOrganizer(User organizer) {
-        this.organizer = organizer;
-    }
-
-    @XmlTransient
-    public Collection<Notification> getNotificationCollection() {
-        return notificationCollection;
-    }
-
-    public void setNotificationCollection(Collection<Notification> notificationCollection) {
-        this.notificationCollection = notificationCollection;
+    public void setPlace(String place) {
+        this.place = place;
     }
 
     @Override
@@ -232,6 +201,15 @@ public class Event implements Serializable {
     @Override
     public String toString() {
         return "it.polimi.meteocal.entities.Event[ id=" + id + " ]";
+    }
+
+    @XmlTransient
+    public Collection<Notification> getNotificationCollection() {
+        return notificationCollection;
+    }
+
+    public void setNotificationCollection(Collection<Notification> notificationCollection) {
+        this.notificationCollection = notificationCollection;
     }
     
 }
