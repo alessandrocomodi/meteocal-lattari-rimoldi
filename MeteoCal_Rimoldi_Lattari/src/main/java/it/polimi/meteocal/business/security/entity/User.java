@@ -3,8 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package it.polimi.meteocal.entities;
+package it.polimi.meteocal.business.security.entity;
 
+import it.polimi.meteocal.business.security.control.PasswordEncrypter;
+import it.polimi.meteocal.entities.Calendar;
+import it.polimi.meteocal.entities.Event;
+import it.polimi.meteocal.entities.Notification;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -31,7 +35,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Alessandro
  */
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
@@ -85,6 +89,16 @@ public class User implements Serializable {
     private Calendar calendar;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private Collection<Calendar> calendarCollection;
+    @NotNull(message = "May not be empty")
+    private String groupName;
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
 
     public User() {
     }
@@ -129,7 +143,7 @@ public class User implements Serializable {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = PasswordEncrypter.encryptPassword(password);
     }
 
     public byte[] getAvatar() {
