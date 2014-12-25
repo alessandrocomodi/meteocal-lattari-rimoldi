@@ -9,6 +9,7 @@ import it.polimi.meteocal.business.security.entity.User;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -64,7 +65,7 @@ public class Notification implements Serializable {
     @Column(name = "text")
     private String text;
     @ManyToMany(mappedBy = "notificationCollection")
-    private Collection<User> userCollection;
+    private List<User> userCollection;
     @JoinColumn(name = "sender", referencedColumnName = "email")
     @ManyToOne
     private User sender;
@@ -123,7 +124,7 @@ public class Notification implements Serializable {
         return userCollection;
     }
 
-    public void setUserCollection(Collection<User> userCollection) {
+    public void setUserCollection(List<User> userCollection) {
         this.userCollection = userCollection;
     }
 
