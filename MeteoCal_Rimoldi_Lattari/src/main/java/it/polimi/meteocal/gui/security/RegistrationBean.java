@@ -7,6 +7,7 @@ package it.polimi.meteocal.gui.security;
 
 import it.polimi.meteocal.business.security.boundary.UserManager;
 import it.polimi.meteocal.business.security.entity.User;
+import java.io.IOException;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
@@ -38,7 +39,7 @@ public class RegistrationBean {
         this.user = user;
     }
 
-    public String register() {
+    public String register() throws IOException {
         um.save(user);
         return "user/user_home?faces-redirect=true";
     }
