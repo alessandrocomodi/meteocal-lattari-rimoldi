@@ -66,10 +66,18 @@ public class Calendar implements Serializable {
     public Calendar(Integer idcalendar) {
         this.idcalendar = idcalendar;
     }
+    
+    public Calendar(boolean private1) {
+        this.private1 = private1;
+    }
 
     public Calendar(Integer idcalendar, boolean private1) {
         this.idcalendar = idcalendar;
         this.private1 = private1;
+    }
+    
+    public Calendar(User user) {
+        this.user = user;
     }
 
     public Integer getIdcalendar() {

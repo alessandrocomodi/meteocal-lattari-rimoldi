@@ -11,6 +11,7 @@ import it.polimi.meteocal.entities.Event;
 import it.polimi.meteocal.entities.Notification;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -25,6 +26,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.metamodel.SingularAttribute;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -77,20 +79,30 @@ public class User implements Serializable {
         @JoinColumn(name = "user", referencedColumnName = "email")}, inverseJoinColumns = {
         @JoinColumn(name = "notification", referencedColumnName = "idnotification")})
     @ManyToMany
-    private Collection<Notification> notificationCollection;
+    private List<Notification> notificationCollection;
     @ManyToMany(mappedBy = "userCollection")
-    private Collection<Event> eventCollection;
+    private List<Event> eventCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
-    private Collection<Event> eventCollection1;
+    private List<Event> eventCollection1;
     @OneToMany(mappedBy = "sender")
-    private Collection<Notification> notificationCollection1;
+    private List<Notification> notificationCollection1;
     @JoinColumn(name = "calendar", referencedColumnName = "idcalendar")
     @ManyToOne(optional = false)
     private Calendar calendar;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private Collection<Calendar> calendarCollection;
+    private List<Calendar> calendarCollection;
     @NotNull(message = "May not be empty")
     private String groupName;
+    
+    private boolean privacy;
+
+    public boolean getPrivacy() {
+        return privacy;
+    }
+
+    public void setPrivacy(boolean privacy) {
+        this.privacy = privacy;
+    }
 
     public String getGroupName() {
         return groupName;
@@ -167,7 +179,7 @@ public class User implements Serializable {
         return notificationCollection;
     }
 
-    public void setNotificationCollection(Collection<Notification> notificationCollection) {
+    public void setNotificationCollection(List<Notification> notificationCollection) {
         this.notificationCollection = notificationCollection;
     }
 
@@ -176,7 +188,7 @@ public class User implements Serializable {
         return eventCollection;
     }
 
-    public void setEventCollection(Collection<Event> eventCollection) {
+    public void setEventCollection(List<Event> eventCollection) {
         this.eventCollection = eventCollection;
     }
 
@@ -185,7 +197,7 @@ public class User implements Serializable {
         return eventCollection1;
     }
 
-    public void setEventCollection1(Collection<Event> eventCollection1) {
+    public void setEventCollection1(List<Event> eventCollection1) {
         this.eventCollection1 = eventCollection1;
     }
 
@@ -194,7 +206,7 @@ public class User implements Serializable {
         return notificationCollection1;
     }
 
-    public void setNotificationCollection1(Collection<Notification> notificationCollection1) {
+    public void setNotificationCollection1(List<Notification> notificationCollection1) {
         this.notificationCollection1 = notificationCollection1;
     }
 
@@ -211,7 +223,7 @@ public class User implements Serializable {
         return calendarCollection;
     }
 
-    public void setCalendarCollection(Collection<Calendar> calendarCollection) {
+    public void setCalendarCollection(List<Calendar> calendarCollection) {
         this.calendarCollection = calendarCollection;
     }
 
