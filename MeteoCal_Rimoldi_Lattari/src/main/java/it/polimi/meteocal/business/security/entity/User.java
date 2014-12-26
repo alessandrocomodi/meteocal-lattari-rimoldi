@@ -82,7 +82,7 @@ public class User implements Serializable {
     @ManyToMany(mappedBy = "userCollection")
     private List<Event> eventCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
-    private List<Event> eventCollection1;
+    private List<Event> eventOrganized;
     @OneToMany(mappedBy = "sender")
     private List<Notification> notificationCollection1;
     @JoinColumn(name = "calendar", referencedColumnName = "idcalendar")
@@ -192,12 +192,12 @@ public class User implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Event> getEventCollection1() {
-        return eventCollection1;
+    public List<Event> getEventOrganized() {
+        return eventOrganized;
     }
 
-    public void setEventCollection1(List<Event> eventCollection1) {
-        this.eventCollection1 = eventCollection1;
+    public void setEventOrganized(List<Event> eventOrganized) {
+        this.eventOrganized = eventOrganized;
     }
 
     @XmlTransient
