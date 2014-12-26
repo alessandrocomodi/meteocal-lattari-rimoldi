@@ -14,7 +14,7 @@ import javax.enterprise.context.RequestScoped;
 
 /**
  *
- * @author miglie
+ * @author Alessandro
  */
 @Named
 @RequestScoped

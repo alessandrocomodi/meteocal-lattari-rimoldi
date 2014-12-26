@@ -77,13 +77,14 @@ public class UserManager {
     }
     
     
-    /*public void update(User user) {
-		user.setName(user.getName());
-		user.setSurname(user.getSurname());
-                user.setPassword(user.getPassword());
-                user.getCalendar().setPrivate1(PRIVACY_TO_SET);
-		em.merge(user);
-    }*/
+    public void update(User user) {
+        user.setName(user.getName());
+        user.setSurname(user.getSurname());
+        user.setPassword(user.getPassword());
+        user.getCalendar().setPrivate1(user.getPrivacy());
+        em.merge(user);
+    }
+
 
     public void unregister() {
         em.remove(getLoggedUser());
