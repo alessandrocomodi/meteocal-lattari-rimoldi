@@ -6,7 +6,6 @@
         <title>MeteoCal - #{ub.currentUser.name}'s profile</title>
     </h:head>
     <h:body>
-        <p:graphicImage value="#{ub.getUserAvatar()}" />
         <div id="profile">
             <span style="font-family: Arial;">
             <b>Name:</b><br />
@@ -25,7 +24,7 @@
             #{ub.getCalendarPrivacy()}
             <br /><br /><br />
             </span>
-            <p:button value="Modify account" href="/*.xhtml" style="border:0; box-shadow:0px 2px 5px #000000;" />
+            <p:button value="Modify account" outcome="modify_account" />
         </div>
     </h:body>
 </html>

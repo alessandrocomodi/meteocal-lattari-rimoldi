@@ -54,7 +54,7 @@ public class UserBean{
         if (getCurrentUser().getPhone() == null) {
             return "not available";
         }
-        return getCurrentUser().getPhone().toString();
+        return getCurrentUser().getPhone();
     }
     
     public String getCalendarPrivacy() {

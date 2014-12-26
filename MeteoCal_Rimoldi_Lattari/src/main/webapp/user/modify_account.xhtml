@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Account update</title>
+    </h:head>
+    <h:body>
+         <h:form id="updateform">
+            <p:panel header="Update Form">
+                <h:panelGrid columns="3" id="upGrid">
+                    <h:outputLabel for="name">Name:</h:outputLabel>
+                    <p:inputText id="name" value="#{mb.currentUser.name}">
+                        <p:ajax update="namemsg"/>
+                    </p:inputText>
+                    <p:message id="namemsg" for="name" />
+                    
+                    <h:outputLabel for="surname">Surname:</h:outputLabel>
+                    <p:inputText id="surname" value="#{mb.currentUser.surname}" >
+                        <p:ajax update="surname"/>
+                    </p:inputText>
+                    <p:message id="surnamemsg" for="surname" />
+                    
+                    <h:outputLabel for="phone">Phone:</h:outputLabel>
+                    <p:inputText id="phone" value="#{mb.currentUser.phone}" >
+                        <p:ajax update="phone"/>
+                    </p:inputText>
+                    <p:message id="phonemsg" for="phone" />
+                    
+                    <h:outputLabel for="password">Password:</h:outputLabel>
+                    <p:password id="password" value="#{mb.currentUser.password}"
+                                feedback="true" match="pwd2" label="Password"/>
+                    <p:message for="password" />
+
+                    <h:outputLabel for="pwd2">Confirm Password:</h:outputLabel>
+                    <p:password id="pwd2" label="Confirm Password"/>
+                    <br />
+                    <p:outputLabel for="privacy" value="Calendar privacy:" />
+                    <p:selectOneRadio id="privacy" value="#{mb.currentUser.privacy}">
+                        <f:selectItem itemLabel="Private" itemValue="#{true}" />
+                        <f:selectItem itemLabel="Public" itemValue="#{false}" />
+                    </p:selectOneRadio>
+                </h:panelGrid>
+                
+                <p:commandButton id="submit" value="Update" update="upGrid" action="#{mb.update()}" />
+
+            </p:panel>
+        </h:form>
+    </h:body>
+</html>
