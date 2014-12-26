@@ -10,14 +10,14 @@ import it.polimi.meteocal.business.security.entity.User;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.bean.ManagedBean;
+import javax.inject.Named;
 
 /**
  *
  * @author Alessandro
  */
-@ManagedBean(name="mb")
 @RequestScoped
+@Named("mb")
 public class ModificationBean {
 
     @EJB

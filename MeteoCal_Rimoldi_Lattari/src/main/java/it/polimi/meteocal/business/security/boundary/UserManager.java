@@ -7,26 +7,17 @@ package it.polimi.meteocal.business.security.boundary;
 
 import it.polimi.meteocal.business.security.entity.Group;
 import it.polimi.meteocal.business.security.entity.User;
-import static it.polimi.meteocal.business.security.entity.User_.privacy;
 import it.polimi.meteocal.entities.Calendar;
-import it.polimi.meteocal.entities.Event;
-import it.polimi.meteocal.entities.Notification;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
 import javax.ejb.Stateless;
 import javax.imageio.ImageIO;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.print.DocFlavor.URL;
-import static javax.servlet.SessionTrackingMode.URL;
 
 /**
  *
@@ -80,6 +71,7 @@ public class UserManager {
     public void update(User user) {
         user.setName(user.getName());
         user.setSurname(user.getSurname());
+        user.setPhone(user.getPhone());
         user.setPassword(user.getPassword());
         user.getCalendar().setPrivate1(user.getPrivacy());
         em.merge(user);
