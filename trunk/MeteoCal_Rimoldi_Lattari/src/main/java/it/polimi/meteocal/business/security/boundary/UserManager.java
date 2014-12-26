@@ -8,11 +8,14 @@ package it.polimi.meteocal.business.security.boundary;
 import it.polimi.meteocal.business.security.entity.Group;
 import it.polimi.meteocal.business.security.entity.User;
 import it.polimi.meteocal.entities.Calendar;
+import it.polimi.meteocal.entities.Event;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.imageio.ImageIO;
 import javax.inject.Inject;
@@ -50,15 +53,15 @@ public class UserManager {
 
     public void save(User user) throws IOException {
         user.setCalendar(new Calendar(user.getPrivacy()));
+        List<Event> eventOrganized = new ArrayList<Event>();
         //al momento generano eccezioni, ma andranno messi prima o poi questi comandi
-//        List<Event> eventCollection1 = new ArrayList<Event>();
 //        List<Event> eventCollection= new ArrayList<Event>();
 //        List<Notification> notificationCollection1 = new ArrayList<Notification>();
 //        List<Notification> notificationCollection = new ArrayList<Notification>();
 //        user.setNotificationCollection(notificationCollection);
 //        user.setNotificationCollection1(notificationCollection1);
 //        user.setEventCollection(eventCollection);
-//        user.setEventCollection1(eventCollection1);
+        user.setEventOrganized(eventOrganized);
         this.loadDefaultProfileImage();
         user.setAvatar(bytes);
         user.setGroupName(Group.USERS);
