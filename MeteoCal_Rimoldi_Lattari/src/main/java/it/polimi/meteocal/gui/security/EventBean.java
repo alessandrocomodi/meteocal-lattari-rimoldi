@@ -6,6 +6,7 @@
 package it.polimi.meteocal.gui.security;
 
 import it.polimi.meteocal.business.security.boundary.EventManager;
+import it.polimi.meteocal.business.security.entity.User;
 import it.polimi.meteocal.entities.Event;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -28,6 +29,9 @@ public class EventBean {
     }
 
     public Event getEvent() {
+        if (event == null) {
+            event = new Event();
+        }
         return event;
     }
 
@@ -35,8 +39,9 @@ public class EventBean {
         this.event = event;
     }
     
-    public void createEvent(String email) {
-        em.createEvent(event, email);
+    public String createEvent(User user) {
+        em.createEvent(event, user);
+        return "user_home";
     }
     
     
