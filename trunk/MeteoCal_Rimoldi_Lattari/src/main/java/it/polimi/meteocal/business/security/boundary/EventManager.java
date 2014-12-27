@@ -22,12 +22,11 @@ public class EventManager {
     @PersistenceContext
     private EntityManager em;
 
-    public void createEvent(Event event, String email) {
-        User u = em.find(User.class, email);
-        event.setOwner(u);
-        List<Event> eventOrganized = u.getEventOrganized();
+    public void createEvent(Event event, User user) {
+        event.setOwner(user);
+        List<Event> eventOrganized = user.getEventOrganized();
         eventOrganized.add(event);
-        u.setEventOrganized(eventOrganized);
+        user.setEventOrganized(eventOrganized);
         em.persist(event);
     }
 }

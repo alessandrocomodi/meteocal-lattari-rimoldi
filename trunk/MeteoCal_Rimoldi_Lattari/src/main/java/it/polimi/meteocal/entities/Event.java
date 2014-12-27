@@ -83,8 +83,6 @@ public class Event implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "name")
     private String name;
-    @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 200)
     @Column(name = "weatherinfo")
     private String weatherinfo;
