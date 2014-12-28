@@ -7,9 +7,11 @@ package it.polimi.meteocal.gui.security;
 
 import it.polimi.meteocal.business.security.boundary.UserManager;
 import it.polimi.meteocal.business.security.entity.User;
+import it.polimi.meteocal.entities.Event;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
@@ -83,6 +85,11 @@ public class UserBean{
     
     public User getCurrentUser(){
         return um.getLoggedUser();
+    }
+    
+    //al momento ritorna solo gli eventi organizzati, poi basterà aggiungere anche gli eventi a cui si partecipa
+    public List<Event> getOwnEvents() {
+        return getCurrentUser().getEventOrganized();
     }
     
 }

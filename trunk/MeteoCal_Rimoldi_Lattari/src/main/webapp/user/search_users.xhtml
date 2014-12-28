@@ -1,0 +1,19 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>MeteoCal - Search</title>
+    </h:head>
+    <h:body>
+        <span style="font-family: Arial;">
+        <h:form>
+        <h:outputLabel for="title" value="You can search users by email, name, surname and phone number"><br /><br />
+            <p:inputText id="title" value="#{sb.paramter}"/>
+        </h:outputLabel>
+           <br /> <br />
+           <p:button value="Search" href="search_results.xhtml" />
+        </h:form>
+        </span>
+    </h:body>
+</html>

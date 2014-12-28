@@ -8,24 +8,61 @@
     <h:body>
         <div id="profile">
             <span style="font-family: Arial;">
-            <b>Name:</b><br />
-            #{ub.currentUser.name}
-            <br /><br />
-            <b>Surname:</b><br />
-            #{ub.currentUser.surname}
-            <br /><br />
-            <b>Email:</b><br />
-            #{ub.currentUser.email}
-            <br /><br />
-            <b>Phone:</b><br />
-            #{ub.getPhoneNumber()}
-            <br /><br />
-            <b>Calendar privacy:</b><br />
-            #{ub.getCalendarPrivacy()}
-            <br /><br /><br />
+                <b>Name:</b><br />
+                #{ub.currentUser.name}
+                <br /><br />
+                <b>Surname:</b><br />
+                #{ub.currentUser.surname}
+                <br /><br />
+                <b>Email:</b><br />
+                #{ub.currentUser.email}
+                <br /><br />
+                <b>Phone:</b><br />
+                #{ub.getPhoneNumber()}
+                <br /><br />
+                <b>Calendar privacy:</b><br />
+                #{ub.getCalendarPrivacy()}
+                <br /><br /><br />
             </span>
+            
             <p:button value="Modify account" outcome="modify_account" />
             <p:button value="Create an event" outcome="create_event" />
+            <p:button value="Search other users" outcome="search_users"/>
+            <br />
+            <br />
+            <p:dataTable var="event" value="#{ub.ownEvents}">
+                <p:column headerText="Name">
+                    <h:outputText value="#{event.name}" />
+                </p:column>
+
+                <p:column headerText="Privacy">
+                    <h:outputText value="#{event.getPrivateString()}" />
+                </p:column>
+
+                <p:column headerText="Indoor">
+                    <h:outputText value="#{event.getIndoorString()}" />
+                </p:column>
+
+                <p:column headerText="Start Time">
+                    <h:outputText value="#{event.starttime}" />
+                </p:column>
+                
+                <p:column headerText="End Time">
+                    <h:outputText value="#{event.endtime}" />
+                </p:column>
+                
+                <p:column headerText="Place">
+                    <h:outputText value="#{event.place}" />
+                </p:column>
+                
+                <p:column headerText="Description">
+                    <h:outputText value="#{event.description}"/>
+                </p:column>
+                
+                <p:column headerText="Weather">
+                    <h:outputText value="#{event.weatherinfo}" />
+                </p:column>
+            </p:dataTable>
         </div>
     </h:body>
 </html>

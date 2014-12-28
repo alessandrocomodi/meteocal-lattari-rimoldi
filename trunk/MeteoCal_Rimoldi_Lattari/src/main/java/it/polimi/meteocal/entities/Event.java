@@ -141,6 +141,13 @@ public class Event implements Serializable {
     public boolean getIndoor() {
         return indoor;
     }
+    
+    public String getIndoorString() {
+        if (indoor) {
+            return "Yes";
+        }
+        return "No";
+    }
 
     public void setIndoor(boolean indoor) {
         this.indoor = indoor;
@@ -149,6 +156,13 @@ public class Event implements Serializable {
     public boolean getPrivate1() {
         return private1;
     }
+    
+    public String getPrivateString() {
+        if (private1) {
+            return "Private";
+        }
+        return "Public";
+    } 
 
     public void setPrivate1(boolean private1) {
         this.private1 = private1;
@@ -179,6 +193,9 @@ public class Event implements Serializable {
     }
 
     public String getWeatherinfo() {
+        if (weatherinfo == null) {
+            return "Not yet available";
+        }
         return weatherinfo;
     }
 
