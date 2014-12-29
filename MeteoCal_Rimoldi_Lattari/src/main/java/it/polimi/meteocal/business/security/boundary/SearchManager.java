@@ -20,13 +20,13 @@ public class SearchManager {
 
     public ArrayList<User> searchUsers(String parameter) {
         Query email= em.createNamedQuery("User.findByEmail");
-        email.setParameter("email", ""+parameter+"");
+        email.setParameter("email", parameter);
         Query name= em.createNamedQuery("User.findByName");
-        name.setParameter("name", ""+parameter+"");
+        name.setParameter("name", parameter);
         Query surname= em.createNamedQuery("User.findBySurname");
-        surname.setParameter("surname", ""+parameter+"");
+        surname.setParameter("surname", parameter);
         Query phone= em.createNamedQuery("User.findByPhone");
-        phone.setParameter("phone", ""+parameter+"");
+        phone.setParameter("phone", parameter);
         ArrayList results= new ArrayList<String>();
         results.addAll(email.getResultList());
         results.addAll(name.getResultList());
