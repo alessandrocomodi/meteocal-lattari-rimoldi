@@ -66,6 +66,6 @@ public class LoginBean {
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
         request.getSession().invalidate();
         logger.log(Level.INFO, "User Logged out");
-        return "/index?faces-redirect=true";
+        return "/login?faces-redirect=true";
     }
 }
