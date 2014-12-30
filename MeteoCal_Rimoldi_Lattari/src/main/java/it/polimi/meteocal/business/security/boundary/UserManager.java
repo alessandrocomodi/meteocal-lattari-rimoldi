@@ -40,7 +40,7 @@ public class UserManager {
     public void loadDefaultProfileImage() throws IOException {
         BufferedImage img = null;
         try {
-            img = ImageIO.read(new File("C:/Users/Alessandro/Documents/NetBeansProjects/MeteoCal_Rimoldi_Lattari/src/main/webapp/images/icon-user-default.png"));
+            img = ImageIO.read(new File("C:/Users/Francesco/Documents/NetBeansProjects/softengin2/MeteoCal_Rimoldi_Lattari/src/main/webapp/images/icon-user-default.png"));
         } catch (IOException e) {
         }
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -71,13 +71,14 @@ public class UserManager {
     }
     
     
-    public void update(User user) {
-        user.setName(user.getName());
-        user.setSurname(user.getSurname());
-        user.setPhone(user.getPhone());
-        user.setPassword(user.getPassword());
-        user.getCalendar().setPrivate1(user.getPrivacy());
+    public void update(User user, User us) {
+        user.setName(us.getName());
+        user.setSurname(us.getSurname());
+        user.setPhone(us.getPhone());
+        user.setModifiedPassword(us.getPassword());
+        user.getCalendar().setPrivate1(us.getPrivacy());
         em.merge(user);
+        em.remove(us);
     }
 
 

@@ -19,25 +19,25 @@ and open the template in the editor.
             <p:panel header="Update Form">
                 <h:panelGrid columns="3" id="upGrid">
                     <h:outputLabel for="name">Name:</h:outputLabel>
-                    <p:inputText id="name" value="#{mb.currentUser.name}">
+                    <p:inputText id="name" value="#{mb.user.name}">
                         <p:ajax update="namemsg"/>
                     </p:inputText>
                     <p:message id="namemsg" for="name" />
                     
                     <h:outputLabel for="surname">Surname:</h:outputLabel>
-                    <p:inputText id="surname" value="#{mb.currentUser.surname}" >
+                    <p:inputText id="surname" value="#{mb.user.surname}" >
                         <p:ajax update="surname"/>
                     </p:inputText>
                     <p:message id="surnamemsg" for="surname" />
                     
                     <h:outputLabel for="phone">Phone:</h:outputLabel>
-                    <p:inputText id="phone" value="#{mb.currentUser.phone}" >
+                    <p:inputText id="phone" value="#{mb.user.phone}" >
                         <p:ajax update="phone"/>
                     </p:inputText>
                     <p:message id="phonemsg" for="phone" />
                     
                     <h:outputLabel for="password">Password:</h:outputLabel>
-                    <p:password id="password" value="#{mb.currentUser.password}"
+                    <p:password id="password" value="#{mb.user.password}"
                                 feedback="true" match="pwd2" label="Password"/>
                     <p:message for="password" />
 
@@ -45,7 +45,7 @@ and open the template in the editor.
                     <p:password id="pwd2" label="Confirm Password"/>
                     <br />
                     <p:outputLabel for="privacy" value="Calendar privacy:" />
-                    <p:selectOneRadio id="privacy" value="#{mb.currentUser.privacy}">
+                    <p:selectOneRadio id="privacy" value="#{mb.user.privacy}">
                         <f:selectItem itemLabel="Private" itemValue="#{true}" />
                         <f:selectItem itemLabel="Public" itemValue="#{false}" />
                     </p:selectOneRadio>
