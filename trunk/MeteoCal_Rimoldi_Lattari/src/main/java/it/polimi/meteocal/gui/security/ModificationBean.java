@@ -29,6 +29,9 @@ public class ModificationBean {
     }
 
     public User getUser() {
+        if (user == null) {
+            user = new User();
+        }
         return user;
     }
 
@@ -37,7 +40,7 @@ public class ModificationBean {
     }
     
     public String update() throws IOException {
-        um.update(this.getCurrentUser());
+        um.update(this.getCurrentUser(),user);
         return "user_home?faces-redirect=true";
     }
     

@@ -156,6 +156,10 @@ public class User implements Serializable {
     public void setPassword(String password) {
         this.password = PasswordEncrypter.encryptPassword(password);
     }
+    
+    public void setModifiedPassword(String password) {
+        this.password = password;
+    }
 
     public byte[] getAvatar() {
         return avatar;
