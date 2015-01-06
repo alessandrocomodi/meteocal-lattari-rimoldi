@@ -12,15 +12,22 @@ import it.polimi.meteocal.entities.Event;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.annotation.Resource;
+import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.imageio.ImageIO;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import org.primefaces.model.UploadedFile;
 
 /**
  *
@@ -40,16 +47,13 @@ public class UserManager {
     public void loadDefaultProfileImage() throws IOException {
         BufferedImage img = null;
         try {
-            img = ImageIO.read(new File("C:/Users/Francesco/Documents/NetBeansProjects/softengin2/MeteoCal_Rimoldi_Lattari/src/main/webapp/images/icon-user-default.png"));
+            img = ImageIO.read(new File("C:/Users/Francesco/Documents/NetBeansProjects/softengine2/MeteoCal_Rimoldi_Lattari/src/main/webapp/images/icon-user-default.png"));
         } catch (IOException e) {
         }
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ImageIO.write(img, "png", baos);
         bytes = baos.toByteArray();
     }
-
-        
-    
 
     public void save(User user) throws IOException {
         user.setCalendar(new Calendar(user.getPrivacy()));
@@ -71,16 +75,17 @@ public class UserManager {
     }
     
     
-    public void update(User user, User us) {
+    public void update(User user, User us,UploadedFile file) {
         user.setName(us.getName());
         user.setSurname(us.getSurname());
         user.setPhone(us.getPhone());
+        user.setPrivacy(us.getPrivacy());
+        user.setAvatar(this.bytes);
         user.setModifiedPassword(us.getPassword());
         user.getCalendar().setPrivate1(us.getPrivacy());
         em.merge(user);
         em.remove(us);
     }
-
 
     public void unregister() {
         em.remove(getLoggedUser());
@@ -88,6 +93,17 @@ public class UserManager {
 
     public User getLoggedUser() {
         return em.find(User.class, principal.getName());
+    }
+
+    public void generateByteArray(String fileName) throws IOException {
+        BufferedImage img = null;
+        try {
+            img = ImageIO.read(new File(fileName));
+        } catch (IOException e) {
+        }
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.write(img, "png", baos);
+        bytes = baos.toByteArray();
     }
 
     

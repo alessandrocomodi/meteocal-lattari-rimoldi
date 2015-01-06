@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -19,7 +20,8 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author miglie
  */
-@Named
+@ManagedBean
+@Named()
 @RequestScoped
 public class LoginBean {
     
@@ -54,7 +56,7 @@ public class LoginBean {
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
         try {
             request.login(this.username, this.password);
-            return "/user/user_home.xhtml";
+            return "/user/user_home3.xhtml";
         } catch (ServletException e) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Login Failed","Login Failed"));
             logger.log(Level.SEVERE,"Login Failed");
@@ -66,6 +68,6 @@ public class LoginBean {
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
         request.getSession().invalidate();
         logger.log(Level.INFO, "User Logged out");
-        return "/login?faces-redirect=true";
+        return "/home?faces-redirect=true";
     }
 }

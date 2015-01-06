@@ -29,4 +29,8 @@ public class EventManager {
         user.setEventOrganized(eventOrganized);
         em.persist(event);
     }
+    
+    public Event find(Object id) {
+        return em.find(Event.class, id);
+    }
 }

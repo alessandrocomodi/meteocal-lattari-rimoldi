@@ -8,14 +8,17 @@ package it.polimi.meteocal.gui.security;
 import it.polimi.meteocal.business.security.boundary.EventManager;
 import it.polimi.meteocal.business.security.entity.User;
 import it.polimi.meteocal.entities.Event;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.bean.ManagedBean;
 import javax.inject.Named;
 
 /**
  *
  * @author Alessandro
  */
+@ManagedBean
 @RequestScoped
 @Named("eb")
 public class EventBean {
@@ -41,9 +44,6 @@ public class EventBean {
     
     public String createEvent(User user) {
         em.createEvent(event, user);
-        return "user_home";
-    }
-    
-    
-    
+        return "calendar_page";
+    }   
 }
