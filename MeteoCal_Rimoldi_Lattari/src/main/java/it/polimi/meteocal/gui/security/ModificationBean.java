@@ -37,28 +37,22 @@ public class ModificationBean {
     private User user;
     
     private UploadedFile file;
-
-    /**
-     * Get the value of file
-     *
-     * @return the value of file
-     */
+    
+    public ModificationBean() {
+    }
+ 
     public UploadedFile getFile() {
         return file;
     }
-
-    /**
-     * Set the value of file
-     *
-     * @param file new value of file
-     */
+ 
     public void setFile(UploadedFile file) {
         this.file = file;
     }
+     
+  
 
 
-    public ModificationBean() {
-    }
+    
 
     public User getUser() {
         if (user == null) {
@@ -74,6 +68,13 @@ public class ModificationBean {
     public String update() throws IOException {
         um.update(this.getCurrentUser(),user,file);
         return "user_home3?faces-redirect=true";
+    }
+    
+      public void upload() {
+        if(file != null) {
+            FacesMessage message = new FacesMessage("Succesful", file.getFileName() + " is uploaded.");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
     }
     
     public User getCurrentUser(){
