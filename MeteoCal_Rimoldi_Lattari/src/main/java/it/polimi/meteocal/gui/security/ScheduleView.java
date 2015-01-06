@@ -1,0 +1,119 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package it.polimi.meteocal.gui.security;
+
+import it.polimi.meteocal.business.security.boundary.EventManager;
+import it.polimi.meteocal.business.security.boundary.UserManager;
+import it.polimi.meteocal.business.security.entity.User;
+import it.polimi.meteocal.entities.Event;
+import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.TimeZone;
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
+import javax.inject.Named;
+import javax.enterprise.context.Dependent;
+import javax.faces.context.FacesContext;
+import org.primefaces.event.SelectEvent;
+import org.primefaces.model.DefaultScheduleEvent;
+import org.primefaces.model.DefaultScheduleModel;
+import org.primefaces.model.ScheduleEvent;
+import org.primefaces.model.ScheduleModel;
+
+/**
+ *
+ * @author Francesco
+ */
+@Named(value = "scheduleView")
+@Dependent
+public class ScheduleView implements Serializable{
+    
+    @EJB
+    private UserManager um;
+    
+    @EJB
+    private EventManager em;
+    
+    private ScheduleModel eventModel;
+
+    private ScheduleEvent event;
+
+    
+    public ScheduleEvent getEvent() {
+        return event;
+    }
+
+    
+    public void setEvent(ScheduleEvent event) {
+        this.event = event;
+    }
+ 
+     
+    @PostConstruct
+    public void init() {
+        eventModel = new DefaultScheduleModel();
+        List<Event> myEvents = getOwnEvents();
+        for(Event e : myEvents){
+            System.out.println(e.getStarttime().toString());
+            eventModel.addEvent(new DefaultScheduleEvent(e.getName(), getDate(e.getStarttime()), getDate(e.getEndtime()), e.getIdevent()));
+        }
+    }
+        
+    public Date getDate(Date eventTime) {
+        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("CET"));
+        cal.setTime(eventTime);
+        
+        System.out.println(eventTime);
+        
+        System.out.println(cal.getTime());
+        
+        return cal.getTime();
+    }
+    
+    public void onEventSelect(SelectEvent selectEvent) {
+        //event = (ScheduleEvent) selectEvent.getObject();
+        //Event eventDetailed = em.find((String)event.getData());
+        //FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds()
+    }
+
+    /**
+     * 
+     * Get the value of eventModel
+     *
+     * @return the value of eventModel
+     */
+    public ScheduleModel getEventModel() {
+        return eventModel;
+    }
+
+    /**
+     * Set the value of eventModel
+     *
+     * @param eventModel new value of eventModel
+     */
+    public void setEventModel(ScheduleModel eventModel) {
+        this.eventModel = eventModel;
+    }
+
+    
+    /**
+     * Creates a new instance of ScheduleView
+     */
+    public ScheduleView() {
+    }
+    
+    public User getCurrentUser(){
+        return um.getLoggedUser();
+    }
+    
+    //al momento ritorna solo gli eventi organizzati, poi basterà aggiungere anche gli eventi a cui si partecipa
+    public List<Event> getOwnEvents() {
+        return getCurrentUser().getEventOrganized();
+    }
+    
+}

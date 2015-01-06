@@ -11,12 +11,14 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.bean.ManagedBean;
 import javax.inject.Named;
 
 /**
  *
  * @author Alessandro
  */
+@ManagedBean
 @RequestScoped
 @Named("sb")
 public class SearchBean {
@@ -29,12 +31,12 @@ public class SearchBean {
     public SearchBean() {
     }
 
-    public String getParamter() {
+    public String getParameter() {
         return parameter;
     }
 
-    public void setParamter(String paramter) {
-        this.parameter = paramter;
+    public void setParameter(String parameter) {
+        this.parameter = parameter;
     }
 
     public ArrayList<User> searchUsers() {

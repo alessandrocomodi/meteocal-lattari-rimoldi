@@ -8,13 +8,18 @@ package it.polimi.meteocal.gui.security;
 import it.polimi.meteocal.business.security.boundary.UserManager;
 import it.polimi.meteocal.business.security.entity.User;
 import it.polimi.meteocal.entities.Event;
+import java.awt.Image;
 import java.io.ByteArrayInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.event.PhaseId;
 import javax.inject.Named;
+import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
@@ -31,23 +36,27 @@ public class UserBean{
     
     private User newUser;
     
+    private byte[] img;
+    
     public UserBean() {
     }
     
     public StreamedContent getUserAvatar() {
-//        byte[] buffer;
-//        FacesContext fc = FacesContext.getCurrentInstance();
-//        if (fc.getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
-//            return new DefaultStreamedContent();
-//        } else {
-//            buffer = getCurrentUser().getAvatar();
-//            InputStream input = new ByteArrayInputStream(buffer);
-//            StreamedContent image = new DefaultStreamedContent(input, "image/png");
-//            return image;
-//        }
-        InputStream is = new ByteArrayInputStream(getCurrentUser().getAvatar());
-        StreamedContent image = new DefaultStreamedContent(is, "image/png");
-        return image;
+/*
+        byte[] buffer;
+        FacesContext fc = FacesContext.getCurrentInstance();
+        if (fc.getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
+            return new DefaultStreamedContent();
+        } else {
+            buffer = getCurrentUser().getAvatar();
+            InputStream input = new ByteArrayInputStream(buffer);
+            StreamedContent image = new DefaultStreamedContent(input, "image/png");
+            return image;
+        } */
+          InputStream is = new ByteArrayInputStream(getCurrentUser().getAvatar());
+          StreamedContent image = new DefaultStreamedContent(is, "image/png");
+          return image;       
+         
     }
     
     public String getPhoneNumber() {

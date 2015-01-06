@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Meteocal</title>
+<link href="../css/calendar_page.css" rel="stylesheet" type="text/css" />
+</h:head>
+
+<h:body style="background-color:#81a4c7">
+	<div id="wrap">
+    	<div id="header">
+            <img src="../images/Logo.png" style="width:150px; height:150px;"/>
+            <div style="float:right;">
+                <div>
+                    <p:commandButton value="Log out" style="width: 100px; border:0; box-shadow:0px 2px 5px #000000; 
+                                             float: right; margin-left: 20px; margin-top: 10px; background: #6cb364; color: white; font-family: Comic Sans MS;" 
+                                             action="#{loginBean.logout()}" />
+                    <h:form style="float: left"><p:commandLink action="#{loginBean.logout()}"></p:commandLink></h:form>
+                </div>
+                <div style="float:right; ">
+                    <p:inputText id="title" value="#{sb.parameter}" style="margin-top: 80px;" required="true"/>
+                    <p:button value="Search users" href="search_results.xhtml" style=" border:0; box-shadow:0px 2px 5px #000000; 
+                                             float: left; margin-left: 10px; margin-top: 76px; background: #6cb364; color: white; font-family: Comic Sans MS;" />
+                </div>
+            </div>
+        </div>
+        <div id="central">
+            <div id="calendar_area">
+                <div id="calendar_container">
+                    <div id="calendar_header">
+                        <h1>Your calendar</h1>
+                        <p:button value="New event" outcome="create_event2" 
+                          style="float: right; border:0; box-shadow:0px 2px 5px #000000; 
+                                             margin-right: 52px; margin-bottom: 10px; background: #6cb364; font-weight: 400; color: white; font-family: Comic Sans MS;"/>
+                    </div>
+                    <h:panelGrid columnClasses="value" >
+                        <p:schedule id="schedule" value="#{scheduleView.eventModel}" 
+                                    widgetVar="myschedule" style="margin-bottom: 20px;width: 700px; margin-left:45px; color: white; font-family: Comic Sans MS;">
+                          <!-- <p:ajax event="eventSelect" listener="#{scheduleView.onEventSelect}" oncomplete="PF('eventDialog').show();" />-->
+                        </p:schedule>
+                    </h:panelGrid> 
+                    <!--
+                    <p:dialog widgetVar="eventDialog" header="Event Details" showEffect="clip" hideEffect="clip">
+                        <p:dataTable var="event" >
+                            <p:column headerText="Name">
+                                <h:outputText value="#{event.name}" />
+                            </p:column>
+
+                            <p:column headerText="Privacy">
+                                <h:outputText value="#{event.getPrivateString()}" />
+                            </p:column>
+
+                            <p:column headerText="Indoor">
+                                <h:outputText value="#{event.getIndoorString()}" />
+                            </p:column>
+
+                            <p:column headerText="Start Time">
+                                <h:outputText value="#{event.starttime}" />
+                            </p:column>
+
+                            <p:column headerText="End Time">
+                                <h:outputText value="#{event.endtime}" />
+                            </p:column>
+
+                            <p:column headerText="Place">
+                                <h:outputText value="#{event.place}" />
+                            </p:column>
+
+                            <p:column headerText="Description">
+                                <h:outputText value="#{event.description}"/>
+                            </p:column>
+
+                            <p:column headerText="Weather">
+                                <h:outputText value="#{event.weatherinfo}" />
+                            </p:column>
+                        </p:dataTable>
+                    </p:dialog>-->
+                </div>
+            </div>
+        </div>
+        <div id="footer">
+            <p>Software engineering 2</p>
+            Project 2014-2015<br />
+            Rimoldi_Lattari<br />
+            <p></p>
+        </div>
+    </div>
+</h:body>
+</html>

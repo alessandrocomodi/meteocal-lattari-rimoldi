@@ -178,7 +178,7 @@ public class User implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Notification> getNotificationCollection() {
+    public List<Notification> getNotificationCollection() {
         return notificationCollection;
     }
 
