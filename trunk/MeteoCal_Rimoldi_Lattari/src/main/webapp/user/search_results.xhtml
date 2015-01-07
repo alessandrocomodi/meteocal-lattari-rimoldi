@@ -21,8 +21,8 @@ and open the template in the editor.
         
         <ui:repeat value="#{sb.searchUsers()}" var="user"  >
             <li>
-                <h:link value="#{user}" outcome="user" style="list-style: none;" >
-                    <f:param name="user" value="#{user}" />
+                <h:link value="#{user.name} #{user.surname} (#{user.email})" outcome="user" style="list-style: none;" >
+                    <f:param name="user" value="#{user.email}" />
                 </h:link>
             </li>
         </ui:repeat>

@@ -36,6 +36,10 @@ public class UserBean{
     
     private User newUser;
     
+    private String userEmail;
+
+    
+    
     private byte[] img;
     
     public UserBean() {
@@ -66,6 +70,32 @@ public class UserBean{
         return getCurrentUser().getPhone();
     }
     
+    //metodo ad hoc per la pagina profilo di un utente generico...in realtà si potrebbe unire a quello già esistente
+    //per il momento lasciare così
+    public String getPhoneFromUser(String email) {
+        if (getUserFromEmail(email).getPhone() == null) {
+            return "not available";
+        }
+        return getUserFromEmail(email).getPhone();
+    }
+    
+    //metodo ad hoc per la pagina profilo di un utente generico...in realtà si potrebbe unire a quello già esistente
+    //per il momento lasciare così
+    public String getCalendarPrivacyFromUser(String email) {
+        if (getUserFromEmail(email).getPrivacy()) {
+            return "private";
+        }
+        return "public";
+    }
+    
+    //metodo per valutare se renderizzare o meno il bottone che linka al calendario dell'utente, a seconda della sua privacy
+    public boolean visualizeCalendarButton(String email) {
+        boolean b = getUserFromEmail(email).getPrivacy();
+        //not b perchè renderizzo (quindi TRUE) il bottone se la privacy è pubblica, ovvero privacy = FALSE
+        return !b;
+    }
+    
+    
     public String getCalendarPrivacy() {
         if (getCurrentUser().getPrivacy()) {
             return "private";
@@ -73,28 +103,14 @@ public class UserBean{
         return "public";
     }
     
-    public String getName() {
-        return um.getLoggedUser().getName();
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
     
-    public String getNewUserName() {
-        return newUser.getName();
-    }
-    
-    public String getNewUserSurname() {
-        return newUser.getSurname();
-    }
-    
-    public String getNewUserEmail() {
-        return newUser.getEmail();
-    }
-    
-    public String getNewUserPhone() {
-        return newUser.getPhone();
-    }
-    
-    
- 
     public void setNewUser(User newUser) {
         this.newUser = newUser;
     }
@@ -112,6 +128,10 @@ public class UserBean{
     
     public User getCurrentUser(){
         return um.getLoggedUser();
+    }
+    
+    public User getUserFromEmail(String email) {
+        return um.getUserFromEmail(email);
     }
     
     //al momento ritorna solo gli eventi organizzati, poi basterà aggiungere anche gli eventi a cui si partecipa

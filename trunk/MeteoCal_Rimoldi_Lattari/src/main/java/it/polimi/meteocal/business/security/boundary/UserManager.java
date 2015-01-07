@@ -90,7 +90,11 @@ public class UserManager {
     public void unregister() {
         em.remove(getLoggedUser());
     }
-
+    
+    public User getUserFromEmail(String email) {
+        return em.find(User.class, email);
+    }
+    
     public User getLoggedUser() {
         return em.find(User.class, principal.getName());
     }
