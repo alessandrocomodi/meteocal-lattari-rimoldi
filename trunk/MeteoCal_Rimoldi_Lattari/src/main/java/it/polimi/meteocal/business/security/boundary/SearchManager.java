@@ -18,8 +18,11 @@ public class SearchManager {
     @PersistenceContext
     private EntityManager em;
 
-    public List<String> searchUsers(String parameter) {
-        String param = "Ciccio";
+    public List<User> searchUsers(String parameter) {
+        //al momento il parametro passato è sempre null (da fixare), quindi per
+        //testare la query gli faccio cercare sempre Ciccio (che sul mio db esiste)
+        //ed effettivamente trova il giusto risultato
+        String param = "Alessandro";
         parameter = param;
         Query email= em.createNamedQuery("User.findByEmail");
         email.setParameter("email", param);
@@ -29,16 +32,11 @@ public class SearchManager {
         surname.setParameter("surname", param);
         Query phone= em.createNamedQuery("User.findByPhone");
         phone.setParameter("phone", param);
-        List<String> results = new ArrayList<>();
+        List<User> results = new ArrayList<>();
         results.addAll(email.getResultList());
         results.addAll(name.getResultList());
         results.addAll(surname.getResultList());
         results.addAll(phone.getResultList());
-//        ArrayList<User> users = new ArrayList<>();
-//        for(int i=0; i<results.size(); i++){
-//            User u = em.find(User.class, results.get(i));
-//            users.add(u);
-//        }
         return results;
     }
 
