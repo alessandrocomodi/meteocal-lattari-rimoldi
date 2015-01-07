@@ -17,7 +17,7 @@ and open the template in the editor.
         <br /><br />
         <ui:repeat value="#{sb.searchUsers()}" var="user">
             <li>
-                <h:link value="#{user.email}" outcome="user"></h:link>
+                <h:link value="#{user}" outcome="user"></h:link>
             </li>
         </ui:repeat>
     </h:body>
