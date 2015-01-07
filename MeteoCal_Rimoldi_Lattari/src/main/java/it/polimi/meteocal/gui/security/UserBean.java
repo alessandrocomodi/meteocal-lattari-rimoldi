@@ -76,6 +76,24 @@ public class UserBean{
     public String getName() {
         return um.getLoggedUser().getName();
     }
+    
+    public String getNewUserName() {
+        return newUser.getName();
+    }
+    
+    public String getNewUserSurname() {
+        return newUser.getSurname();
+    }
+    
+    public String getNewUserEmail() {
+        return newUser.getEmail();
+    }
+    
+    public String getNewUserPhone() {
+        return newUser.getPhone();
+    }
+    
+    
  
     public void setNewUser(User newUser) {
         this.newUser = newUser;

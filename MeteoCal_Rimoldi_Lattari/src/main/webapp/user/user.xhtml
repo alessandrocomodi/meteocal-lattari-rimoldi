@@ -7,13 +7,16 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Meteocal</title>
 <link href="./css/user_home3.css" rel="stylesheet" type="text/css" />
+    <f:metadata>
+        <f:viewParam name="user" value="#{ub.newUser}" />
+    </f:metadata>
 </h:head>
+  
 
 <h:body style="background-color:#81a4c7">
 	<div id="wrap">
     	<div id="header">
-       
-                <a href="home.xhtml"><img src="./images/Logo.png" style="width:150px; height:150px;" /></a>
+            <img src="./images/Logo.png" style="width:150px; height:150px;"/>
             <div style="float:right;">
                 <div>
                     <p:commandButton value="Log out" style="width: 100px; border:0; box-shadow:0px 2px 5px #000000; 
@@ -37,16 +40,17 @@
                     <h:panelGrid columns="2" style="text-align: left;">
                         <span style="color: white; font-family: Comic Sans MS; font-size: 24px; float: left; margin-left: 10px; margin-top: 10px;">
                             <b>Name:</b>
-                            #{ub.currentUser.name}
+                            
+                            #{ub.newUserName}
                             <br /><br />
                             <b>Surname:</b>
-                            #{ub.currentUser.surname}
+                            #{ub.newUserSurname}
                             <br /><br />
                             <b>Email:</b>
-                            #{ub.currentUser.email}
+                            #{ub.newUserEmail}
                             <br /><br />
                             <b>Phone:</b>
-                            #{ub.getPhoneNumber()}
+                            #{ub.newUserPhone}
                             <br /><br />
                             <b>Calendar privacy:</b>
                             #{ub.getCalendarPrivacy()}
@@ -65,7 +69,7 @@
                     <p:button value="Calendar" outcome="calendar_page" 
                           style=" border:0; box-shadow:0px 2px 5px #000000; 
                                              margin-left: 10px; background: #6cb364; font-weight: 400; color: white; font-family: Comic Sans MS;"/>
-                    <p:button value="Notifications" outcome="notification_page" 
+                    <p:button value="Search other users" outcome="notification_page" 
                           style=" border:0; box-shadow:0px 2px 5px #000000; 
                                               margin-left: 10px; background: #6cb364; font-weight: 400; color: white; font-family: Comic Sans MS;"/>
                 </div>

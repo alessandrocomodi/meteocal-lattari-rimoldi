@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.inject.Named;
 
@@ -19,7 +20,7 @@ import javax.inject.Named;
  * @author Alessandro
  */
 @ManagedBean
-@RequestScoped
+@ApplicationScoped
 @Named("sb")
 public class SearchBean {
     
@@ -30,16 +31,18 @@ public class SearchBean {
 
     public SearchBean() {
     }
-
+    
+    public void setParameter(String parameter) {
+        this.parameter = parameter;
+    }
+    
     public String getParameter() {
         return parameter;
     }
 
-    public void setParameter(String parameter) {
-        this.parameter = parameter;
-    }
+    
 
-    public List<String> searchUsers() {
+    public List<User> searchUsers() {
         return sm.searchUsers(parameter);
     }
 }

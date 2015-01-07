@@ -8,16 +8,22 @@ and open the template in the editor.
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Results for #{sb.parameter}</title>
     </h:head>
     <h:body>
         <p:button value="User Home" outcome="user_home" />
         <br /><br />
-        <ui:repeat value="#{sb.searchUsers()}" var="user">
+        
+        
+        
+        <ui:repeat value="#{sb.searchUsers()}" var="user"  >
             <li>
-                <h:link value="#{user}" outcome="user"></h:link>
+                <h:link value="#{user}" outcome="user" style="list-style: none;" >
+                    <f:param name="user" value="#{user}" />
+                </h:link>
             </li>
         </ui:repeat>
     </h:body>
