@@ -39,7 +39,7 @@ public class SearchBean {
         this.parameter = parameter;
     }
 
-    public ArrayList<User> searchUsers() {
+    public List<String> searchUsers() {
         return sm.searchUsers(parameter);
     }
 }
