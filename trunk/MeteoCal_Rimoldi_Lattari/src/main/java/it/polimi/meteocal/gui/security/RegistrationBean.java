@@ -41,7 +41,7 @@ public class RegistrationBean {
 
     public String register() throws IOException {
         um.save(user);
-        return "user/user_home3?faces-redirect=true";
+        return "home?faces-redirect=true";
     }
 
 }
