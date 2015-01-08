@@ -70,4 +70,11 @@ public class LoginBean {
         logger.log(Level.INFO, "User Logged out");
         return "/home?faces-redirect=true";
     }
+    
+    //metodo che verifica se un un utente è già loggato o meno, così da mostrare on opportuno messaggio in home.xhtml
+    public boolean isLogged() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+        return request.getUserPrincipal() == null;
+    }
 }
