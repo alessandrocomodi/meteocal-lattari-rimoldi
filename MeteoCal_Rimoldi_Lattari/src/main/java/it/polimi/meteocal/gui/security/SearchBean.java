@@ -7,10 +7,8 @@ package it.polimi.meteocal.gui.security;
 
 import it.polimi.meteocal.business.security.boundary.SearchManager;
 import it.polimi.meteocal.business.security.entity.User;
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.inject.Named;
@@ -38,6 +36,10 @@ public class SearchBean {
     
     public String getParameter() {
         return parameter;
+    }
+    
+    public String resultUrl() {
+        return "search_results?faces-redirect=true&par=" + parameter;
     }
 
     public List<User> searchUsers() {
