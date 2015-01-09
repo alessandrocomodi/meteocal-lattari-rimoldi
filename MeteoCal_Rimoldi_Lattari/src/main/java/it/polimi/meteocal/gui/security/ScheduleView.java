@@ -18,6 +18,8 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.Dependent;
+import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DefaultScheduleEvent;
@@ -30,7 +32,7 @@ import org.primefaces.model.ScheduleModel;
  * @author Francesco
  */
 @Named(value = "scheduleView")
-@Dependent
+@SessionScoped
 public class ScheduleView implements Serializable{
     
     @EJB
@@ -41,7 +43,28 @@ public class ScheduleView implements Serializable{
     
     private ScheduleModel eventModel;
 
-    private ScheduleEvent event;
+    private ScheduleEvent event = new DefaultScheduleEvent();
+    
+    private Event selectedEvent;
+
+    /**
+     * Get the value of selectedEvent
+     *
+     * @return the value of selectedEvent
+     */
+    public Event getSelectedEvent() {
+        return selectedEvent;
+    }
+
+    /**
+     * Set the value of selectedEvent
+     *
+     * @param selectedEvent new value of selectedEvent
+     */
+    public void setSelectedEvent(Event selectedEvent) {
+        this.selectedEvent = selectedEvent;
+    }
+
 
     
     public ScheduleEvent getEvent() {
@@ -76,9 +99,10 @@ public class ScheduleView implements Serializable{
     }
     
     public void onEventSelect(SelectEvent selectEvent) {
-        //event = (ScheduleEvent) selectEvent.getObject();
-        //Event eventDetailed = em.find((String)event.getData());
-        //FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds()
+        event = (ScheduleEvent) selectEvent.getObject();
+        System.out.println(event.getData().getClass().toString());
+        this.selectedEvent = em.find(event.getData());
+        
     }
 
     /**
