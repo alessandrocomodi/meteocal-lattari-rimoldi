@@ -39,45 +39,45 @@
                     <h:panelGrid columnClasses="value" >
                         <p:schedule id="schedule" value="#{scheduleView.eventModel}" 
                                     widgetVar="myschedule" style="margin-bottom: 20px;width: 700px; margin-left:45px; color: white; font-family: Comic Sans MS;">
-                          <!-- <p:ajax event="eventSelect" listener="#{scheduleView.onEventSelect}" oncomplete="PF('eventDialog').show();" />-->
+                            <p:ajax event="eventSelect" listener="#{scheduleView.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
                         </p:schedule>
                     </h:panelGrid> 
-                    <!--
+                    
                     <p:dialog widgetVar="eventDialog" header="Event Details" showEffect="clip" hideEffect="clip">
-                        <p:dataTable var="event" >
+                        <p:dataTable id="eventDetails" var="event" value="#{scheduleView.selectedEvent}">
                             <p:column headerText="Name">
-                                <h:outputText value="#{event.name}" />
+                                <h:outputText value="#{scheduleView.selectedEvent.name}" />
                             </p:column>
 
                             <p:column headerText="Privacy">
-                                <h:outputText value="#{event.getPrivateString()}" />
+                                <h:outputText value="#{scheduleView.selectedEvent.getPrivateString()}" />
                             </p:column>
 
                             <p:column headerText="Indoor">
-                                <h:outputText value="#{event.getIndoorString()}" />
+                                <h:outputText value="#{scheduleView.selectedEvent.getIndoorString()}" />
                             </p:column>
 
                             <p:column headerText="Start Time">
-                                <h:outputText value="#{event.starttime}" />
+                                <h:outputText value="#{scheduleView.selectedEvent.starttime}" />
                             </p:column>
 
                             <p:column headerText="End Time">
-                                <h:outputText value="#{event.endtime}" />
+                                <h:outputText value="#{scheduleView.selectedEvent.endtime}" />
                             </p:column>
 
                             <p:column headerText="Place">
-                                <h:outputText value="#{event.place}" />
+                                <h:outputText value="#{scheduleView.selectedEvent.place}" />
                             </p:column>
 
                             <p:column headerText="Description">
-                                <h:outputText value="#{event.description}"/>
+                                <h:outputText value="#{scheduleView.selectedEvent.description}"/>
                             </p:column>
 
                             <p:column headerText="Weather">
-                                <h:outputText value="#{event.weatherinfo}" />
+                                <h:outputText value="#{scheduleView.selectedEvent.weatherinfo}" />
                             </p:column>
                         </p:dataTable>
-                    </p:dialog>-->
+                    </p:dialog>
                 </div>
             </div>
         </div>
