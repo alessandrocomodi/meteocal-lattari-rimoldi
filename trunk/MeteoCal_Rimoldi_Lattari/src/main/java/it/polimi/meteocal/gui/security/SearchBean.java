@@ -40,10 +40,6 @@ public class SearchBean {
         return parameter;
     }
 
-    public String getResultURL() {
-        return "./search_results?faces-redirect=true&par=" + this.parameter;
-    }
-
     public List<User> searchUsers() {
         return sm.searchUsers(parameter);
     }
