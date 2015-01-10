@@ -49,28 +49,28 @@
                     <h:form id="updateform" style="font-family: Comic Sans MS; color: #ffffff; font-size: 20px">
                         <h:panelGrid columns="1" id="upGrid">
                             <h:outputLabel style="margin-left: 20px;" for="name">Name:</h:outputLabel>
-                            <p:inputText id="name" value="#{modificationBean.user.name}"
+                            <p:inputText id="name" value="#{modificationBean.user.name}" placeholder="#{modificationBean.currentUser.name}"
                                          style="width:360px; float:left; margin-right: 10px; margin-left: 20px;">
                                 <p:ajax update="namemsg"/>
                             </p:inputText>
                             <p:message id="namemsg" for="name" />
 
                             <h:outputLabel style="margin-left: 20px;" for="surname">Surname:</h:outputLabel>
-                            <p:inputText id="surname" value="#{modificationBean.user.surname}" 
+                            <p:inputText id="surname" value="#{modificationBean.user.surname}" placeholder="#{modificationBean.currentUser.surname}"
                                          style="width:360px; float:left; margin-right: 10px; margin-left: 20px;">
                                 <p:ajax update="surname"/>
                             </p:inputText>
                             <p:message id="surnamemsg" for="surname" />
 
                             <h:outputLabel style="margin-left: 20px;" for="phone">Phone:</h:outputLabel>
-                            <p:inputText id="phone" value="#{modificationBean.user.phone}" 
+                            <p:inputText id="phone" value="#{modificationBean.user.phone}" placeholder="#{modificationBean.currentUser.phone}"
                                          style="width:360px; float:left; margin-right: 10px; margin-left: 20px;">
                                 <p:ajax update="phone"/>
                             </p:inputText>
                             <p:message id="phonemsg" for="phone" />
 
                             <h:outputLabel style="margin-left: 20px;" for="password">Password:</h:outputLabel>
-                            <p:password id="password" value="#{modificationBean.user.password}"
+                            <p:password id="password" value="#{modificationBean.user.password}" 
                                         feedback="true" match="pwd2" label="Password"
                                         style="width:360px; float:left; margin-right: 10px; margin-left: 20px;"/>
                             <p:message for="password" />

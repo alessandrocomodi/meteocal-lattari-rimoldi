@@ -13,6 +13,7 @@ import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.TimeZone;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -88,7 +89,7 @@ public class ScheduleView implements Serializable{
     }
         
     public Date getDate(Date eventTime) {
-        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("CET"));
+        Calendar cal = Calendar.getInstance(TimeZone.getDefault());
         cal.setTime(eventTime);
         
         System.out.println(eventTime);
@@ -104,7 +105,7 @@ public class ScheduleView implements Serializable{
         this.selectedEvent = em.find(event.getData());
         
     }
-
+    
     /**
      * 
      * Get the value of eventModel
@@ -124,6 +125,13 @@ public class ScheduleView implements Serializable{
         this.eventModel = eventModel;
     }
 
+    public boolean visualizeModifyButton(){
+        if(this.selectedEvent != null){
+            return (this.selectedEvent.getOwner().getEmail().equals(getCurrentUser().getEmail()));
+        } else {
+            return true;
+        }
+    }
     
     /**
      * Creates a new instance of ScheduleView
@@ -135,7 +143,7 @@ public class ScheduleView implements Serializable{
         return um.getLoggedUser();
     }
     
-    //al momento ritorna solo gli eventi organizzati, poi basterà aggiungere anche gli eventi a cui si partecipa
+    //al momento ritorna solo gli eventi organizzati, poi basterÃ  aggiungere anche gli eventi a cui si partecipa
     public List<Event> getOwnEvents() {
         return getCurrentUser().getEventOrganized();
     }
