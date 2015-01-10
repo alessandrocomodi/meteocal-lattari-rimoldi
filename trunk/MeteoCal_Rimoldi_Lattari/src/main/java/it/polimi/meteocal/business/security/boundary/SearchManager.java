@@ -19,9 +19,6 @@ public class SearchManager {
     private EntityManager em;
 
     public List<User> searchUsers(String parameter) {
-        //al momento il parametro passato è sempre null (da fixare), quindi per
-        //testare la query gli faccio cercare sempre Ciccio (che sul mio db esiste)
-        //ed effettivamente trova il giusto risultato
         String param = parameter;
         Query email= em.createNamedQuery("User.findByEmail");
         email.setParameter("email", param);

@@ -11,18 +11,55 @@ and open the template in the editor.
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
-        <title>MeteoCal</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Meteocal</title>
+        <link href="./../css/user_home3.css" rel="stylesheet" type="text/css" />
         <f:metadata>
             <f:viewParam name="par" value="#{searchBean.par}" />
         </f:metadata>
     </h:head>
-    <h:body>
-        <ui:repeat value="#{searchBean.searchUsers(searchBean.par)}" var="user" >
-            <li>
-                <h:link value="#{user.name} #{user.surname} (#{user.email})" outcome="user" style="list-style: none;" >
-                    <f:param name="user" value="#{user.email}" />
-                </h:link>
-            </li>
-        </ui:repeat>
+    <h:body style="background-color:#81a4c7">
+        <div id="wrap">
+    	<div id="header">
+            <a href="user_home3.xhtml"><img src="./../images/Logo.png" style="width:150px; height:150px;" /></a>
+            <div style="float:right;">
+                <div>
+                    <p:commandButton value="Log out" style="width: 100px; border:0; box-shadow:0px 2px 5px #000000; 
+                                             float: right; margin-left: 20px; margin-top: 10px; background: #6cb364; color: white; font-family: Comic Sans MS;" 
+                                             action="#{loginBean.logout()}" />
+                    <h:form style="float: left"><p:commandLink action="#{loginBean.logout()}"></p:commandLink></h:form>
+                </div>
+            </div>
+        </div>
+        <div id="central">
+            <div id="profile_area">
+                <div id="profile_container">
+                    <div id="profile_header">
+                        <h1>Search results for #{searchBean.par}</h1>
+                    </div>
+                    <ui:repeat value="#{searchBean.searchUsers(searchBean.par)}" var="user" >
+                        <li style="margin-left: 20px; font-family: Comic Sans MS; color: white;">
+                            <h:link value="#{user.name} #{user.surname} (#{user.email})" outcome="user" style="list-style: none; color: white; font-family: Comic Sans MS; font-size: 18px;" >
+                                <f:param name="user" value="#{user.email}" />
+                            </h:link>
+                        </li>
+                    </ui:repeat>
+                    <h:outputText value="No result found" rendered="#{searchBean.noResult(searchBean.par)}" style="color: white; font-family: Comic Sans MS; margin-left: 20px; font-size: 18px;"/>
+                </div>
+            </div>
+            <div id="menu">
+                <br />
+                <div>
+                    
+                </div>
+            </div>
+        </div>
+        <div id="footer">
+            <p>Software engineering 2</p>
+            Project 2014-2015<br />
+            Rimoldi_Lattari<br />
+            <p></p>
+        </div>
+    </div>
     </h:body>
 </html>
