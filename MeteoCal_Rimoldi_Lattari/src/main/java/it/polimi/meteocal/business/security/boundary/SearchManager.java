@@ -22,8 +22,7 @@ public class SearchManager {
         //al momento il parametro passato è sempre null (da fixare), quindi per
         //testare la query gli faccio cercare sempre Ciccio (che sul mio db esiste)
         //ed effettivamente trova il giusto risultato
-        String param = "Alessandro";
-        parameter = param;
+        String param = parameter;
         Query email= em.createNamedQuery("User.findByEmail");
         email.setParameter("email", param);
         Query name= em.createNamedQuery("User.findByName");
