@@ -61,4 +61,8 @@ public class SearchBean {
         return sm.searchUsers(parameter2);
     }
     
+    public boolean noResult(String parameter2) {
+        return sm.searchUsers(parameter2).isEmpty();
+    }
+    
 }
