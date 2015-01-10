@@ -9,33 +9,38 @@ import it.polimi.meteocal.business.security.boundary.SearchManager;
 import it.polimi.meteocal.business.security.entity.User;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.faces.bean.ApplicationScoped;
-import javax.faces.bean.ManagedBean;
 import javax.inject.Named;
+import javax.enterprise.context.Dependent;
+import javax.enterprise.context.RequestScoped;
+import javax.faces.bean.ManagedBean;
 
 /**
  *
- * @author Alessandro
+ * @author Francesco
  */
 @ManagedBean
-@ApplicationScoped
-@Named("sb")
+@Named(value = "searchBean")
+@RequestScoped
 public class SearchBean {
-    
+
     @EJB
     private SearchManager sm;
     
-    private String parameter;
+        private String parameter;
 
-    public SearchBean() {
+    public String getParameter() {
+        return parameter;
     }
-    
+
     public void setParameter(String parameter) {
         this.parameter = parameter;
     }
+
     
-    public String getParameter() {
-        return parameter;
+    /**
+     * Creates a new instance of SearchBean
+     */
+    public SearchBean() {
     }
     
     public String resultUrl() {
@@ -45,4 +50,5 @@ public class SearchBean {
     public List<User> searchUsers() {
         return sm.searchUsers(parameter);
     }
+    
 }
