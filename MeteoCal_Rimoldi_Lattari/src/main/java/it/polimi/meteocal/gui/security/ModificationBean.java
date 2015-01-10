@@ -5,22 +5,19 @@
  */
 package it.polimi.meteocal.gui.security;
 
-import com.fasterxml.jackson.databind.util.ISO8601Utils;
 import it.polimi.meteocal.business.security.boundary.UserManager;
 import it.polimi.meteocal.business.security.entity.User;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
-import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
-import sun.misc.IOUtils;
 
 /**
  *
@@ -29,7 +26,7 @@ import sun.misc.IOUtils;
 @ManagedBean
 @RequestScoped
 @Named
-public class ModificationBean {
+public class ModificationBean implements Serializable{
 
     @EJB
     private UserManager um;
@@ -37,6 +34,11 @@ public class ModificationBean {
     private User user;
     
     private UploadedFile file;
+    
+    @PostConstruct
+    public void init() {
+        this.user = this.getCurrentUser();
+    }
     
     public ModificationBean() {
     }
@@ -48,11 +50,6 @@ public class ModificationBean {
     public void setFile(UploadedFile file) {
         this.file = file;
     }
-     
-  
-
-
-    
 
     public User getUser() {
         if (user == null) {

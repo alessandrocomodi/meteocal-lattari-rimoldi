@@ -11,11 +11,13 @@ import java.io.IOException;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.bean.ManagedBean;
 
 /**
  *
  * @author Alessandro
  */
+@ManagedBean
 @Named
 @RequestScoped
 public class RegistrationBean {

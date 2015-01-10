@@ -37,46 +37,52 @@
                                              margin-right: 52px; margin-bottom: 10px; background: #6cb364; font-weight: 400; color: white; font-family: Comic Sans MS;"/>
                     </div>
                     <h:panelGrid columnClasses="value" >
-                        <p:schedule id="schedule" value="#{scheduleView.eventModel}" 
+                        <p:schedule id="schedule" value="#{scheduleView.eventModel}" draggable="false" timeZone="GMT+1" resizable="false" 
                                     widgetVar="myschedule" style="margin-bottom: 20px;width: 700px; margin-left:45px; color: white; font-family: Comic Sans MS;">
-                            <p:ajax event="eventSelect" listener="#{scheduleView.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
+                            <p:ajax event="eventSelect" listener="#{scheduleView.onEventSelect}" update="eventDetails :modifyForm:modifyButton" oncomplete="PF('eventDialog').show();" />
                         </p:schedule>
                     </h:panelGrid> 
                     
-                    <p:dialog widgetVar="eventDialog" header="Event Details" showEffect="clip" hideEffect="clip">
-                        <p:dataTable id="eventDetails" var="event" value="#{scheduleView.selectedEvent}">
-                            <p:column headerText="Name">
-                                <h:outputText value="#{scheduleView.selectedEvent.name}" />
-                            </p:column>
-
-                            <p:column headerText="Privacy">
-                                <h:outputText value="#{scheduleView.selectedEvent.getPrivateString()}" />
-                            </p:column>
-
-                            <p:column headerText="Indoor">
-                                <h:outputText value="#{scheduleView.selectedEvent.getIndoorString()}" />
-                            </p:column>
-
-                            <p:column headerText="Start Time">
-                                <h:outputText value="#{scheduleView.selectedEvent.starttime}" />
-                            </p:column>
-
-                            <p:column headerText="End Time">
-                                <h:outputText value="#{scheduleView.selectedEvent.endtime}" />
-                            </p:column>
-
-                            <p:column headerText="Place">
-                                <h:outputText value="#{scheduleView.selectedEvent.place}" />
-                            </p:column>
-
-                            <p:column headerText="Description">
-                                <h:outputText value="#{scheduleView.selectedEvent.description}"/>
-                            </p:column>
-
-                            <p:column headerText="Weather">
-                                <h:outputText value="#{scheduleView.selectedEvent.weatherinfo}" />
-                            </p:column>
-                        </p:dataTable>
+                    <p:dialog widgetVar="eventDialog" showEffect="clip" hideEffect="clip" resizable="false6" style="width: 840px;" >
+                        <div id="event_container">
+                            <div id="event_header">
+                                <h1>Event details</h1>
+                            </div>
+                            <h:panelGrid id="eventDetails" columns="2" style="text-align: left;">
+                                <span style="color: white; font-family: Comic Sans MS; font-size: 24px; float: left; margin-left: 10px; margin-top: 10px;">
+                                    <b>Name:</b>
+                                    #{scheduleView.selectedEvent.name}
+                                    <br /><br />
+                                    <b>Privacy:</b>
+                                    #{scheduleView.selectedEvent.getPrivateString()}
+                                    <br /><br />
+                                    <b>Indoor:</b>
+                                    #{scheduleView.selectedEvent.getIndoorString()}
+                                    <br /><br />
+                                    <b>Start time:</b>
+                                    #{scheduleView.selectedEvent.starttime}
+                                    <br /><br />
+                                    <b>End time:</b>
+                                    #{scheduleView.selectedEvent.endtime}
+                                    <br /><br />
+                                    <b>Place:</b>
+                                    #{scheduleView.selectedEvent.place}
+                                    <br /><br />
+                                    <b>Description:</b>
+                                    <div style="width: 750px; overflow-y: scroll">
+                                        <p >#{scheduleView.selectedEvent.description}</p>
+                                    </div>
+                                    <b>Description:</b>
+                                    #{scheduleView.selectedEvent.weatherinfo}
+                                    <br /><br />
+                                </span>
+                            </h:panelGrid>
+                        </div>
+                        <h:form id="modifyForm" style="margin-top: 10px;">
+                            <p:button id="modifyButton" value="Modify event" outcome="modify_event" disabled="#{!scheduleView.visualizeModifyButton()}" 
+                                  style=" border:0; box-shadow:0px 2px 5px #000000; 
+                                                      margin-left: 10px; background: #6cb364; color: white; font-weight: 400; font-family: Comic Sans MS;"/>
+                        </h:form>
                     </p:dialog>
                 </div>
             </div>

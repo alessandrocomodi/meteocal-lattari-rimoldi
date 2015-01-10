@@ -47,7 +47,7 @@ public class UserManager {
     public void loadDefaultProfileImage() throws IOException {
         BufferedImage img = null;
         try {
-            img = ImageIO.read(new File("C:/Users/Alessandro/Documents/NetBeansProjects/MeteoCal_Rimoldi_Lattari/src/main/webapp/images/icon-user-default.png"));
+            img = ImageIO.read(new File("C:/Users/Francesco/Documents/NetBeansProjects/se2project/trunk/MeteoCal_Rimoldi_Lattari/src/main/webapp/images/icon-user-default.png"));
         } catch (IOException e) {
             System.out.println("Non l'ho letto!");
         }
@@ -81,11 +81,9 @@ public class UserManager {
         user.setSurname(us.getSurname());
         user.setPhone(us.getPhone());
         user.setPrivacy(us.getPrivacy());
-        user.setAvatar(file.getContents());
         user.setModifiedPassword(us.getPassword());
         user.getCalendar().setPrivate1(us.getPrivacy());
         em.merge(user);
-        em.remove(us);
     }
 
     public void unregister() {
