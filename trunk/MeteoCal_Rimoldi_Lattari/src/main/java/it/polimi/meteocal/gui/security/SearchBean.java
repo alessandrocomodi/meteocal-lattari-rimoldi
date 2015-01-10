@@ -36,6 +36,16 @@ public class SearchBean {
         this.parameter = parameter;
     }
 
+    private String par;
+
+    public String getPar() {
+        return par;
+    }
+
+    public void setPar(String par) {
+        this.par = par;
+    }
+
     
     /**
      * Creates a new instance of SearchBean
@@ -44,11 +54,11 @@ public class SearchBean {
     }
     
     public String resultUrl() {
-        return "search_results?faces-redirect=true&par=" + parameter;
+        return "search_results2?faces-redirect=true&par=" + parameter;
     }
 
-    public List<User> searchUsers() {
-        return sm.searchUsers(parameter);
+    public List<User> searchUsers(String parameter2) {
+        return sm.searchUsers(parameter2);
     }
     
 }
