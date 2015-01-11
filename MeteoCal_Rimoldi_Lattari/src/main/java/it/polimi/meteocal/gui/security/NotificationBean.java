@@ -5,6 +5,9 @@
  */
 package it.polimi.meteocal.gui.security;
 
+import it.polimi.meteocal.business.security.boundary.NotificationManager;
+import it.polimi.meteocal.entities.Notification;
+import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.bean.ManagedBean;
@@ -22,6 +25,27 @@ public class NotificationBean {
      * Creates a new instance of NotificationBean
      */
     public NotificationBean() {
+    }
+    
+    @EJB
+    private NotificationManager nm;
+    
+    private Notification notification;
+
+    public Notification getNotification() {
+        if (notification == null) {
+            notification = new Notification();
+        }
+        return notification;
+    }
+
+    public void setNotification(Notification notification) {
+        this.notification = notification;
+    }
+
+    
+    public void inviteUser() {
+        nm.inviteUser(getNotification());
     }
     
 }

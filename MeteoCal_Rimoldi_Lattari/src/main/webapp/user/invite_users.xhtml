@@ -41,39 +41,11 @@ and open the template in the editor.
                         
                         <p:dataList value="#{searchBean.searchUsers(searchBean.parameter)}" var="user" type="unordered" itemType="none" paginator="true" rows="10" styleClass="paginated">
                             <f:facet name="header">
-                                Result list
+                                Result list (click to invite)
                             </f:facet>
-                            <p:commandLink update=":form:userDetail" oncomplete="PF('userDialog').show()" title="View Detail" styleClass="ui-icon ui-icon-search" style="float:left;margin-right:10px">
-                                <f:setPropertyActionListener value="#{user}" target="#{searchBean.selectedUser}" />
-                                <h:outputText value="#{user.name}, #{user.surname}, #{user.email}" />
-                            </p:commandLink>
+                            <p:commandLink action="#{nb.inviteUser()}" title="Invite" styleClass="ui-icon ui-icon-plusthick" style="float:left;margin-right:10px"/>
                             <h:outputText value="#{user.name} #{user.surname}, #{user.email}" style="display:inline-block"/>
                         </p:dataList>
-                        
-                        <p:dialog header="User Info" widgetVar="userDialog" modal="true" showEffect="blind" hideEffect="explode" resizable="false">
-                            <p:outputPanel id="userDetail" style="text-align:center;">
-                                <p:panelGrid  columns="2" rendered="#{not empty searchBean.selectedUser}" columnClasses="label,value">
-                                    <f:facet name="header">
-                                        <p:graphicImage id="avatarImg" value="#{user.avatar}" cache="false" style="width:250px; height:250px;">
-                                            <f:param name="id" value="#{user.email}" />
-                                        </p:graphicImage>
-                                    </f:facet>
-
-                                    <h:outputText value="Id:" />
-                                    <h:outputText value="#{searchBean.selectedUser.name}" />
-
-                                    <h:outputText value="Year" />
-                                    <h:outputText value="#{searchBean.selectedUser.surname}" />
-
-                                    <h:outputText value="Color:" />
-                                    <h:outputText value="#{searchBean.selectedUser.email}"/>
-
-                                    <h:outputText value="Price" />
-                                    <h:outputText value="#{searchBean.selectedUser.phone}" />
-                                </p:panelGrid>
-                            </p:outputPanel>
-                        </p:dialog>
-                        
                     </h:form>
                 </div>
             </div>
