@@ -36,6 +36,16 @@ public class SearchBean {
         this.parameter = parameter;
     }
 
+    private User selectedUser;
+
+    public User getSelectedUser() {
+        return selectedUser;
+    }
+
+    public void setSelectedUser(User selectedUser) {
+        this.selectedUser = selectedUser;
+    }
+
     private String par;
 
     public String getPar() {

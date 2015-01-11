@@ -108,7 +108,10 @@
                                 <f:selectItem itemLabel="Indoor" itemValue="#{true}" />
                                 <f:selectItem itemLabel="Outdoor" itemValue="#{false}" />
                             </p:selectOneRadio>
-
+                            
+                            <p:commandButton value="Invite" type="button" onclick="window.open('invite_users.xhtml', 'Search Users', 'width=600, height=400, resizable, status, scrollbars=1, location');" style="width: 358px; margin-top: 10px; border:0; box-shadow:0px 2px 5px #000000; 
+                                             float: left; background: #6cb364; color: white; font-family: Comic Sans MS;"/>
+                            
                             <p:commandButton id="submit" value="Create" update="evGrid" style="width: 358px; margin-top: 10px; border:0; box-shadow:0px 2px 5px #000000; 
                                              float: left; background: #6cb364; color: white; font-family: Comic Sans MS;"
                                              action="#{eb.createEvent(ub.currentUser)}"/>

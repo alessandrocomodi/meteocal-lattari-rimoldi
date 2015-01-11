@@ -125,13 +125,13 @@ public class ScheduleView implements Serializable{
         this.eventModel = eventModel;
     }
 
-    public boolean visualizeModifyButton(){
-        if(this.selectedEvent != null){
+    public boolean visualizeModifyButton() {
+        if (this.selectedEvent != null) {
             return (this.selectedEvent.getOwner().getEmail().equals(getCurrentUser().getEmail()));
         } else {
             return true;
         }
-    }
+    } 
     
     /**
      * Creates a new instance of ScheduleView
@@ -147,5 +147,7 @@ public class ScheduleView implements Serializable{
     public List<Event> getOwnEvents() {
         return getCurrentUser().getEventOrganized();
     }
+    
+    
     
 }
