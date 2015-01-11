@@ -133,6 +133,10 @@ public class ScheduleView implements Serializable{
         }
     } 
     
+    public String resultUrl(){
+        return "modify_event?faces-redirect=true&par=" + this.selectedEvent.getIdevent();
+    }
+    
     /**
      * Creates a new instance of ScheduleView
      */
