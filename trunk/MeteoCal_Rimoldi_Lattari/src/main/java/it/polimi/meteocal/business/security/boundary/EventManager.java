@@ -30,6 +30,19 @@ public class EventManager {
         em.persist(event);
     }
     
+    public void update(Event selectedEvent, Event event){
+        selectedEvent.setName(event.getName());
+        selectedEvent.setIndoor(event.getIndoor());
+        selectedEvent.setDescription(event.getDescription());
+        selectedEvent.setPlace(event.getPlace());
+        selectedEvent.setPrivate1(event.getPrivate1());
+        selectedEvent.setStarttime(event.getStarttime());
+        selectedEvent.setEndtime(event.getEndtime());
+        selectedEvent.setWeatherinfo(event.getWeatherinfo());
+        em.merge(selectedEvent);
+              
+    }
+    
     public Event find(Object id) {
         return em.find(Event.class, id);
     }

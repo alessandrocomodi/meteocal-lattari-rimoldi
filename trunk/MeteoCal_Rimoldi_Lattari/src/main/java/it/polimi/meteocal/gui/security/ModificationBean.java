@@ -5,13 +5,16 @@
  */
 package it.polimi.meteocal.gui.security;
 
+import it.polimi.meteocal.business.security.boundary.EventManager;
 import it.polimi.meteocal.business.security.boundary.UserManager;
 import it.polimi.meteocal.business.security.entity.User;
+import it.polimi.meteocal.entities.Event;
 import java.io.IOException;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
@@ -24,14 +27,63 @@ import org.primefaces.model.UploadedFile;
  * @author Alessandro
  */
 @ManagedBean
-@RequestScoped
+@SessionScoped
 @Named
 public class ModificationBean implements Serializable{
 
     @EJB
     private UserManager um;
+
+    @EJB
+    private EventManager em;
     
     private User user;
+    
+    private Event event;
+
+    private String parameter;
+
+    public void eventSet(){
+        this.event = em.find(Integer.parseInt(parameter));
+    }
+    
+    /**
+     * Get the value of parameter
+     *
+     * @return the value of parameter
+     */
+    public String getParameter() {
+        return parameter;
+    }
+
+    /**
+     * Set the value of parameter
+     *
+     * @param parameter new value of parameter
+     */
+    public void setParameter(String parameter) {
+        this.parameter = parameter;
+    }
+
+    
+    /**
+     * Get the value of event
+     *
+     * @return the value of event
+     */
+    public Event getEvent() {
+        return event;
+    }
+
+    /**
+     * Set the value of event
+     *
+     * @param event new value of event
+     */
+    public void setEvent(Event event) {
+        this.event = event;
+    }
+
     
     private UploadedFile file;
     
@@ -65,6 +117,11 @@ public class ModificationBean implements Serializable{
     public String update() throws IOException {
         um.update(this.getCurrentUser(),user,file);
         return "user_home3?faces-redirect=true";
+    }
+    
+    public String updateEvent(){
+        em.update(em.find(Integer.parseInt(parameter)),this.event);
+        return "calendar_page?faces-redirect=true";
     }
     
       public void upload() {
