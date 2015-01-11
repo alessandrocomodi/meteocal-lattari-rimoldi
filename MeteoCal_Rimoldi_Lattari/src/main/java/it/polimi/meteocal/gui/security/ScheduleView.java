@@ -81,13 +81,25 @@ public class ScheduleView implements Serializable{
     @PostConstruct
     public void init() {
         eventModel = new DefaultScheduleModel();
+    }
+    
+    public void updateView(){
         List<Event> myEvents = getOwnEvents();
+        if(eventModel.getEventCount() != 0){
+            eventModel.clear();
+        }
         for(Event e : myEvents){
             System.out.println(e.getStarttime().toString());
             eventModel.addEvent(new DefaultScheduleEvent(e.getName(), getDate(e.getStarttime()), getDate(e.getEndtime()), e.getIdevent()));
         }
     }
-        
+
+    public void resetView(){
+        if(eventModel.getEventCount()!=0){
+            eventModel.clear();
+        }
+    }
+    
     public Date getDate(Date eventTime) {
         Calendar cal = Calendar.getInstance(TimeZone.getDefault());
         cal.setTime(eventTime);
