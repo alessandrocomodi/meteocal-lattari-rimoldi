@@ -26,8 +26,8 @@ public class SearchBean {
     @EJB
     private SearchManager sm;
     
-        private String parameter;
-
+    private String parameter;
+    
     public String getParameter() {
         return parameter;
     }
