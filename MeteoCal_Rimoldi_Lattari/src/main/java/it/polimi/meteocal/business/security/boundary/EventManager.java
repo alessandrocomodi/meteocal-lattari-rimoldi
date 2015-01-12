@@ -7,10 +7,12 @@ package it.polimi.meteocal.business.security.boundary;
 
 import it.polimi.meteocal.business.security.entity.User;
 import it.polimi.meteocal.entities.Event;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -45,5 +47,13 @@ public class EventManager {
     
     public Event find(Object id) {
         return em.find(Event.class, id);
+    }
+    
+    public List<Event> getEventOrganized(String email) {
+        Query query1= em.createNamedQuery("Event.findByOrganizer");
+        query1.setParameter("owner", email);
+        List<Event> results = new ArrayList<>();
+        results.addAll(query1.getResultList());
+        return results;
     }
 }

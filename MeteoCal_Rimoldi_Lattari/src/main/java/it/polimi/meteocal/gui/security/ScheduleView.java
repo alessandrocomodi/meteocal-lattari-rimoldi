@@ -83,8 +83,9 @@ public class ScheduleView implements Serializable{
         eventModel = new DefaultScheduleModel();
     }
     
-    public void updateView(){
-        List<Event> myEvents = getOwnEvents();
+    public void updateView(String email){
+        List<Event> myEvents = em.getEventOrganized(email);
+//        List<Event> myEvents = getOwnEvents();
         if(eventModel.getEventCount() != 0){
             eventModel.clear();
         }

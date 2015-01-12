@@ -44,6 +44,6 @@ public class EventBean {
     
     public String createEvent(User user) {
         em.createEvent(event, user);
-        return "calendar_page";
+        return "calendar_page?feces-redirect=true";
     }   
 }
