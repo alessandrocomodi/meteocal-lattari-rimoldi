@@ -28,6 +28,18 @@ public class EventBean {
     
     private Event event;
 
+    private List<User> guests;
+
+    public List<User> getGuests() {
+        return guests;
+    }
+
+    public void setGuests(List<User> guests) {
+        this.guests = guests;
+    }
+
+    
+    
     public EventBean() {
     }
 
@@ -45,5 +57,9 @@ public class EventBean {
     public String createEvent(User user) {
         em.createEvent(event, user);
         return "calendar_page?feces-redirect=true";
-    }   
+    }
+    
+    public void addGuest(User user) {
+        this.guests.add(user);
+    }
 }

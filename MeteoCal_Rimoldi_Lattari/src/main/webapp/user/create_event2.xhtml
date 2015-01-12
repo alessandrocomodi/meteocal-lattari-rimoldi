@@ -109,7 +109,7 @@
                                 <f:selectItem itemLabel="Outdoor" itemValue="#{false}" />
                             </p:selectOneRadio>
                             
-                            <p:commandButton value="Invite" type="button" onclick="window.open('invite_users.xhtml', 'Search Users', 'width=600, height=400, resizable, status, scrollbars=1, location');" style="width: 358px; margin-top: 10px; border:0; box-shadow:0px 2px 5px #000000; 
+                            <p:commandButton value="Invite" type="button" onclick="PF('listDialog').show();" style="width: 358px; margin-top: 10px; border:0; box-shadow:0px 2px 5px #000000; 
                                              float: left; background: #6cb364; color: white; font-family: Comic Sans MS;"/>
                             
                             <p:commandButton id="submit" value="Create" update="evGrid" style="width: 358px; margin-top: 10px; border:0; box-shadow:0px 2px 5px #000000; 
@@ -117,6 +117,58 @@
                                              action="#{eb.createEvent(ub.currentUser)}"/>
                             <br />
                         </h:panelGrid>
+                        
+                        <p:dialog widgetVar="listDialog" showEffect="clip" hideEffect="clip" resizable="false" style="width: 840px;" >
+                    <div id="list_container">
+                    <div id="list_header">
+                    <h1>Users list</h1>
+                    </div>
+                    <h:panelGrid id="listDetails" columns="2" style="text-align: left;">
+                    <h:form id="form"> 
+                    <p:panel id="panel" header="Insert a keyword (name, surname, email or phone)" style="margin-bottom:10px;">
+                    <p:messages id="messages" />
+
+                    <h:panelGrid columns="4" cellpadding="5">
+                    <h:outputLabel for="txt1" value="Keyword: *" />
+                    <p:inputText id="txt1" value="#{searchBean.parameter}" required="true" label="Text 1">
+                    <f:validateLength minimum="2" />
+                    </p:inputText>
+
+                    </h:panelGrid>
+                    </p:panel>
+
+                    <h:panelGrid columns="1">
+                    <p:commandButton process="@form:@child(1):txt1" update="@form" value="Search"/>
+                    </h:panelGrid>
+
+                    <p:dataList value="#{searchBean.searchUsers(searchBean.parameter)}" var="user" type="unordered" itemType="none" paginator="true" rows="10" styleClass="paginated">
+                    <f:facet name="header">
+                    Result list (click to invite)
+                    </f:facet>
+                        <p:commandLink  oncomplete="PF('messageDialog').show()" title="Invite" styleClass="ui-icon ui-icon-plusthick" style="float:left;margin-right:10px">
+                            <f:setPropertyActionListener value="#{user}" target="#{searchBean.selectedUser}" />
+                            <h:outputText value="#{user.name} #{user.surname}, #{user.email}" />
+                        </p:commandLink>
+                    <h:outputText value="#{user.name} #{user.surname}, #{user.email}" style="display:inline-block"/>
+                    </p:dataList>
+                        
+                        
+                        <p:dialog onShow="#{eventBean.addGuest(user)}" header="Confirmation" widgetVar="messageDialog" modal="true" showEffect="blind" hideEffect="explode" resizable="false">
+                            <p:outputPanel id="message2" style="text-align:center;">
+                                <h:outputText value="Aggiunto"/>
+                            </p:outputPanel>
+                        </p:dialog>
+                        
+                        
+                    </h:form>
+                    </h:panelGrid>
+                    </div>
+                    <h:form id="modifyForm" style="margin-top: 10px;">
+                    <p:commandButton value="Modify event" action="#{scheduleView.resultUrl()}" style=" border:0; box-shadow:0px 2px 5px #000000; 
+                    float: left; margin-left: 10px; margin-top: 10px; background: #6cb364; color: white; font-family: Comic Sans MS;" />
+                    </h:form>
+                    </p:dialog>
+                        
                     </h:form>
                 </div>
             </div>
