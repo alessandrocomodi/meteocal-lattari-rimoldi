@@ -47,6 +47,7 @@ public class ScheduleView implements Serializable{
     private ScheduleEvent event = new DefaultScheduleEvent();
     
     private Event selectedEvent;
+    
 
     /**
      * Get the value of selectedEvent
@@ -85,20 +86,38 @@ public class ScheduleView implements Serializable{
     
     public void updateView(String email){
         List<Event> myEvents = em.getEventOrganized(email);
-//        List<Event> myEvents = getOwnEvents();
         if(eventModel.getEventCount() != 0){
             eventModel.clear();
         }
         for(Event e : myEvents){
+            String name;
+            if (e.getPrivate1()) {
+                name = "busy";
+            } else {
+                name = e.getName();
+            }
             System.out.println(e.getStarttime().toString());
-            eventModel.addEvent(new DefaultScheduleEvent(e.getName(), getDate(e.getStarttime()), getDate(e.getEndtime()), e.getIdevent()));
+            eventModel.addEvent(new DefaultScheduleEvent(name, getDate(e.getStarttime()), getDate(e.getEndtime()), e.getIdevent()));
         }
+        
     }
 
     public void resetView(){
         if(eventModel.getEventCount()!=0){
             eventModel.clear();
         }
+    }
+    
+    public String visualizeCorrectHeader() {
+        if (selectedEvent.getPrivate1()) {
+            return "No available information for private events";
+        } else {
+            return "Event details";
+        }
+    }
+    
+    public boolean visualizeEventDetails() {
+        return !selectedEvent.getPrivate1();
     }
     
     public Date getDate(Date eventTime) {
@@ -116,7 +135,12 @@ public class ScheduleView implements Serializable{
         event = (ScheduleEvent) selectEvent.getObject();
         System.out.println(event.getData().getClass().toString());
         this.selectedEvent = em.find(event.getData());
-        
+        if (selectedEvent.getPrivate1()) {
+            selectedEvent.setName("---");
+            selectedEvent.setDescription("---");
+            selectedEvent.setPlace("---");
+            selectedEvent.getIndoorString();
+        }
     }
     
     /**
