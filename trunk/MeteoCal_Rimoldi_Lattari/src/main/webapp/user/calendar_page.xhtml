@@ -45,13 +45,13 @@
                         </p:schedule>
                     </h:panelGrid> 
                     
-                    <p:dialog widgetVar="eventDialog" showEffect="clip" hideEffect="clip" resizable="false6" style="width: 840px;" >
+                    <p:dialog widgetVar="eventDialog" showEffect="clip" hideEffect="clip" resizable="false" style="width: 840px;" >
                         <div id="event_container">
                             <div id="event_header">
                                 <h1>Event details</h1>
                             </div>
                             <h:panelGrid id="eventDetails" columns="2" style="text-align: left;">
-                                <span style="color: white; font-family: Comic Sans MS; font-size: 24px; float: left; margin-left: 10px; margin-top: 10px;">
+                                <span style="color: white; font-family: Comic Sans MS; font-size: 18px; float: left; margin-left: 10px; margin-top: 10px;">
                                     <b>Name:</b>
                                     #{scheduleView.selectedEvent.name}
                                     <br /><br />
@@ -74,15 +74,15 @@
                                     <div style="width: 750px; overflow-y: scroll">
                                         <p >#{scheduleView.selectedEvent.description}</p>
                                     </div>
-                                    <b>Description:</b>
+                                    <b>Weather:</b>
                                     #{scheduleView.selectedEvent.weatherinfo}
-                                    <br /><br />
+                                    
                                 </span>
                             </h:panelGrid>
                         </div>
                         <h:form id="modifyForm" style="margin-top: 10px;">
                             <p:commandButton value="Modify event" action="#{scheduleView.resultUrl()}" style=" border:0; box-shadow:0px 2px 5px #000000; 
-                              float: left; margin-left: 10px; margin-top: 76px; background: #6cb364; color: white; font-family: Comic Sans MS;" />
+                              float: left; margin-left: 10px; margin-top: 10px; background: #6cb364; color: white; font-family: Comic Sans MS;" />
                         </h:form>
                     </p:dialog>
                 </div>
