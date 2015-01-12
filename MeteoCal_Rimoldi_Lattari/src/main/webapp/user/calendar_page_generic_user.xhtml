@@ -7,9 +7,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Meteocal</title>
 <link href="../css/calendar_page.css" rel="stylesheet" type="text/css" />
+    <f:metadata>
+        <f:viewParam name="par" value="#{ub.userEmail}" />
+    </f:metadata>
 </h:head>
 
-    <h:body style="background-color:#81a4c7" onload="#{scheduleView.updateView(ub.currentUser.email)}">
+    <h:body style="background-color:#81a4c7" onload="#{scheduleView.updateView(ub.userEmail)}">
 	<div id="wrap">
     	<div id="header">
             <a href="user_home3.xhtml"><img src="./../images/Logo.png" style="width:150px; height:150px;" /></a>
@@ -33,10 +36,7 @@
             <div id="calendar_area">
                 <div id="calendar_container">
                     <div id="calendar_header">
-                        <h1>Your calendar</h1>
-                        <p:button value="New event" outcome="create_event2" 
-                          style="float: right; border:0; box-shadow:0px 2px 5px #000000; 
-                                             margin-right: 52px; margin-bottom: 10px; background: #6cb364; font-weight: 400; color: white; font-family: Comic Sans MS;"/>
+                        <h1>#{ub.getUserFromEmail(ub.userEmail).name}'s calendar</h1>
                     </div>
                     <h:panelGrid columnClasses="value" >
                         <p:schedule id="schedule" value="#{scheduleView.eventModel}" draggable="false" timeZone="GMT+1" resizable="false" 
@@ -80,10 +80,7 @@
                                 </span>
                             </h:panelGrid>
                         </div>
-                        <h:form id="modifyForm" style="margin-top: 10px;">
-                            <p:commandButton value="Modify event" action="#{scheduleView.resultUrl()}" style=" border:0; box-shadow:0px 2px 5px #000000; 
-                              float: left; margin-left: 10px; margin-top: 76px; background: #6cb364; color: white; font-family: Comic Sans MS;" />
-                        </h:form>
+                        
                     </p:dialog>
                 </div>
             </div>
