@@ -58,6 +58,19 @@ public class EventManager {
         results.addAll(query1.getResultList());
         return results;
     }
+    
+    public List<Event> getJoinedEvent(User u) {
+        Query events = em.createNamedQuery("Event.findAll");
+        List<Event> allEvents = new ArrayList<>();
+        allEvents.addAll(events.getResultList());
+        List<Event> results = new ArrayList<>();
+        for (Event e : allEvents) {
+            if (e.getUserCollection().contains(u)) {
+                results.add(e);
+            }
+        }
+        return results;
+    }
 
     public void addParticipant(Event e, User u) {
         e.getUserCollection().add(u);

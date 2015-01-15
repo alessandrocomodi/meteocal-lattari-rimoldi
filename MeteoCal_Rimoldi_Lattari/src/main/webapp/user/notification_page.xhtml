@@ -83,7 +83,7 @@
                         
                         
                         <h:form id="modifyForm" style="margin-top: 10px;">
-                            <p:commandButton id="submit" value="Accept" style="width: 358px; margin-top: 10px; border:0; box-shadow:0px 2px 5px #000000; 
+                            <p:commandButton id="submit" value="Accept" disabled="#{!scheduleView.isInTheParticipantsList(ub.currentUser, notificationView.selectedNotification.event)}" style="width: 358px; margin-top: 10px; border:0; box-shadow:0px 2px 5px #000000; 
                                              float: left; background: #6cb364; color: white; font-family: Comic Sans MS;"
                                              action="#{eb.acceptInvitation(notificationView.selectedNotification.event, ub.currentUser)}"/>
                         </h:form>

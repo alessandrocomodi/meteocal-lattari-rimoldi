@@ -47,6 +47,8 @@ public class ScheduleView implements Serializable{
     private ScheduleEvent event = new DefaultScheduleEvent();
     
     private Event selectedEvent;
+   
+
     
 
     /**
@@ -85,11 +87,13 @@ public class ScheduleView implements Serializable{
     }
     
     public void updateView(String email){
-        List<Event> myEvents = em.getEventOrganized(email);
+        List<Event> myEvents2 = em.getEventOrganized(email);
+        List<Event> joinedEvents = em.getJoinedEvent(um.getUserFromEmail(email));
+        myEvents2.addAll(joinedEvents);
         if(eventModel.getEventCount() != 0){
             eventModel.clear();
         }
-        for(Event e : myEvents){
+        for(Event e : myEvents2){
             String name;
             if (e.getPrivate1()) {
                 name = "busy";
@@ -189,6 +193,20 @@ public class ScheduleView implements Serializable{
         return getCurrentUser().getEventOrganized();
     }
     
+    public boolean isInTheParticipantsList(User u, Event e) {
+        if (e == null) {
+            return true;
+        } else if (e.getUserCollection().contains(u)) {
+            return false;
+        }
+        return true;
+    }
     
+    public boolean isTheOwner(User u, Event event) {
+        if (event == null) {
+            return true;
+        }
+        return event.getOwner().getEmail().equals(u.getEmail());
+    }
     
 }
