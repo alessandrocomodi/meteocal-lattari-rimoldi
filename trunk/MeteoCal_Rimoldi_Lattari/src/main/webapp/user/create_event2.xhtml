@@ -109,8 +109,19 @@
                                 <f:selectItem itemLabel="Outdoor" itemValue="#{false}" />
                             </p:selectOneRadio>
                             
-                            <p:commandButton value="Invite" type="button" onclick="PF('listDialog').show();" style="width: 358px; margin-top: 10px; border:0; box-shadow:0px 2px 5px #000000; 
-                                             float: left; background: #6cb364; color: white; font-family: Comic Sans MS;"/>
+                            <p:autoComplete id="searchUser" value="#{inviteBean.selectedUsers}" style=""
+                                            completeMethod="#{inviteBean.suggestUsers}" 
+                                var="user" 
+                                itemLabel="#{user.email}" itemValue="#{user}"
+                                converter="userConverter"
+                                multiple="true">
+
+                                <p:ajax event="itemSelect"/>
+
+                                <p:column style="width:200px;text-align:center">
+                                #{user.name} - #{user.email} 
+                                </p:column>
+                            </p:autoComplete>
                             
                             <p:commandButton id="submit" value="Create" update="evGrid" style="width: 358px; margin-top: 10px; border:0; box-shadow:0px 2px 5px #000000; 
                                              float: left; background: #6cb364; color: white; font-family: Comic Sans MS;"
