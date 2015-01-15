@@ -35,15 +35,65 @@
                     <div id="calendar_header">
                         <h1>Your notifications</h1>
                     </div>
+                    <h:form id="form">
                     <h:panelGrid columnClasses="value" style="width: 600px; margin-left: auto; margin-right: auto;" >
                         <p:dataList value="#{notificationsView.myNotifications}" var="notification" type="unordered" itemType="none" paginator="true" rows="10" styleClass="paginated">          
-                        <p:commandLink  title="View Detail" styleClass="ui-icon ui-icon-search" style="float:left;margin-right:10px">
+                        <p:commandLink  update=":form:eventDetails" title="View Detail" oncomplete="PF('eventDialog').show()" styleClass="ui-icon ui-icon-search" style="float:left;margin-right:10px">
                             <f:setPropertyActionListener value="#{notification}" target="#{notificationsView.selectedNotification}" />
                             <h:outputText value="#{notification.text}, #{notification.timestamp}" />
                         </p:commandLink>
                             <h:outputText value="#{notification.text}, #{notification.timestamp}" style="display:inline-block"/>
                     </p:dataList>
                     </h:panelGrid>
+                    
+                    
+                    <p:dialog widgetVar="eventDialog" showEffect="clip" hideEffect="clip" resizable="false" style="width: 840px;" >
+                        <div id="not_container">
+                            <div id="not_header">
+                                <h1>Event details</h1>
+                            </div>
+                            <h:panelGrid id="eventDetails" columns="2" style="text-align: left;">
+                                <span style="color: white; font-family: Comic Sans MS; font-size: 18px; float: left; margin-left: 10px; margin-top: 10px;">
+                                    <b>Name:</b>
+                                    #{notificationsView.mySelectedNotificatio.event.name}
+                                    <br /><br />
+                                    <b>Privacy:</b>
+                                    #{notificationsView.selectedNotification.event.privateString}
+                                    <br /><br />
+                                    <b>Indoor:</b>
+                                    #{notificationsView.selectedNotification.event.indoorString}
+                                    <br /><br />
+                                    <b>Start time:</b>
+                                    #{notificationsView.selectedNotification.event.starttime}
+                                    <br /><br />
+                                    <b>End time:</b>
+                                    #{notificationsView.selectedNotification.event.endtime}
+                                    <br /><br />
+                                    <b>Place:</b>
+                                    #{notificationsView.selectedNotification.event.place}
+                                    <br /><br />
+                                    <b>Description:</b>
+                                    <div style="width: 750px; overflow-y: scroll">
+                                        <p >#{notificationsView.selectedNotification.event.description}</p>
+                                    </div>
+                                    <b>Weather:</b>
+                                    #{notificationsView.selectedNotification.event.weatherinfo}
+                                    
+                                </span>
+                            </h:panelGrid>
+                        </div>
+                        
+                        
+                        <h:form id="modifyForm" style="margin-top: 10px;">
+                            
+                        </h:form>
+                    </p:dialog>
+                        
+                        </h:form>
+                    
+                    
+                    
+                    
                 </div>
             </div>
         </div>

@@ -16,6 +16,9 @@ import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.Dependent;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import org.primefaces.model.DefaultScheduleEvent;
 
 /**
@@ -23,7 +26,7 @@ import org.primefaces.model.DefaultScheduleEvent;
  * @author Francesco
  */
 @Named(value = "notificationsView")
-@Dependent
+@SessionScoped
 public class NotificationsView {
 
     @EJB
@@ -39,15 +42,18 @@ public class NotificationsView {
         this.myNotifications = getOwnNotifications();
     }
     
-    public Notification getSelectedNotification() {
+    public void setSelectedNotification(Notification selectedNotification) {
+        this.selectedNotification = selectedNotification;
+    }
+    
+    public Notification getMySelectedNotificatio() {
         return selectedNotification;
     }
 
     
-    public void setSelectedNotification(Notification selectedNotification) {
-        this.selectedNotification = selectedNotification;
+    public Notification getSelectedNotification() {
+        return selectedNotification;
     }
-
 
     
     public List<Notification> getMyNotifications() {
