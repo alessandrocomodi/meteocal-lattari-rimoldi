@@ -33,6 +33,18 @@ public class NotificationManager {
     public void create(Notification entity) {
         em.persist(entity);
     }
+    
+    public void createInvitation(List<User> invitedUsers, Integer event){
+        Notification notification = new Notification();
+        Event event2 = em.find(Event.class, event);
+        notification.setEvent(event2);
+        notification.setSender(event2.getOwner());
+        notification.setType("INVITATION");
+        notification.setTimestamp(new Date(System.currentTimeMillis() % 1000));
+        notification.setText("You have been invited to:\nName: " + event2.getName() + "\nOrganizer: " + event2.getOwner().getName() + " " );
+        notification.setUserCollection(invitedUsers);
+        em.persist(notification);
+    }
 
     public void remove(Notification entity) {
         em.remove(em.merge(entity));

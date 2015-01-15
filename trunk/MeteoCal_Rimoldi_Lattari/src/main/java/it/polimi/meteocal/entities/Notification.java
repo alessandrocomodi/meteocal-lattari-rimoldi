@@ -120,7 +120,7 @@ public class Notification implements Serializable {
     }
 
     @XmlTransient
-    public Collection<User> getUserCollection() {
+    public List<User> getUserCollection() {
         return userCollection;
     }
 
