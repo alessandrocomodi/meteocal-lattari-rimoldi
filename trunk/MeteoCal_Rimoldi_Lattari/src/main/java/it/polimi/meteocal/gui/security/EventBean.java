@@ -51,8 +51,6 @@ public class EventBean {
         em.addParticipant(e, u);
         return "notification_page?faces-redirect=true";
     }
-
-    
     
     public EventBean() {
     }
