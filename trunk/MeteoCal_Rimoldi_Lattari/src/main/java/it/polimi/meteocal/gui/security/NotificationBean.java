@@ -42,10 +42,4 @@ public class NotificationBean {
     public void setNotification(Notification notification) {
         this.notification = notification;
     }
-
-    
-    public void inviteUser() {
-        nm.inviteUser(getNotification());
-    }
-    
 }

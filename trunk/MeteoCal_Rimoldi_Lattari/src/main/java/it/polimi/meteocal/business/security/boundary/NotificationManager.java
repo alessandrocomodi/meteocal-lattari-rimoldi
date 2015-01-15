@@ -9,13 +9,12 @@ import it.polimi.meteocal.business.security.entity.User;
 import it.polimi.meteocal.entities.Event;
 import it.polimi.meteocal.entities.Notification;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 
 /**
  *
@@ -24,8 +23,6 @@ import javax.persistence.TypedQuery;
 @Stateless
 public class NotificationManager {
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
     @PersistenceContext
     private EntityManager em;
     
@@ -42,8 +39,10 @@ public class NotificationManager {
         notification.setEvent(event2);
         notification.setSender(event2.getOwner());
         notification.setType("INVITATION");
-        notification.setTimestamp(new Date(System.currentTimeMillis() % 1000));
-        notification.setText("You have been invited to:\nName: " + event2.getName() + "\nOrganizer: " + event2.getOwner().getName() + " " );
+        Calendar cal = Calendar.getInstance();
+        notification.setTimestamp(cal.getTime());
+        System.out.println(cal.getTime());
+        notification.setText("You have been invited to an event");
         notification.setUserCollection(invitedUsers);
         em.persist(notification);
     }
@@ -69,16 +68,4 @@ public class NotificationManager {
         cq.select(cq.from(Notification.class));
         return em.createQuery(cq).getResultList();
     }
-    
-    
-    //metodo di prova per vedere se il salvataggio della notifica nel db avviene bene
-    public void inviteUser(Notification notification) {
-        notification.setText("Sei stato invitato");
-        notification.setType("INVITO");
-        notification.setTimestamp(new Date(System.currentTimeMillis() % 1000));
-        notification.setSender(new User());
-        notification.setEvent(new Event());
-        em.persist(notification);
-    }
-    
 }
