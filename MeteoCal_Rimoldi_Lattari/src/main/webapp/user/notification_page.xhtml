@@ -37,9 +37,9 @@
                     </div>
                     <h:form id="form">
                     <h:panelGrid columnClasses="value" style="width: 600px; margin-left: auto; margin-right: auto;" >
-                        <p:dataList value="#{notificationsView.myNotifications}" var="notification" type="unordered" itemType="none" paginator="true" rows="10" styleClass="paginated">          
+                        <p:dataList value="#{notificationView.myNotifications}" var="notification" type="unordered" itemType="none" paginator="true" rows="10" styleClass="paginated">          
                         <p:commandLink  update=":form:eventDetails" title="View Detail" oncomplete="PF('eventDialog').show()" styleClass="ui-icon ui-icon-search" style="float:left;margin-right:10px">
-                            <f:setPropertyActionListener value="#{notification}" target="#{notificationsView.selectedNotification}" />
+                            <f:setPropertyActionListener value="#{notification}" target="#{notificationView.selectedNotification}" />
                             <h:outputText value="#{notification.text}, #{notification.timestamp}" />
                         </p:commandLink>
                             <h:outputText value="#{notification.text}, #{notification.timestamp}" style="display:inline-block"/>
@@ -55,30 +55,23 @@
                             <h:panelGrid id="eventDetails" columns="2" style="text-align: left;">
                                 <span style="color: white; font-family: Comic Sans MS; font-size: 18px; float: left; margin-left: 10px; margin-top: 10px;">
                                     <b>Name:</b>
-                                    #{notificationsView.mySelectedNotificatio.event.name}
+                                    #{notificationView.selectedNotification.event.name}
                                     <br /><br />
                                     <b>Privacy:</b>
-                                    #{notificationsView.selectedNotification.event.privateString}
                                     <br /><br />
                                     <b>Indoor:</b>
-                                    #{notificationsView.selectedNotification.event.indoorString}
                                     <br /><br />
                                     <b>Start time:</b>
-                                    #{notificationsView.selectedNotification.event.starttime}
                                     <br /><br />
                                     <b>End time:</b>
-                                    #{notificationsView.selectedNotification.event.endtime}
                                     <br /><br />
                                     <b>Place:</b>
-                                    #{notificationsView.selectedNotification.event.place}
                                     <br /><br />
                                     <b>Description:</b>
                                     <div style="width: 750px; overflow-y: scroll">
-                                        <p >#{notificationsView.selectedNotification.event.description}</p>
+                                        <p>bello</p>
                                     </div>
                                     <b>Weather:</b>
-                                    #{notificationsView.selectedNotification.event.weatherinfo}
-                                    
                                 </span>
                             </h:panelGrid>
                         </div>
