@@ -9,6 +9,7 @@ import it.polimi.meteocal.business.security.entity.User;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -98,7 +99,7 @@ public class Event implements Serializable {
         @JoinColumn(name = "event", referencedColumnName = "idevent")}, inverseJoinColumns = {
         @JoinColumn(name = "user", referencedColumnName = "email")})
     @ManyToMany
-    private Collection<User> userCollection;
+    private List<User> userCollection;
     @JoinColumn(name = "owner", referencedColumnName = "email")
     @ManyToOne(optional = false)
     private User owner;
@@ -222,11 +223,11 @@ public class Event implements Serializable {
     }
 
     @XmlTransient
-    public Collection<User> getUserCollection() {
+    public List<User> getUserCollection() {
         return userCollection;
     }
 
-    public void setUserCollection(Collection<User> userCollection) {
+    public void setUserCollection(List<User> userCollection) {
         this.userCollection = userCollection;
     }
 

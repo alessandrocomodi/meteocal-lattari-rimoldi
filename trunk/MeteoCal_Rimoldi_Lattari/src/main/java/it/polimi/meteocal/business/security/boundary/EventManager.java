@@ -58,4 +58,11 @@ public class EventManager {
         results.addAll(query1.getResultList());
         return results;
     }
+
+    public void addParticipant(Event e, User u) {
+        e.getUserCollection().add(u);
+        em.merge(e);
+        u.getEventCollection().add(e);
+        em.merge(u);
+    }
 }

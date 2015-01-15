@@ -46,6 +46,11 @@ public class EventBean {
     public void setGuests(List<User> guests) {
         this.guests = guests;
     }
+    
+    public String acceptInvitation(Event e, User u) {
+        em.addParticipant(e, u);
+        return "notification_page?faces-redirect=true";
+    }
 
     
     
