@@ -58,18 +58,23 @@
                                     #{notificationView.selectedNotification.event.name}
                                     <br /><br />
                                     <b>Privacy:</b>
+                                    #{notificationView.selectedNotification.event.privateString}
                                     <br /><br />
                                     <b>Indoor:</b>
+                                    #{notificationView.selectedNotification.event.indoorString}
                                     <br /><br />
                                     <b>Start time:</b>
+                                    #{notificationView.selectedNotification.event.starttime}
                                     <br /><br />
                                     <b>End time:</b>
+                                    #{notificationView.selectedNotification.event.endtime}
                                     <br /><br />
                                     <b>Place:</b>
+                                    #{notificationView.selectedNotification.event.place}
                                     <br /><br />
                                     <b>Description:</b>
                                     <div style="width: 750px; overflow-y: scroll">
-                                        <p>bello</p>
+                                        <p>#{notificationView.selectedNotification.event.description}</p>
                                     </div>
                                     <b>Weather:</b>
                                 </span>
@@ -78,7 +83,9 @@
                         
                         
                         <h:form id="modifyForm" style="margin-top: 10px;">
-                            
+                            <p:commandButton id="submit" value="Accept" style="width: 358px; margin-top: 10px; border:0; box-shadow:0px 2px 5px #000000; 
+                                             float: left; background: #6cb364; color: white; font-family: Comic Sans MS;"
+                                             action="#{eb.acceptInvitation(notificationView.selectedNotification.event, ub.currentUser)}"/>
                         </h:form>
                     </p:dialog>
                         

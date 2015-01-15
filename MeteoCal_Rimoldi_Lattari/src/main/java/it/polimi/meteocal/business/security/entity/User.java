@@ -187,7 +187,7 @@ public class User implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Event> getEventCollection() {
+    public List<Event> getEventCollection() {
         return eventCollection;
     }
 
