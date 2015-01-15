@@ -125,7 +125,7 @@
                             
                             <p:commandButton id="submit" value="Create" update="evGrid" style="width: 358px; margin-top: 10px; border:0; box-shadow:0px 2px 5px #000000; 
                                              float: left; background: #6cb364; color: white; font-family: Comic Sans MS;"
-                                             action="#{eb.createEvent(ub.currentUser)}"/>
+                                             action="#{eb.createEvent(ub.currentUser, inviteBean.selectedUsers)}"/>
                             <br />
                         </h:panelGrid>
                     </h:form>

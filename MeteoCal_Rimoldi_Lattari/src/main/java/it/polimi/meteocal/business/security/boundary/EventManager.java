@@ -32,6 +32,8 @@ public class EventManager {
         em.persist(event);
     }
     
+    
+    
     public void update(Event selectedEvent, Event event){
         selectedEvent.setName(event.getName());
         selectedEvent.setIndoor(event.getIndoor());
