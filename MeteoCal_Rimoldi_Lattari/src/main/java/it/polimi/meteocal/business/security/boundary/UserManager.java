@@ -85,6 +85,10 @@ public class UserManager {
         user.getCalendar().setPrivate1(us.getPrivacy());
         em.merge(user);
     }
+    
+    public void updateUserNotificationList(User u) {
+        em.merge(u);
+    }
 
     public void unregister() {
         em.remove(getLoggedUser());

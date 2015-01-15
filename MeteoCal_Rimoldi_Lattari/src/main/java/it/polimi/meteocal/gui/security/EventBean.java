@@ -7,8 +7,10 @@ package it.polimi.meteocal.gui.security;
 
 import it.polimi.meteocal.business.security.boundary.EventManager;
 import it.polimi.meteocal.business.security.boundary.NotificationManager;
+import it.polimi.meteocal.business.security.boundary.UserManager;
 import it.polimi.meteocal.business.security.entity.User;
 import it.polimi.meteocal.entities.Event;
+import it.polimi.meteocal.entities.Notification;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -29,6 +31,9 @@ public class EventBean {
     
     @EJB
     private NotificationManager nm;
+    
+    @EJB
+    private UserManager um;
     
     private Event event;
 
@@ -68,6 +73,17 @@ public class EventBean {
             }
         }
         nm.createInvitation(invitedUsers, id);
+        Integer id2 = 0;
+        List<Notification> result2 = nm.getLastInvitation(id);
+        for (Notification n : result2) {
+            if (n.getIdnotification() > id2 && n.getType().equals("INVITATION")) {
+            id2 = n.getIdnotification();
+            }
+        }
+        for (User u : invitedUsers) {
+            u.getNotificationCollection().add(nm.find(id2));
+            um.updateUserNotificationList(u);
+        }
         return "calendar_page?feces-redirect=true";
     }
     

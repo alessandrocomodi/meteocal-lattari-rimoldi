@@ -8,11 +8,13 @@ package it.polimi.meteocal.business.security.boundary;
 import it.polimi.meteocal.business.security.entity.User;
 import it.polimi.meteocal.entities.Event;
 import it.polimi.meteocal.entities.Notification;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 /**
@@ -49,7 +51,15 @@ public class NotificationManager {
     public void remove(Notification entity) {
         em.remove(em.merge(entity));
     }
-
+    
+    public List<Notification> getLastInvitation(Integer idevent) {
+        Query query1= em.createNamedQuery("Notification.findByEvent");
+        query1.setParameter("idevent", idevent);
+        List<Notification> results = new ArrayList<>();
+        results.addAll(query1.getResultList());
+        return results;
+    }
+    
     public Notification find(Object id) {
         return em.find(Notification.class, id);
     }
