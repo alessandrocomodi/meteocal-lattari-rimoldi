@@ -45,45 +45,76 @@
                         </p:schedule>
                     </h:panelGrid> 
                     
-                    <p:dialog widgetVar="eventDialog" showEffect="clip" hideEffect="clip" resizable="false" style="width: 840px;" >
+                    <p:dialog widgetVar="eventDialog" showEffect="clip" hideEffect="clip" resizable="false" style="" >
                         <div id="event_container">
                             <div id="event_header">
                                 <h1>Event details</h1>
                             </div>
-                            <h:panelGrid id="eventDetails" columns="2" style="text-align: left;">
-                                <span style="color: white; font-family: Comic Sans MS; font-size: 18px; float: left; margin-left: 10px; margin-top: 10px;">
-                                    <b>Name:</b>
-                                    #{scheduleView.selectedEvent.name}
-                                    <br /><br />
-                                    <b>Privacy:</b>
-                                    #{scheduleView.selectedEvent.getPrivateString()}
-                                    <br /><br />
-                                    <b>Indoor:</b>
-                                    #{scheduleView.selectedEvent.getIndoorString()}
-                                    <br /><br />
-                                    <b>Start time:</b>
-                                    #{scheduleView.selectedEvent.starttime}
-                                    <br /><br />
-                                    <b>End time:</b>
-                                    #{scheduleView.selectedEvent.endtime}
-                                    <br /><br />
-                                    <b>Place:</b>
-                                    #{scheduleView.selectedEvent.place}
-                                    <br /><br />
-                                    <b>Description:</b>
-                                    <div style="width: 750px; overflow-y: scroll">
-                                        <p >#{scheduleView.selectedEvent.description}</p>
+                            <h:panelGrid id="eventDetails" columns="1" style="text-align: left; margin-bottom: 10px;">
+                                <h:panelGrid columns="2">
+                                    <div>
+                                        <span style="color: white; font-family: Comic Sans MS; font-size: 18px; float: left; margin-left: 10px; margin-top: 10px;">
+                                            <b>Name:</b>
+                                            #{scheduleView.selectedEvent.name}
+                                            <br /><br />
+                                            <b>Privacy:</b>
+                                            #{scheduleView.selectedEvent.getPrivateString()}
+                                            <br /><br />
+                                            <b>Indoor:</b>
+                                            #{scheduleView.selectedEvent.getIndoorString()}
+                                            <br /><br />
+                                            <b>Start time:</b>
+                                            #{scheduleView.selectedEvent.starttime}
+                                            <br /><br />
+                                            <b>End time:</b>
+                                            #{scheduleView.selectedEvent.endtime}
+                                            <br /><br />
+                                            <b>Place:</b>
+                                            #{scheduleView.selectedEvent.place}
+                                            <br /><br />
+                                            <b>Description:</b>
+                                            <div style="width: 450px; overflow-y: scroll">
+                                                <p >#{scheduleView.selectedEvent.description}</p>
+                                            </div>
+                                            <b>Weather:</b>
+                                            #{scheduleView.selectedEvent.weatherinfo}
+                                        </span>
                                     </div>
-                                    <b>Weather:</b>
-                                    #{scheduleView.selectedEvent.weatherinfo}
-                                    
-                                </span>
+                                    <h:panelGrid columns="1" style="margin-left: 35px; background: none">
+                                        <div id="organizer_container">
+                                            <div id="organizer_header">
+                                                <h1>Organizer</h1>
+                                            </div>
+                                            <p:panelGrid columns="2">
+                                                <f:facet name="header">
+                                                    <a href="#{scheduleView.resultUserUrl()}">
+                                                        <p:graphicImage id="avatarImg" value="#{scheduleView.userAvatar}" cache="false" style="width:250px; height:250px;">
+                                                            <f:param name="id" value="#{scheduleView.selectedEvent.owner.email}" />
+                                                    </p:graphicImage>
+                                                    </a>
+                                                </f:facet>
+
+                                                <h:outputText value="Name:" />
+                                                <h:outputText value="#{scheduleView.selectedEvent.owner.name}" />
+
+                                                <h:outputText value="Surname:" />
+                                                <h:outputText value="#{scheduleView.selectedEvent.owner.surname}" />
+
+                                                <h:outputText value="Email:" />
+                                                <h:outputText value="#{scheduleView.selectedEvent.owner.email}" />
+
+                                                <h:outputText value="Phone:" />
+                                                <h:outputText value="#{scheduleView.selectedEvent.owner.phone}" />
+                                            </p:panelGrid>
+                                        </div>
+                                    </h:panelGrid>
+                                </h:panelGrid>
+                                <h:form id="modifyForm" style="margin-top: 10px;">
+                                    <p:commandButton value="Modify event" rendered="#{scheduleView.isTheOwner(ub.currentUser, scheduleView.selectedEvent)}" action="#{scheduleView.resultUrl()}" style=" border:0; box-shadow:0px 2px 5px #000000; 
+                                      float: left; margin-bottom: 10px; margin-left: 320px; margin-top: 10px; background: #6cb364; color: white; font-family: Comic Sans MS;" />
+                                </h:form>
                             </h:panelGrid>
                         </div>
-                        <h:form id="modifyForm" style="margin-top: 10px;">
-                            <p:commandButton value="Modify event" rendered="#{scheduleView.isTheOwner(ub.currentUser, scheduleView.selectedEvent)}" action="#{scheduleView.resultUrl()}" style=" border:0; box-shadow:0px 2px 5px #000000; 
-                              float: left; margin-left: 10px; margin-top: 10px; background: #6cb364; color: white; font-family: Comic Sans MS;" />
-                        </h:form>
                     </p:dialog>
                 </div>
             </div>
