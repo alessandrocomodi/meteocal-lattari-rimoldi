@@ -75,17 +75,19 @@ public class EventBean {
                 id = e.getIdevent();
             }
         }
-        nm.createInvitation(invitedUsers, id);
-        Integer id2 = 0;
-        List<Notification> result2 = nm.getLastInvitation(id);
-        for (Notification n : result2) {
-            if (n.getIdnotification() > id2 && n.getType().equals("INVITATION")) {
-            id2 = n.getIdnotification();
+        if(invitedUsers != null){
+            nm.createInvitation(invitedUsers, id);
+            Integer id2 = 0;
+            List<Notification> result2 = nm.getLastInvitation(id);
+            for (Notification n : result2) {
+                if (n.getIdnotification() > id2 && n.getType().equals("INVITATION")) {
+                id2 = n.getIdnotification();
+                }
             }
-        }
-        for (User u : invitedUsers) {
-            u.getNotificationCollection().add(nm.find(id2));
-            um.updateUserNotificationList(u);
+            for (User u : invitedUsers) {
+                u.getNotificationCollection().add(nm.find(id2));
+                um.updateUserNotificationList(u);
+            }
         }
         return "calendar_page?feces-redirect=true";
     }

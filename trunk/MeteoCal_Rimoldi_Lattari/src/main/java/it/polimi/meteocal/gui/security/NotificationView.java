@@ -8,19 +8,25 @@ package it.polimi.meteocal.gui.security;
 import it.polimi.meteocal.business.security.boundary.UserManager;
 import it.polimi.meteocal.business.security.entity.User;
 import it.polimi.meteocal.entities.Notification;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 
 /**
  *
  * @author Alessandro
  */
 @Named(value = "notificationView")
-@ViewScoped
+@SessionScoped
 public class NotificationView implements Serializable{
     
     @EJB
@@ -65,4 +71,23 @@ public class NotificationView implements Serializable{
         return um.getLoggedUser();
     }
     
+    public StreamedContent getUserAvatar() {
+        if(selectedNotification != null){
+          InputStream is = new ByteArrayInputStream(selectedNotification.getEvent().getOwner().getAvatar());
+          StreamedContent image = new DefaultStreamedContent(is, "image/png");
+          return image; 
+        } else {
+          InputStream is = new ByteArrayInputStream(getCurrentUser().getAvatar());
+          StreamedContent image = new DefaultStreamedContent(is, "image/png");
+          return image; 
+        }
+    }
+    
+    public String resultUrl(){
+        if(selectedNotification != null){
+            return "user.xhtml?faces-redirect=true&user=" + this.selectedNotification.getEvent().getOwner().getEmail();
+        } else {
+            return "user.xhtml?faces-redirect=true&user=g";
+        }
+    }
 }

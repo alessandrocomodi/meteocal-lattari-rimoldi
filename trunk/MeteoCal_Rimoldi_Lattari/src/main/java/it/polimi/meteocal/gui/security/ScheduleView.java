@@ -9,6 +9,8 @@ import it.polimi.meteocal.business.security.boundary.EventManager;
 import it.polimi.meteocal.business.security.boundary.UserManager;
 import it.polimi.meteocal.business.security.entity.User;
 import it.polimi.meteocal.entities.Event;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
@@ -25,8 +27,10 @@ import javax.faces.context.FacesContext;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DefaultScheduleEvent;
 import org.primefaces.model.DefaultScheduleModel;
+import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
+import org.primefaces.model.StreamedContent;
 
 /**
  *
@@ -178,6 +182,31 @@ public class ScheduleView implements Serializable{
         return "modify_event?faces-redirect=true&par=" + this.selectedEvent.getIdevent();
     }
     
+    public String resultUserUrl(){
+        if(selectedEvent != null){
+            if(selectedEvent.getOwner().getEmail().equals(getCurrentUser().getEmail())){
+                return "user_home3.xhtml";
+            } else {
+                return "user.xhtml?faces-redirect=true&user=" + this.selectedEvent.getOwner().getEmail();
+            }
+        } else {
+            return "user.xhtml?faces-redirect=true&user=";
+        }
+        
+    }
+    
+    public StreamedContent getUserAvatar(){
+        if(selectedEvent != null){
+          InputStream is = new ByteArrayInputStream(selectedEvent.getOwner().getAvatar());
+          StreamedContent image = new DefaultStreamedContent(is, "image/png");
+          return image; 
+        } else {
+          InputStream is = new ByteArrayInputStream(getCurrentUser().getAvatar());
+          StreamedContent image = new DefaultStreamedContent(is, "image/png");
+          return image; 
+        }
+    }
+    
     /**
      * Creates a new instance of ScheduleView
      */
@@ -188,7 +217,7 @@ public class ScheduleView implements Serializable{
         return um.getLoggedUser();
     }
     
-    //al momento ritorna solo gli eventi organizzati, poi basterÃ  aggiungere anche gli eventi a cui si partecipa
+    //al momento ritorna solo gli eventi organizzati, poi basterÃƒÂ  aggiungere anche gli eventi a cui si partecipa
     public List<Event> getOwnEvents() {
         return getCurrentUser().getEventOrganized();
     }

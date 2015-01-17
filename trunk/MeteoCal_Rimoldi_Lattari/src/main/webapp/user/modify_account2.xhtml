@@ -27,8 +27,7 @@
         <div id="central">
             <div id="image_div">
                 <h2 style="padding-top: 20px;">Your profile image</h2>
-                <p:graphicImage id="avatarImg" value="#{ub.userAvatar}" cache="false" style="width:250px; height:250px;">
-                    <f:param name="id" value="#{ub.currentUser.email}" />
+                <p:graphicImage id="avatarImg" value="#{notificationView.userAvatar}" cache="false" style="width:250px; height:250px;">
                 </p:graphicImage>
                 <h:form enctype="multipart/form-data">
                     <p:growl id="messages" showDetail="true" />

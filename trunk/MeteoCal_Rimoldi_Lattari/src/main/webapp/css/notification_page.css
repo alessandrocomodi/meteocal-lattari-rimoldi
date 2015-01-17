@@ -96,7 +96,36 @@
 	font-weight: 400;
 }
 
+#calendar_area {
+	width:100%;
+	height:600px;
+	float:left;
+}
 
+#organizer_container {
+	background-color:#9d9d9c;
+	box-shadow: 1px 3px 5px 0px rgba(0, 0, 0, 0.35);
+	border-radius:10px;
+	width: 254px;
+        text-align: center;
+}
+
+#organizer_header {
+	background-color:#B74535;
+	border-radius:10px;
+	width:100%;
+	height: 52px;
+	box-shadow: 1px 3px 5px 0px rgba(0, 0, 0, 0.35);
+}
+
+#organizer_header h1 {
+	position:relative;
+	top:3px;
+	font-family: "Comic Sans MS";
+	color: #ffffff;
+	font-size: 30px;
+	font-weight: 400;
+}
 
 #footer {
 	background-color:#336699;

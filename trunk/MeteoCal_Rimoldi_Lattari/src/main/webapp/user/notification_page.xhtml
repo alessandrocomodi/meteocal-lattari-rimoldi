@@ -23,7 +23,7 @@
                 <div style="float:right; ">
                     <h:form>
                         <p:inputText id="title" value="#{searchBean.parameter}" style="margin-top: 80px;" required="true"/>
-                    <p:commandButton value="Search users" action="#{searchBean.resultUrl()}" style=" border:0; box-shadow:0px 2px 5px #000000; 
+                        <p:commandButton value="Search users" action="#{searchBean.resultUrl()}" style=" border:0; box-shadow:0px 2px 5px #000000; 
                               float: left; margin-left: 10px; margin-top: 76px; background: #6cb364; color: white; font-family: Comic Sans MS;" />
                     </h:form>
                 </div>
@@ -36,64 +36,89 @@
                         <h1>Your notifications</h1>
                     </div>
                     <h:form id="form">
-                    <h:panelGrid columnClasses="value" style="width: 600px; margin-left: auto; margin-right: auto;" >
-                        <p:dataList value="#{notificationView.myNotifications}" var="notification" type="unordered" itemType="none" paginator="true" rows="10" styleClass="paginated">          
-                        <p:commandLink  update=":form:eventDetails" title="View Detail" oncomplete="PF('eventDialog').show()" styleClass="ui-icon ui-icon-search" style="float:left;margin-right:10px">
-                            <f:setPropertyActionListener value="#{notification}" target="#{notificationView.selectedNotification}" />
-                            <h:outputText value="#{notification.text}, #{notification.timestamp}" />
-                        </p:commandLink>
-                            <h:outputText value="#{notification.text}, #{notification.timestamp}" style="display:inline-block"/>
-                    </p:dataList>
-                    </h:panelGrid>
-                    
-                    
-                    <p:dialog widgetVar="eventDialog" showEffect="clip" hideEffect="clip" resizable="false" style="width: 840px;" >
-                        <div id="not_container">
-                            <div id="not_header">
-                                <h1>Event details</h1>
+                        <h:panelGrid columnClasses="value" style="width: 600px; margin-left: auto; margin-right: auto;" >
+                            <p:dataList value="#{notificationView.myNotifications}" var="notification" type="unordered" itemType="none" paginator="true" rows="10" styleClass="paginated">          
+                            <p:commandLink  update=":form:eventDetails" title="View Detail" oncomplete="PF('eventDialog').show()" styleClass="ui-icon ui-icon-search" style="float:left;margin-right:10px">
+                                <f:setPropertyActionListener value="#{notification}" target="#{notificationView.selectedNotification}" />
+                                <h:outputText value="#{notification.text}, #{notification.timestamp}" />
+                            </p:commandLink>
+                                <h:outputText value="#{notification.text}, #{notification.timestamp}" style="display:inline-block"/>
+                        </p:dataList>
+                        </h:panelGrid>
+
+
+                        <p:dialog widgetVar="eventDialog" showEffect="clip" hideEffect="clip" resizable="false" style="" >
+                            <div id="not_container">
+                                <div id="not_header">
+                                    <h1>Event details</h1>
+                                </div>
+                                <h:panelGrid id="eventDetails" columns="1" style="text-align: left; margin-bottom: 10px;">
+                                    <h:panelGrid columns="2">
+                                        <div>
+                                            <span style="color: white; font-family: Comic Sans MS; font-size: 18px; float: left; margin-left: 10px; margin-top: 10px;">
+                                                <b>Name:</b>
+                                                #{notificationView.selectedNotification.event.name}
+                                                <br /><br />
+                                                <b>Privacy:</b>
+                                                #{notificationView.selectedNotification.event.privateString}
+                                                <br /><br />
+                                                <b>Indoor:</b>
+                                                #{notificationView.selectedNotification.event.indoorString}
+                                                <br /><br />
+                                                <b>Start time:</b>
+                                                #{notificationView.selectedNotification.event.starttime}
+                                                <br /><br />
+                                                <b>End time:</b>
+                                                #{notificationView.selectedNotification.event.endtime}
+                                                <br /><br />
+                                                <b>Place:</b>
+                                                #{notificationView.selectedNotification.event.place}
+                                                <br /><br />
+                                                <b>Description:</b>
+                                                <div style="width: 450px; overflow-y: scroll">
+                                                    <p>#{notificationView.selectedNotification.event.description}</p>
+                                                </div>
+                                                <b>Weather:</b>
+                                            </span>
+                                        </div>
+                                        <h:panelGrid columns="1" style="margin-left: 35px; background: none">
+                                            <div id="organizer_container">
+                                                <div id="organizer_header">
+                                                    <h1>Organizer</h1>
+                                                </div>
+                                                <p:panelGrid columns="2">
+                                                    <f:facet name="header">
+                                                        <a href="#{notificationView.resultUrl()}">
+                                                            <p:graphicImage id="avatarImg" value="#{notificationView.userAvatar}" cache="false" style="width:250px; height:250px;">
+                                                            <f:param name="id" value="#{notificationView.selectedNotification.event.owner.email}" />
+                                                        </p:graphicImage>
+                                                        </a>
+                                                    </f:facet>
+
+                                                    <h:outputText value="Name:" />
+                                                    <h:outputText value="#{notificationView.selectedNotification.event.owner.name}" />
+
+                                                    <h:outputText value="Surname:" />
+                                                    <h:outputText value="#{notificationView.selectedNotification.event.owner.surname}" />
+
+                                                    <h:outputText value="Email:" />
+                                                    <h:outputText value="#{notificationView.selectedNotification.event.owner.email}" />
+
+                                                    <h:outputText value="Phone:" />
+                                                    <h:outputText value="#{notificationView.selectedNotification.event.owner.phone}" />
+                                                </p:panelGrid>
+                                            </div>
+                                        </h:panelGrid>
+                                    </h:panelGrid>
+                                    <h:form id="modifyForm" style="margin-top: 10px; float: left; margin-left: 320px; margin-bottom: 10px;">
+                                        <p:commandButton id="submit" value="Accept" disabled="#{!scheduleView.isInTheParticipantsList(ub.currentUser, notificationView.selectedNotification.event)}" style="width: 200px; margin-top: 10px; margin-bottom: 10px; border:0; box-shadow:0px 2px 5px #000000; 
+                                                         float: left; background: #6cb364; color: white; font-family: Comic Sans MS;"
+                                                         action="#{eb.acceptInvitation(notificationView.selectedNotification.event, ub.currentUser)}"/>
+                                    </h:form>
+                                </h:panelGrid>
                             </div>
-                            <h:panelGrid id="eventDetails" columns="2" style="text-align: left;">
-                                <span style="color: white; font-family: Comic Sans MS; font-size: 18px; float: left; margin-left: 10px; margin-top: 10px;">
-                                    <b>Name:</b>
-                                    #{notificationView.selectedNotification.event.name}
-                                    <br /><br />
-                                    <b>Privacy:</b>
-                                    #{notificationView.selectedNotification.event.privateString}
-                                    <br /><br />
-                                    <b>Indoor:</b>
-                                    #{notificationView.selectedNotification.event.indoorString}
-                                    <br /><br />
-                                    <b>Start time:</b>
-                                    #{notificationView.selectedNotification.event.starttime}
-                                    <br /><br />
-                                    <b>End time:</b>
-                                    #{notificationView.selectedNotification.event.endtime}
-                                    <br /><br />
-                                    <b>Place:</b>
-                                    #{notificationView.selectedNotification.event.place}
-                                    <br /><br />
-                                    <b>Description:</b>
-                                    <div style="width: 750px; overflow-y: scroll">
-                                        <p>#{notificationView.selectedNotification.event.description}</p>
-                                    </div>
-                                    <b>Weather:</b>
-                                </span>
-                            </h:panelGrid>
-                        </div>
-                        
-                        
-                        <h:form id="modifyForm" style="margin-top: 10px;">
-                            <p:commandButton id="submit" value="Accept" disabled="#{!scheduleView.isInTheParticipantsList(ub.currentUser, notificationView.selectedNotification.event)}" style="width: 358px; margin-top: 10px; border:0; box-shadow:0px 2px 5px #000000; 
-                                             float: left; background: #6cb364; color: white; font-family: Comic Sans MS;"
-                                             action="#{eb.acceptInvitation(notificationView.selectedNotification.event, ub.currentUser)}"/>
-                        </h:form>
-                    </p:dialog>
-                        
-                        </h:form>
-                    
-                    
-                    
-                    
+                        </p:dialog>
+                    </h:form>
                 </div>
             </div>
         </div>
