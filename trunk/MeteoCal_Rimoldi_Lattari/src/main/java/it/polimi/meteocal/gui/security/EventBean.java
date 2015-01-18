@@ -92,6 +92,14 @@ public class EventBean {
         return "calendar_page?feces-redirect=true";
     }
     
+    
+    public String deleteEvent(Event eventToBeDeleted) {
+        nm.createEventDeletedNotification(eventToBeDeleted.getUserCollection(), eventToBeDeleted.getIdevent());
+        nm.removeEveryReletedNotification(eventToBeDeleted.getIdevent());
+        em.deleteEvent(eventToBeDeleted);
+        return "calendar_page?feces-redirect=true";
+    }
+    
     public void addGuest(User user) {
         this.guests.add(user);
     }
