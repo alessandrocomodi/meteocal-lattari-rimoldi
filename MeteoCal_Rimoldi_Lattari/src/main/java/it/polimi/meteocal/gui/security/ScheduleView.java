@@ -104,6 +104,9 @@ public class ScheduleView implements Serializable{
             } else {
                 name = e.getName();
             }
+            if (e.getOwner().getEmail().equals(um.getLoggedUser().getEmail())) {
+                name = e.getName();
+            }
             System.out.println(e.getStarttime().toString());
             eventModel.addEvent(new DefaultScheduleEvent(name, getDate(e.getStarttime()), getDate(e.getEndtime()), e.getIdevent()));
         }
@@ -143,7 +146,7 @@ public class ScheduleView implements Serializable{
         event = (ScheduleEvent) selectEvent.getObject();
         System.out.println(event.getData().getClass().toString());
         this.selectedEvent = em.find(event.getData());
-        if (selectedEvent.getPrivate1()) {
+        if (selectedEvent.getPrivate1() && !selectedEvent.getOwner().getEmail().equals(um.getLoggedUser().getEmail())) {
             selectedEvent.setName("---");
             selectedEvent.setDescription("---");
             selectedEvent.setPlace("---");
