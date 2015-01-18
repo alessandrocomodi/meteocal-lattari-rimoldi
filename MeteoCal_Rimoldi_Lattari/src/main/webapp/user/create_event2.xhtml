@@ -107,7 +107,7 @@
                                 <f:selectItem itemLabel="Indoor" itemValue="#{true}" />
                                 <f:selectItem itemLabel="Outdoor" itemValue="#{false}" />
                             </p:selectOneRadio>
-                            
+                            <h:outputLabel for="searchUser">Invite other users (search by email)</h:outputLabel>
                             <p:autoComplete id="searchUser"  value="#{inviteBean.selectedUsers}" style=""
                                             completeMethod="#{inviteBean.suggestUsers}" 
                                 var="user" 
