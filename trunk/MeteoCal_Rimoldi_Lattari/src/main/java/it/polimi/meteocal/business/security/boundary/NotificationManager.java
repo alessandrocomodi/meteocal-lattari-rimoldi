@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.faces.bean.ManagedProperty;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -26,8 +27,6 @@ public class NotificationManager {
     @PersistenceContext
     private EntityManager em;
     
-
-
     
     public void create(Notification entity) {
         em.persist(entity);
@@ -48,7 +47,8 @@ public class NotificationManager {
     }
 
     public void remove(Notification entity) {
-        em.remove(em.merge(entity));
+        Notification temp = em.find(Notification.class, entity.getIdnotification());
+        em.remove(em.merge(temp));
     }
     
     public List<Notification> getLastInvitation(Integer idevent) {
@@ -77,9 +77,13 @@ public class NotificationManager {
         Calendar cal = Calendar.getInstance();
         notification.setTimestamp(cal.getTime());
         System.out.println(cal.getTime());
-        notification.setText("The event was deleted");
+        notification.setText("The event: " + event2.getName() + " in date: " + event2.getStarttime() + " was deleted");
         notification.setUserCollection(userCollection);
         em.persist(notification);
+        for(User u : userCollection){
+            u.getNotificationCollection().add(notification);
+            em.merge(u);
+        }
     }
 
     public void removeEveryReletedNotification(Integer idevent) {
@@ -88,6 +92,10 @@ public class NotificationManager {
         List<Notification> results = new ArrayList<>();
         results.addAll(query.getResultList());
         for (Notification n : results) {
+            for(User u : n.getUserCollection()){
+                u.getNotificationCollection().remove(n);
+                em.merge(u);
+            }
             this.remove(n);
         }
     }

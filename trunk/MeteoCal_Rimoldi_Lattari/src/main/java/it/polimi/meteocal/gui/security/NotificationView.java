@@ -52,8 +52,7 @@ public class NotificationView implements Serializable{
         this.selectedNotification = selectedNotification;
     }
     
-    @PostConstruct
-    public void init() {
+    public void updateView(){
         this.myNotifications = getOwnNotifications();
     }
     
@@ -66,7 +65,7 @@ public class NotificationView implements Serializable{
     private List<Notification> getOwnNotifications() {
         return getCurrentUser().getNotificationCollection();
     }
-
+    
     private User getCurrentUser() {
         return um.getLoggedUser();
     }
