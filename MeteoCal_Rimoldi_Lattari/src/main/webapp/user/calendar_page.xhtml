@@ -109,10 +109,16 @@
                                         </div>
                                     </h:panelGrid>
                                 </h:panelGrid>
+                                <h:panelGrid columns="2">
                                 <h:form id="modifyForm" style="margin-top: 10px;">
                                     <p:commandButton value="Modify event" rendered="#{scheduleView.isTheOwner(ub.currentUser, scheduleView.selectedEvent)}" action="#{scheduleView.resultUrl()}" style=" border:0; box-shadow:0px 2px 5px #000000; 
-                                      float: left; margin-bottom: 10px; margin-left: 320px; margin-top: 10px; background: #6cb364; color: white; font-family: Comic Sans MS;" />
+                                      float: left; margin-bottom: 10px; margin-left: 10px; margin-top: 10px; background: #6cb364; color: white; font-family: Comic Sans MS;" />
                                 </h:form>
+                                <h:form id="cancelForm" style="margin-top: 10px;">
+                                    <p:commandButton value="Cancel event" rendered="#{scheduleView.isTheOwner(ub.currentUser, scheduleView.selectedEvent)}" action="#{eventBean.deleteEvent(scheduleView.selectedEvent)}" style=" border:0; box-shadow:0px 2px 5px #000000; 
+                                      float: left; margin-bottom: 10px; margin-left: 10px; margin-top: 10px; background: #6cb364; color: white; font-family: Comic Sans MS;" />
+                                </h:form>
+                                </h:panelGrid>
                             </h:panelGrid>
                         </div>
                     </p:dialog>

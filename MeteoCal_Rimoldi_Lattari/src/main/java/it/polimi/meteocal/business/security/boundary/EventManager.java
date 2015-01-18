@@ -78,4 +78,11 @@ public class EventManager {
         u.getEventCollection().add(e);
         em.merge(u);
     }
+
+    public void deleteEvent(Event eventToBeDeleted) {
+        Event e = find(eventToBeDeleted.getIdevent());
+        if (e!=null) {
+            em.remove(e);
+        }
+    }
 }

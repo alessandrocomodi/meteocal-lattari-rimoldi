@@ -68,4 +68,27 @@ public class NotificationManager {
         cq.select(cq.from(Notification.class));
         return em.createQuery(cq).getResultList();
     }
+
+    public void createEventDeletedNotification(List<User> userCollection, Integer event) {
+        Notification notification = new Notification();
+        Event event2 = em.find(Event.class, event);
+        notification.setSender(event2.getOwner());
+        notification.setType("DELETION");
+        Calendar cal = Calendar.getInstance();
+        notification.setTimestamp(cal.getTime());
+        System.out.println(cal.getTime());
+        notification.setText("The event was deleted");
+        notification.setUserCollection(userCollection);
+        em.persist(notification);
+    }
+
+    public void removeEveryReletedNotification(Integer idevent) {
+        Query query = em.createNamedQuery("Notification.findByEvent");
+        query.setParameter("idevent", idevent);
+        List<Notification> results = new ArrayList<>();
+        results.addAll(query.getResultList());
+        for (Notification n : results) {
+            this.remove(n);
+        }
+    }
 }
