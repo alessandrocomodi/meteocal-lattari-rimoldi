@@ -167,7 +167,7 @@ public class WeatherBean {
             
             //lista dei dati
             weatherForecast.add(day + "$" + code + "$" + name + "$" + min + "$" + max);
-            weatherConditions.add("Day: " + day + "\n" + "Condition: " + name + "\n" + "Temp. min: "+  min + "\n" + "Temp. max: " + max);
+            weatherConditions.add("Day: " + day + " Cond: " + name + " Min: "+  min + " Max: " + max);
         }
         
         //prova di output
