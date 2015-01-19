@@ -139,7 +139,7 @@ public class ModificationBean implements Serializable{
     }
     
     public String update() throws IOException {
-        um.update(this.getCurrentUser(),user,file);
+        um.update(this.getCurrentUser(),user,file.getInputstream());
         return "user_home3?faces-redirect=true";
     }
     
