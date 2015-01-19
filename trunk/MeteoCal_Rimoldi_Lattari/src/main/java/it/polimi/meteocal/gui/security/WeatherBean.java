@@ -5,67 +5,63 @@
  */
 package it.polimi.meteocal.gui.security;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.StringReader;
 import java.net.MalformedURLException;
 import java.net.URL;
-import javax.inject.Named;
 import javax.enterprise.context.Dependent;
 import javax.faces.bean.ManagedBean;
-import javax.swing.text.Document;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import org.glassfish.grizzly.InputSource;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
 
 /**
  *
  * @author Francesco
  */
 @ManagedBean
-@Named(value = "wb")
 @Dependent
 public class WeatherBean {
 
     private String conditions;
 
-    /**
-     * Get the value of conditions
-     *
-     * @return the value of conditions
-     */
+    private String lat2;
+    
+    private String lon2;
+
+    public String getLon2() {
+        return lon2;
+    }
+
+    public void setLon2(String lon2) {
+        this.lon2 = lon2;
+    }
+
+
+    public String getLat2() {
+        return lat2;
+    }
+
+    public void setLat2(String lat2) {
+        this.lat2 = lat2;
+    }
+
+    
     public String getConditions() {
         return conditions;
     }
 
-    /**
-     * Set the value of conditions
-     *
-     * @param conditions new value of conditions
-     */
     public void setConditions(String conditions) {
         this.conditions = conditions;
     }
 
-    
     private double lon;
 
-    /**
-     * Get the value of lon
-     *
-     * @return the value of lon
-     */
     public double getLon() {
         return lon;
     }
 
-    /**
-     * Set the value of lon
-     *
-     * @param lon new value of lon
-     */
     public void setLon(double lon) {
         this.lon = lon;
     }
@@ -98,18 +94,19 @@ public class WeatherBean {
     public WeatherBean() {
     }
     
-    public void retrieveConditions() throws MalformedURLException, IOException, ParserConfigurationException {
-        
-        URL oracle = new URL("http://api.openweathermap.org/data/2.5/forecast?q=London&mode=xml&units=metric&cnt=7&APPID=717e3c2ca6c7dfd9a18b4b25d27555af");
-        BufferedReader in = new BufferedReader(
-        new InputStreamReader(oracle.openStream()));
-        
-        StringBuilder sb = new StringBuilder();
-        String inputLine;
-        
-        while ((inputLine = in.readLine()) != null)
-                System.err.println(inputLine);
-        in.close();
+    public void retrieveConditions() throws ParserConfigurationException, MalformedURLException, SAXException, IOException {
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        DocumentBuilder db = dbf.newDocumentBuilder();
+
+        URL oracle2 = new URL("http://api.openweathermap.org/data/2.5/forecast/daily?lat=" + lat2 + "&lon=" + lon2 + "&mode=xml&units=metric&cnt=16&APPID=717e3c2ca6c7dfd9a18b4b25d27555af");
+
+        Document doc = db.parse(oracle2.openStream());
+
+        doc.getDocumentElement().normalize();
+
+        System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+
+        conditions = doc.getDocumentElement().getNodeName();
     }
     
 }
