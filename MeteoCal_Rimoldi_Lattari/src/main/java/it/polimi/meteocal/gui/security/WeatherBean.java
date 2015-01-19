@@ -8,12 +8,17 @@ package it.polimi.meteocal.gui.security;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import javax.enterprise.context.Dependent;
 import javax.faces.bean.ManagedBean;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 /**
@@ -104,9 +109,63 @@ public class WeatherBean {
 
         doc.getDocumentElement().normalize();
 
-        System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+        //liste di nodi contenenti gli elementi di interesse
+        NodeList dataNodeList = doc.getElementsByTagName("time");
+        NodeList weatherNodeList = doc.getElementsByTagName("symbol");
+        NodeList tempNodeList = doc.getElementsByTagName("temperature");
+        
+        //Lista che conterrà tutti i dati, per ogni cella ci sarà una sequenza day code name min max separati da $
+        List<String> weatherForecast = new ArrayList();
+        String day = "";
+        String code = "";
+        String name = "";
+        String min = "";
+        String max = "";
+        
+        //tanto la lunghezza delle liste di nodi è sempre la stessa: 16
+        for (int i = 0; i < dataNodeList.getLength(); i++) {
+            
+            
+            //prima la data
+            Node nNode1 = dataNodeList.item(i);
+            if (nNode1.getNodeType() == Node.ELEMENT_NODE) {
+                Element element = (Element) nNode1;
+                //salvo il dato
+                day = element.getAttribute("day");
+            }
+            
+            //poi il meteo
+            Node nNode2 = weatherNodeList.item(i);
+            if (nNode2.getNodeType() == Node.ELEMENT_NODE) {
+                Element element = (Element) nNode2;
+                //salvo i dati
+                code = element.getAttribute("number");
+                name = element.getAttribute("name");
+            }
+            
+            //infine la temperatura
+            Node nNode3 = tempNodeList.item(i);
+            
+            if (nNode3.getNodeType() == Node.ELEMENT_NODE) {
+                Element element = (Element) nNode3;
+                //salvo i dati
+                min = element.getAttribute("min");
+                max = element.getAttribute("max");
+            }
+            
+            //lista dei dati
+            weatherForecast.add(day + "$" + code + "$" + name + "$" + min + "$" + max);
+        }
+        
+        //prova di output
+        for (String s : weatherForecast) {
+            System.out.println(s);
+        }
+        
+        
+        
 
-        conditions = doc.getDocumentElement().getNodeName();
+        conditions = weatherForecast.toString();
     }
     
 }
