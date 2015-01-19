@@ -9,7 +9,7 @@
 <link href="../css/modify_account.css" rel="stylesheet" type="text/css" />
 </h:head>
 
-<h:body style="background-color:#81a4c7">
+    <h:body style="background-color:#81a4c7" onload="#{modificationBean.initialize()}">
     <div id="wrap">
     	<div id="header">
             <a href="user_home3.xhtml"><img src="./../images/Logo.png" style="width:150px; height:150px;" /></a>
@@ -27,15 +27,15 @@
         <div id="central">
             <div id="image_div">
                 <h2 style="padding-top: 20px;">Your profile image</h2>
-                <p:graphicImage id="avatarImg" value="#{notificationView.userAvatar}" cache="false" style="width:250px; height:250px;">
-                </p:graphicImage>
-                <h:form enctype="multipart/form-data">
+                
+                <h:form id="imageForm">
+                    <p:graphicImage id="avatarImg" value="#{modificationBean.userAvatar}" cache="false" style="width:250px; height:250px;"/>
+                    <p:fileUpload fileUploadListener="#{modificationBean.uploadListener}" mode="advanced" dragDropSupport="false"
+                                  update="imageForm" fileLimit="1" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" styleClass="fileUploadClass" style="font-size: 18px; margin-left: 20px; margin-right: auto;" />
+
                     <p:growl id="messages" showDetail="true" />
-
-                    <p:fileUpload value="#{modificationBean.file}" mode="simple" />
-
-                    <p:commandButton value="Submit" ajax="false" actionListener="#{modificationBean.upload}" disabled="false" />
                 </h:form>
+                
             </div> 
             <div id="profile_area">
                 <div id="profile_container">

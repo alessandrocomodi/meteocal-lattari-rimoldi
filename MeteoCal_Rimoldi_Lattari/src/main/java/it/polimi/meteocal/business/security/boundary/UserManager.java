@@ -27,7 +27,9 @@ import javax.imageio.ImageIO;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
+import sun.misc.IOUtils;
 
 /**
  *
