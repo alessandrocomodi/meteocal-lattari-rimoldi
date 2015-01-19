@@ -41,10 +41,20 @@ public class UserBean{
     private StreamedContent genericUserAvatar;
 
     public StreamedContent getGenericUserAvatar() {
-        User u = getUserFromEmail(userEmail);
-        InputStream is = new ByteArrayInputStream(u.getAvatar());
-        genericUserAvatar = new DefaultStreamedContent(is, "image/png");
-        return genericUserAvatar;
+        return this.genericUserAvatar;
+    }
+    
+    //eventualmente da rivedere
+    public StreamedContent retriveGenericUserAvatar(String email) {
+        if (email == null) {
+            return genericUserAvatar = new DefaultStreamedContent();
+        }
+        do {
+            User u = getUserFromEmail(email);
+            InputStream is = new ByteArrayInputStream(u.getAvatar());
+            genericUserAvatar = new DefaultStreamedContent(is, "image/png");
+        } while ( genericUserAvatar == null );
+        return genericUserAvatar; 
     }
 
     public void setGenericUserAvatar(StreamedContent genericUserAvatar) {
