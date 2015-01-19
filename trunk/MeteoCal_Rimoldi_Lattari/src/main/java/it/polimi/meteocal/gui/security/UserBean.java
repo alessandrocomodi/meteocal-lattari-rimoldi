@@ -38,9 +38,20 @@ public class UserBean{
     
     private String userEmail;
 
-    
-    
     private byte[] img;
+    
+    private StreamedContent genericUserAvatar;
+
+    public StreamedContent getGenericUserAvatar() {
+        InputStream is = new ByteArrayInputStream(getUserFromEmail(userEmail).getAvatar());
+        genericUserAvatar = new DefaultStreamedContent(is, "image/png");
+        return genericUserAvatar;
+    }
+
+    public void setGenericUserAvatar(StreamedContent genericUserAvatar) {
+        this.genericUserAvatar = genericUserAvatar;
+    }
+
     
     public UserBean() {
     }
@@ -59,8 +70,7 @@ public class UserBean{
         } */
           InputStream is = new ByteArrayInputStream(getCurrentUser().getAvatar());
           StreamedContent image = new DefaultStreamedContent(is, "image/png");
-          return image;       
-         
+          return image;      
     }
     
     public String getPhoneNumber() {
