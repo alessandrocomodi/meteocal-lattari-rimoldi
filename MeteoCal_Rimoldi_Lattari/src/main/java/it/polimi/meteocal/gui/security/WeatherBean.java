@@ -34,6 +34,17 @@ public class WeatherBean {
     private String lat2;
     
     private String lon2;
+    
+    
+    private List<String> weatherConditions;
+
+    public List<String> getWeatherConditions() {
+        return weatherConditions;
+    }
+
+    public void setWeatherConditions(List<String> weatherConditions) {
+        this.weatherConditions = weatherConditions;
+    }
 
     public String getLon2() {
         return lon2;
@@ -116,6 +127,7 @@ public class WeatherBean {
         
         //Lista che conterrà tutti i dati, per ogni cella ci sarà una sequenza day code name min max separati da $
         List<String> weatherForecast = new ArrayList();
+        weatherConditions = new ArrayList();
         String day = "";
         String code = "";
         String name = "";
@@ -155,17 +167,13 @@ public class WeatherBean {
             
             //lista dei dati
             weatherForecast.add(day + "$" + code + "$" + name + "$" + min + "$" + max);
+            weatherConditions.add("Day: " + day + "\n" + "Condition: " + name + "\n" + "Temp. min: "+  min + "\n" + "Temp. max: " + max);
         }
         
         //prova di output
         for (String s : weatherForecast) {
             System.out.println(s);
         }
-        
-        
-        
-
-        conditions = weatherForecast.toString();
     }
     
 }
