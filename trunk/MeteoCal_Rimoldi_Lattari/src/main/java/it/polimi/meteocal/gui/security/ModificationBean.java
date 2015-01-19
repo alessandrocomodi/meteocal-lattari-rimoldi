@@ -11,7 +11,10 @@ import it.polimi.meteocal.business.security.boundary.UserManager;
 import it.polimi.meteocal.business.security.entity.User;
 import it.polimi.meteocal.entities.Event;
 import it.polimi.meteocal.entities.Notification;
+import java.awt.Image;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -22,7 +25,12 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
+import javax.imageio.ImageIO;
 import javax.inject.Named;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.CroppedImage;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
 /**
@@ -48,44 +56,54 @@ public class ModificationBean implements Serializable{
     private Event event;
 
     private String parameter;
+    
+    private StreamedContent userAvatar;
+    
+    private CroppedImage croppedImage;
+
+    public CroppedImage getCroppedImage() {
+        return croppedImage;
+    }
+
+    public void setCroppedImage(CroppedImage croppedImage) {
+        this.croppedImage = croppedImage;
+    }
+
+
+    public StreamedContent getUserAvatar() {
+        return userAvatar;
+    }
+    
+    public void crop(){
+        InputStream is = new ByteArrayInputStream(croppedImage.getBytes());
+        userAvatar = new DefaultStreamedContent(is, "image/png");
+    }
+
+    public void setUserAvatar(StreamedContent userAvatar) {
+        this.userAvatar = userAvatar;
+    }
+    
+    public void initialize(){
+        InputStream is = new ByteArrayInputStream(getCurrentUser().getAvatar());
+        userAvatar = new DefaultStreamedContent(is, "image/png");
+    }
 
     public void eventSet(){
         this.event = em.find(Integer.parseInt(parameter));
     }
     
-    /**
-     * Get the value of parameter
-     *
-     * @return the value of parameter
-     */
     public String getParameter() {
         return parameter;
     }
 
-    /**
-     * Set the value of parameter
-     *
-     * @param parameter new value of parameter
-     */
     public void setParameter(String parameter) {
         this.parameter = parameter;
     }
 
-    
-    /**
-     * Get the value of event
-     *
-     * @return the value of event
-     */
     public Event getEvent() {
         return event;
     }
 
-    /**
-     * Set the value of event
-     *
-     * @param event new value of event
-     */
     public void setEvent(Event event) {
         this.event = event;
     }
@@ -158,11 +176,26 @@ public class ModificationBean implements Serializable{
         return "calendar_page?faces-redirect=true";
     }
     
-      public void upload() {
+    public void upload() {
         if(file != null) {
             FacesMessage message = new FacesMessage("Succesful", file.getFileName() + " is uploaded.");
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
+    }
+    
+    public void uploadListener(FileUploadEvent event) throws IOException{
+        FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
+        System.out.println(event.getFile().getInputstream().toString());
+        file = event.getFile();
+        InputStream is = event.getFile().getInputstream();
+        userAvatar = new DefaultStreamedContent(is, "image/png");  
+        
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+    
+    public Image getImageFromBytes() throws IOException{
+        Image image = ImageIO.read(new ByteArrayInputStream(getCurrentUser().getAvatar()));
+        return image;
     }
     
     public User getCurrentUser(){

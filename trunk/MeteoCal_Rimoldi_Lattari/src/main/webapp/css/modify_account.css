@@ -9,6 +9,10 @@
 	position: relative;
 }
 
+.ui-fileupload .ui-progressbar{
+    width: 80px;
+}
+
 #header {
 	position:relative;
 	background-color:#336699;
