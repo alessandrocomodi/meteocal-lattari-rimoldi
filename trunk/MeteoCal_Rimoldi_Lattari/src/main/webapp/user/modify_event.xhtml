@@ -95,8 +95,6 @@
                             <h:form style="margin-top: 10px;"> 
                                 <p:growl id="messages" showDetail="true" life="2000" />
                                 <p:gmap id="gmap" widgetVar="map" center="41.381542, 2.122893" zoom="15" type="ROADMAP" style="width:358px; height:200px">
-                                    <p:ajax event="stateChange" listener="#{eventView.onStateChange}" update="messages" />
-                                    <p:ajax event="pointSelect" listener="#{eventView.onPointSelect}" update="messages" />
                                 </p:gmap>
                             </h:form>
                             <p:outputLabel for="privacy" value="Event privacy:" />

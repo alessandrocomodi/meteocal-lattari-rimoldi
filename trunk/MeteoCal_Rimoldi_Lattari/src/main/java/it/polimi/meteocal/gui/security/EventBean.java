@@ -97,7 +97,7 @@ public class EventBean {
         nm.removeEveryReletedNotification(eventToBeDeleted.getIdevent());
         nm.createEventDeletedNotification(eventToBeDeleted.getUserCollection(), eventToBeDeleted.getIdevent());
         em.deleteEvent(eventToBeDeleted);
-        return "calendar_page?feces-redirect=true";
+        return "user_home3?feces-redirect=true";
     }
     
     public void addGuest(User user) {

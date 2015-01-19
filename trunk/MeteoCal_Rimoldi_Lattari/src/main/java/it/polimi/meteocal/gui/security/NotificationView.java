@@ -89,4 +89,8 @@ public class NotificationView implements Serializable{
             return "user.xhtml?faces-redirect=true&user=g";
         }
     }
+    
+    public boolean showEventDeletedDetails() {
+        return selectedNotification.getEvent() != null;
+    }
 }
