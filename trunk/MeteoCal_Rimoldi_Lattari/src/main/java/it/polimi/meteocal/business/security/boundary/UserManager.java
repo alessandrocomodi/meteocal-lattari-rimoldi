@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -78,7 +79,13 @@ public class UserManager {
     }
     
     
-    public void update(User user, User us,UploadedFile file) {
+    public void update(User user, User us,InputStream file) throws IOException {
+        BufferedImage img = null;
+        img = ImageIO.read(file);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.write(img, "png", baos);
+        bytes = baos.toByteArray();
+        user.setAvatar(bytes);
         user.setName(us.getName());
         user.setSurname(us.getSurname());
         user.setPhone(us.getPhone());
