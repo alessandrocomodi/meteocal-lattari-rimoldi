@@ -22,6 +22,8 @@
                 var longitude = results[0].geometry.location.lng();
                 $('[id="#{p:component('latitude')}"]').val(latitude);
                 $('[id="#{p:component('longitude')}"]').val(longitude);
+                $('[id="#{p:component('latitudine')}"]').val(latitude);
+                $('[id="#{p:component('longitudine')}"]').val(longitude);
                 if(currentMarker === null){
                     currentMarker = new google.maps.Marker({
                             position:new google.maps.LatLng(latitude,longitude)
@@ -76,19 +78,16 @@
 
                             <h:outputLabel for="address">Location:</h:outputLabel>                            
                             <p:inputText id="address" value="#{eb.event.place}" style="width: 350px;" >
-                                <p:ajax  event="blur" update=":eventform:forecast" listener="#{wb.retrieveConditions()}" />
                             </p:inputText>
                             <p:message id="placemsg" for="address" />
                             <input type="button" onclick="GetLocation()" value="Confirm location" style="width: 358px; margin-top: 10px; margin-bottom: 10px; border:0; box-shadow:0px 2px 5px #000000; 
                                              float: left; background: #6cb364; color: white; font-size: 20px; font-family: Comic Sans MS;"/>
                             <h:outputLabel for="latitude">Latitude</h:outputLabel>
-                            <p:inputText id="latitude" disabled="true" value="#{wb.lat}"></p:inputText>
+                            <p:inputText id="latitude" disabled="true" binding="#{latInput}" value="#{weatherBean.lat}"></p:inputText>
                             <h:outputLabel for="latitude">Longitude</h:outputLabel>
-                            <p:inputText id="longitude" disabled="true" value="#{wb.lon}">
-                                <p:ajax event="change" update=":eventform:forecast" listener="#{wb.retrieveConditions()}"/>
-                                
+                            <p:inputText id="longitude" disabled="true" binding="#{lonInput}" value="#{weatherBean.lon}">
                             </p:inputText>
-                                <h:inputText id="forecast" value="#{weatherBean.conditions}" />
+                                <h:inputText id="forecast" value="#{weatherBean.conditions}"/>
                             <h:form style="margin-top: 10px;"> 
                                 <p:growl id="messages" showDetail="true" life="2000" />
                                 <p:gmap id="gmap" widgetVar="map" center="41.381542, 2.122893" zoom="15" type="ROADMAP" style="width:358px; height:200px">
@@ -133,7 +132,20 @@
             <div id="info">
                 <div id="meteo_info">
                     <h1>Wheather forecast</h1>
-                    
+                        <h:form id="eventcoorform" style="font-family: Comic Sans MS; color: #ffffff; font-size: 20px; margin-left: 35px;" >
+                            <h:panelGrid columns="1" id="coorGrid">
+                                <h:outputLabel for="latitudine" style="margin-left: 20px; ">Latitude</h:outputLabel>
+                                <p:inputText id="latitudine" value="#{weatherBean.lat2}" style="width:360px; float:left; margin-right: 10px; margin-left: 20px;" />
+                                <h:outputLabel for="longitudine" style="margin-left: 20px;">Longitude</h:outputLabel>
+                                <p:inputText  id="longitudine" value="#{weatherBean.lon2}" style="width:360px;  float:left; margin-right: 10px; margin-left: 20px;" />
+                                <br/>
+                                <p:commandButton value="Get weather conditions" action="#{weatherBean.retrieveConditions()}" update="coorGrid" style="width: 370px; border:0; box-shadow:0px 2px 5px #000000; 
+                                                 float: left; margin-left: 20px; background: #6cb364; color: white; font-family: Comic Sans MS;"
+                                                 />
+                                <h:outputLabel for="alreadyLogged" style="margin-left: 20px;">#{weatherBean.conditions}</h:outputLabel>
+                                <br />
+                            </h:panelGrid>
+                        </h:form>
                 </div>
             </div>
         </div>
