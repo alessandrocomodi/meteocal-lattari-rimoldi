@@ -38,12 +38,11 @@ public class UserBean{
     
     private String userEmail;
 
-    private byte[] img;
-    
     private StreamedContent genericUserAvatar;
 
     public StreamedContent getGenericUserAvatar() {
-        InputStream is = new ByteArrayInputStream(getUserFromEmail(userEmail).getAvatar());
+        User u = getUserFromEmail(userEmail);
+        InputStream is = new ByteArrayInputStream(u.getAvatar());
         genericUserAvatar = new DefaultStreamedContent(is, "image/png");
         return genericUserAvatar;
     }
@@ -53,8 +52,15 @@ public class UserBean{
     }
 
     
+    private byte[] img;
+    
+    
+
+    
     public UserBean() {
     }
+    
+    
     
     public StreamedContent getUserAvatar() {
 /*
