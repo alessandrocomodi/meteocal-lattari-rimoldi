@@ -50,7 +50,7 @@ public class UserManager {
     public void loadDefaultProfileImage() throws IOException {
         BufferedImage img = null;
         try {
-            img = ImageIO.read(new File("C:/Users/Alessandro/Documents/NetBeansProjects/MeteoCal_Rimoldi_Lattari/src/main/webapp/images/icon-user-default.png"));
+            img = ImageIO.read(new File("C:/Users/Francesco/Documents/NetBeansProjects/se2/MeteoCal_Rimoldi_Lattari/src/main/webapp/images/icon-user-default.png"));
         } catch (IOException e) {
             System.out.println("Non l'ho letto!");
         }
