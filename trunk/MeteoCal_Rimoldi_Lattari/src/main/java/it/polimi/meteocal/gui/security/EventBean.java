@@ -17,9 +17,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import javax.inject.Named;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -35,7 +34,7 @@ import org.xml.sax.SAXException;
  * @author Alessandro
  */
 @ManagedBean
-@RequestScoped
+@SessionScoped
 @Named("eb")
 public class EventBean {
     
@@ -54,6 +53,8 @@ public class EventBean {
     private List<User> guests;
     
     private String lat2;
+    
+    private List<String> weatherForecast;
 
     public String getLat2() {
         return lat2;
@@ -112,9 +113,9 @@ public class EventBean {
         this.event = event;
     }
     
-    public String createEvent(User user, List<User> invitedUsers) {
+    public String createEvent(User user, List<User> invitedUsers) throws ParserConfigurationException, SAXException, IOException {
         Integer id = 0;
-        System.out.println(this.getWeatherConditions());
+        System.out.println(this.getWeatherConditionsForEventDay());
         em.createEvent(event, user);
         List<Event> result = em.getEventOrganized(user.getEmail());
         for (Event e : result) {
@@ -152,7 +153,17 @@ public class EventBean {
     }
     
     private String getWeatherConditionsForEventDay() {
-        return null;
+        String[] parts = new String[5];
+        String eventDate = this.getFormattedTime();
+        for (String s : weatherForecast) {
+            if (s.contains(eventDate)) {
+                parts = s.split("$");
+            } else {
+                parts[1]= "No weather conditions available";
+            }
+        }
+        
+        return parts[1];
     }
     
     
@@ -193,7 +204,7 @@ public class EventBean {
         NodeList tempNodeList = doc.getElementsByTagName("temperature");
         
         //Lista che conterrà tutti i dati, per ogni cella ci sarà una sequenza day code name min max separati da $
-        List<String> weatherForecast = new ArrayList();
+        weatherForecast = new ArrayList();
         weatherConditions = new ArrayList();
         String day = "";
         String code = "";
