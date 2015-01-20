@@ -299,9 +299,25 @@ public class Event implements Serializable {
         return "it.polimi.meteocal.entities.Event[ idevent=" + idevent + " ]";
     }
     
+    public String retrieveMinTemp() {
+        String [] parts = weatherinfo.split(":");
+        return parts[3];
+    }
+    
+    public String retrieveMaxTemp() {
+        String [] parts = weatherinfo.split(":");
+        return parts[4];
+    }
+    
+    public String retrieveNameCondition() {
+        String [] parts = weatherinfo.split(":");
+        return parts[2];
+    }
+    
     public String retriveWeatherIconNumber() {
+        String [] parts = weatherinfo.split(":");
         int n;
-        n = Integer.parseInt(weatherinfo);
+        n = Integer.parseInt(parts[1]);
         boolean day;
         String icon = "";
 

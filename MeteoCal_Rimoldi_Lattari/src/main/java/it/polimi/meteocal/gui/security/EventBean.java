@@ -162,8 +162,7 @@ public class EventBean {
         List<String> iterateMe = this.retriveWeatherForecast(latitudine, longitudine);
         for (String s : iterateMe) {
             if (s.contains(eventDate)) {
-                String [] parts = s.split(":");
-                return parts[1];
+                return s;
             }
         }
         return "No weather conditions available";
