@@ -8,10 +8,12 @@ package it.polimi.meteocal.gui.security;
 import it.polimi.meteocal.business.security.boundary.UserManager;
 import it.polimi.meteocal.business.security.entity.User;
 import java.io.IOException;
+import java.io.InputStream;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -42,7 +44,8 @@ public class RegistrationBean {
     }
 
     public String register() throws IOException {
-        um.save(user);
+        InputStream iStream = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/images/icon-user-default.png");
+        um.save(user, iStream);
         return "home?faces-redirect=true";
     }
 

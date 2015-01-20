@@ -149,7 +149,8 @@ public class UserBean{
     }
      
     public void create() throws IOException {
-         um.save(newUser);
+        InputStream iStream = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/images/icon-user-default.png");
+        um.save(newUser, iStream);
     }
     
     public User getCurrentUser(){
