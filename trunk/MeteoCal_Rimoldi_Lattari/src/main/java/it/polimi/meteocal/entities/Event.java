@@ -93,6 +93,16 @@ public class Event implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "place")
     private String place;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
+    @Column(name = "lat")
+    private String lat;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
+    @Column(name = "lon")
+    private String lon;
     @ManyToMany(mappedBy = "eventCollection")
     private Collection<Calendar> calendarCollection;
     @JoinTable(name = "participants", joinColumns = {
@@ -149,6 +159,22 @@ public class Event implements Serializable {
             return "Yes";
         }
         return "No";
+    }
+    
+    public String getLat() {
+        return lat;
+    }
+
+    public void setLat(String lat) {
+        this.lat = lat;
+    }
+
+    public String getLon() {
+        return lon;
+    }
+
+    public void setLon(String lon) {
+        this.lon = lon;
     }
 
     public void setIndoor(boolean indoor) {

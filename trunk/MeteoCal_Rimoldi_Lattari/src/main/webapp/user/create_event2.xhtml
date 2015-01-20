@@ -23,6 +23,8 @@
                 var longitude = results[0].geometry.location.lng();
                 $('[id="#{p:component('latitudine')}"]').val(latitude);
                 $('[id="#{p:component('longitudine')}"]').val(longitude);
+                $('[id="#{p:component('latitudineSX')}"]').val(latitude);
+                $('[id="#{p:component('longitudineSX')}"]').val(longitude);
                 if(currentMarker === null){
                     currentMarker = new google.maps.Marker({
                             position:new google.maps.LatLng(latitude,longitude)
@@ -81,6 +83,12 @@
                             <p:message id="placemsg" for="address" />
                             <input type="button" onclick="GetLocation()" value="Confirm location" style="width: 358px; margin-top: 10px; margin-bottom: 10px; border:0; box-shadow:0px 2px 5px #000000; 
                                              float: left; background: #6cb364; color: white; font-size: 20px; font-family: Comic Sans MS;"/>
+                            
+                            <h:outputLabel for="latitude">Latitude</h:outputLabel>
+                            <p:inputText id="latitudineSX" value="#{eb.event.lat}"></p:inputText>
+                            <h:outputLabel for="latitude">Longitude</h:outputLabel>
+                            <p:inputText id="longitudineSX" value="#{eb.event.lon}"></p:inputText>
+                            
                             <h:form style="margin-top: 10px;"> 
                                 <p:growl id="messages" showDetail="true" life="2000" />
                                 <p:gmap id="gmap" widgetVar="map" center="41.381542, 2.122893" zoom="15" type="ROADMAP" style="width:358px; height:200px">
