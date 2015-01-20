@@ -300,21 +300,33 @@ public class Event implements Serializable {
     }
     
     public String retrieveMinTemp() {
+        if(weatherinfo.equals("No weather conditions available") || weatherinfo == null){
+            return "---";
+        }
         String [] parts = weatherinfo.split(":");
         return parts[3];
     }
     
     public String retrieveMaxTemp() {
+        if(weatherinfo.equals("No weather conditions available") || weatherinfo == null){
+            return "---";
+        }
         String [] parts = weatherinfo.split(":");
         return parts[4];
     }
     
     public String retrieveNameCondition() {
+        if(weatherinfo.equals("No weather conditions available") || weatherinfo == null){
+            return "---";
+        }
         String [] parts = weatherinfo.split(":");
         return parts[2];
     }
     
     public String retriveWeatherIconNumber() {
+        if(weatherinfo.equals("No weather conditions available") || weatherinfo == null){
+            return "01d.png";
+        }
         String [] parts = weatherinfo.split(":");
         int n;
         n = Integer.parseInt(parts[1]);
