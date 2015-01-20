@@ -54,33 +54,45 @@
                                 </div>
                                 <h:panelGrid id="eventDetails" columns="1" style="text-align: left; margin-bottom: 10px;">
                                     <h:panelGrid columns="2">
-                                        <div>
-                                            <span style="color: white; font-family: Comic Sans MS; font-size: 18px; float: left; margin-left: 10px; margin-top: 10px;">
-                                                <b>Name:</b>
-                                                #{notificationView.selectedNotification.event.name}
-                                                <br /><br />
-                                                <b>Privacy:</b>
-                                                #{notificationView.selectedNotification.event.privateString}
-                                                <br /><br />
-                                                <b>Indoor:</b>
-                                                #{notificationView.selectedNotification.event.indoorString}
-                                                <br /><br />
-                                                <b>Start time:</b>
-                                                #{notificationView.selectedNotification.event.starttime}
-                                                <br /><br />
-                                                <b>End time:</b>
-                                                #{notificationView.selectedNotification.event.endtime}
-                                                <br /><br />
-                                                <b>Place:</b>
-                                                #{notificationView.selectedNotification.event.place}
-                                                <br /><br />
-                                                <b>Description:</b>
-                                                <div style="width: 450px; overflow-y: scroll">
-                                                    <p>#{notificationView.selectedNotification.event.description}</p>
-                                                </div>
-                                                <b>Weather:</b>
-                                            </span>
-                                        </div>
+                                        <h:panelGrid columns="1">
+                                            <div>
+                                                <span style="color: white; font-family: Comic Sans MS; font-size: 18px; float: left; margin-left: 10px; margin-top: 10px;">
+                                                    <b>Name:</b>
+                                                    #{notificationView.selectedNotification.event.name}
+                                                    <br /><br />
+                                                    <b>Privacy:</b>
+                                                    #{notificationView.selectedNotification.event.privateString}
+                                                    <br /><br />
+                                                    <b>Indoor:</b>
+                                                    #{notificationView.selectedNotification.event.indoorString}
+                                                    <br /><br />
+                                                    <b>Start time:</b>
+                                                    #{notificationView.selectedNotification.event.starttime}
+                                                    <br /><br />
+                                                    <b>End time:</b>
+                                                    #{notificationView.selectedNotification.event.endtime}
+                                                    <br /><br />
+                                                    <b>Place:</b>
+                                                    #{notificationView.selectedNotification.event.place}
+                                                    <br /><br />
+                                                    <b>Description:</b>
+                                                    <div style="width: 450px; overflow-y: scroll">
+                                                        <p>#{notificationView.selectedNotification.event.description}</p>
+                                                    </div>
+                                                    <b>Weather:</b>
+                                                    <p:graphicImage id="weatherIcon" value="http://openweathermap.org/img/w/#{notificationView.selectedNotification.event.retriveWeatherIconNumber()}" style="float: left; margin-left: 20px;"/>
+                                                        <span style="color: white; font-family: Comic Sans MS; font-size: 18px; float: left; margin-left: 10px;">
+                                                            <b>#{notificationView.selectedNotification.event.retrieveNameCondition()}</b>
+                                                        <br />
+                                                        <b>Min. Temperature:</b>
+                                                        #{notificationView.selectedNotification.event.retrieveMinTemp()}
+                                                        <br />
+                                                        <b>Max. Temperature:</b>
+                                                        #{notificationView.selectedNotification.event.retrieveMaxTemp()}
+                                                        </span>
+                                                </span>
+                                            </div>
+                                        </h:panelGrid>
                                         <h:panelGrid columns="1" style="margin-left: 35px; background: none">
                                             <div id="organizer_container">
                                                 <div id="organizer_header">
