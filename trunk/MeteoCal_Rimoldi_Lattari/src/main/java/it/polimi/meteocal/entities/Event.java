@@ -299,4 +299,91 @@ public class Event implements Serializable {
         return "it.polimi.meteocal.entities.Event[ idevent=" + idevent + " ]";
     }
     
+    public String retriveWeatherIconNumber() {
+        int n;
+        n = Integer.parseInt(weatherinfo);
+        boolean day;
+        String icon = "";
+
+        //controllo se l'evento inizia di giorno o di notte
+        if (starttime.getHours() > 17 || starttime.getHours() < 5) {
+        day = false;
+        } else {
+        day = true;
+        }
+
+        //identifico la giusta icona
+        if (n == 800) {
+        if (day) {
+        icon = "01d.png";
+        } else {
+        icon = "01n.png"; 
+        }
+        }
+        if (n == 801) {
+        if (day) {
+        icon = "02d.png";
+        } else {
+        icon = "02n.png"; 
+        }
+        }
+        if (n == 802) {
+        if (day) {
+        icon = "03d.png";
+        } else {
+        icon = "03n.png"; 
+        }
+        }
+        if (n == 803 || n == 804) {
+        if (day) {
+        icon = "04d.png";
+        } else {
+        icon = "04n.png"; 
+        }
+        }
+        if (n >= 300 && n <= 321) {
+        if (day) {
+        icon = "09d.png";
+        } else {
+        icon = "09n.png"; 
+        }
+        }
+        if (n >= 500 && n <= 504) {
+        if (day) {
+        icon = "10d.png";
+        } else {
+        icon = "10n.png"; 
+        }
+        }
+        if (n >= 200 && n <= 232) {
+        if (day) {
+        icon = "11d.png";
+        } else {
+        icon = "11n.png"; 
+        }
+        }
+        if (n == 511 || n >= 600 && n <= 622) {
+        if (day) {
+        icon = "13d.png";
+        } else {
+        icon = "13n.png"; 
+        }
+        }
+        if (n >= 701 && n <= 781) {
+        if (day) {
+        icon = "50d.png";
+        } else {
+        icon = "50n.png"; 
+        }
+        }
+        if (n >= 900 && n <= 962) {
+        if (day) {
+        icon = "11d.png";
+        } else {
+        icon = "11n.png"; 
+        }
+        }
+        return icon;
+    }
+    
 }

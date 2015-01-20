@@ -53,34 +53,36 @@
                             </div>
                             <h:panelGrid id="eventDetails" columns="1" style="text-align: left; ">
                                 <h:panelGrid columns="2">
-                                    <div>
-                                        <span style="color: white; font-family: Comic Sans MS; font-size: 18px; float: left; margin-left: 10px; margin-top: 10px;">
-                                            <b>Name:</b>
-                                            #{scheduleView.selectedEvent.name}
-                                            <br /><br />
-                                            <b>Privacy:</b>
-                                            #{scheduleView.selectedEvent.getPrivateString()}
-                                            <br /><br />
-                                            <b>Indoor:</b>
-                                            #{scheduleView.selectedEvent.getIndoorString()}
-                                            <br /><br />
-                                            <b>Start time:</b>
-                                            #{scheduleView.selectedEvent.starttime}
-                                            <br /><br />
-                                            <b>End time:</b>
-                                            #{scheduleView.selectedEvent.endtime}
-                                            <br /><br />
-                                            <b>Place:</b>
-                                            #{scheduleView.selectedEvent.place}
-                                            <br /><br />
-                                            <b>Description:</b>
-                                            <div style="width: 450px; overflow-y: auto;">
-                                                <p >#{scheduleView.selectedEvent.description}</p>
-                                            </div>
-                                            <b>Weather:</b>
-                                            #{scheduleView.selectedEvent.weatherinfo}
-                                        </span>
-                                    </div>
+                                    <h:panelGrid columns="1">
+                                        <div>
+                                            <span style="color: white; font-family: Comic Sans MS; font-size: 18px; float: left; margin-left: 10px; margin-top: 10px;">
+                                                <b>Name:</b>
+                                                #{scheduleView.selectedEvent.name}
+                                                <br /><br />
+                                                <b>Privacy:</b>
+                                                #{scheduleView.selectedEvent.getPrivateString()}
+                                                <br /><br />
+                                                <b>Indoor:</b>
+                                                #{scheduleView.selectedEvent.getIndoorString()}
+                                                <br /><br />
+                                                <b>Start time:</b>
+                                                #{scheduleView.selectedEvent.starttime}
+                                                <br /><br />
+                                                <b>End time:</b>
+                                                #{scheduleView.selectedEvent.endtime}
+                                                <br /><br />
+                                                <b>Place:</b>
+                                                #{scheduleView.selectedEvent.place}
+                                                <br /><br />
+                                                <b>Description:</b>
+                                                <div style="width: 450px; overflow-y: auto;">
+                                                    <p >#{scheduleView.selectedEvent.description}</p>
+                                                </div>
+                                                <b>Weather:</b>
+                                                    <p:graphicImage id="weatherIcon" value="http://openweathermap.org/img/w/#{scheduleView.selectedEvent.retriveWeatherIconNumber()}" style="float: left;"/>
+                                            </span>
+                                        </div>
+                                    </h:panelGrid>
                                     <h:panelGrid columns="1" style="margin-left: 35px; background: none">
                                         <div id="organizer_container">
                                             <div id="organizer_header">
