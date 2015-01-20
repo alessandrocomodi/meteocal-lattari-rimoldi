@@ -324,9 +324,6 @@ public class Event implements Serializable {
     }
     
     public String retriveWeatherIconNumber() {
-        if(weatherinfo.equals("No weather conditions available") || weatherinfo == null){
-            return "01d.png";
-        }
         String [] parts = weatherinfo.split(":");
         int n;
         n = Integer.parseInt(parts[1]);

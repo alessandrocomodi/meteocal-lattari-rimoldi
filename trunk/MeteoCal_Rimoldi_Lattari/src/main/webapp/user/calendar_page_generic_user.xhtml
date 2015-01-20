@@ -75,7 +75,7 @@
                                                     <p >#{scheduleView.selectedEvent.description}</p>
                                                 </div>
                                                 <b>Weather:</b>
-                                                    <p:graphicImage id="weatherIcon" value="http://openweathermap.org/img/w/#{scheduleView.selectedEvent.retriveWeatherIconNumber()}" style="float: left; margin-left: 20px;"/>
+                                                <p:graphicImage id="weatherIcon" value="#{scheduleView.retrieveCorrectUrl(scheduleView.selectedEvent)}" style="float: left; margin-left: 20px;"/>
                                                     <span style="color: white; font-family: Comic Sans MS; font-size: 18px; float: left; margin-left: 10px;">
                                                         <b>#{scheduleView.selectedEvent.retrieveNameCondition()}</b>
                                                         <br />

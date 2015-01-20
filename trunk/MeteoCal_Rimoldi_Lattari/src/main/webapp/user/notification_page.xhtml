@@ -80,7 +80,7 @@
                                                         <p>#{notificationView.selectedNotification.event.description}</p>
                                                     </div>
                                                     <b>Weather:</b>
-                                                    <p:graphicImage id="weatherIcon" value="http://openweathermap.org/img/w/#{notificationView.selectedNotification.event.retriveWeatherIconNumber()}" style="float: left; margin-left: 20px;"/>
+                                                    <p:graphicImage id="weatherIcon" value="#{notificationView.retrieveCorrectUrl(notificationView.selectedNotification.event)}" style="float: left; margin-left: 20px;"/>
                                                         <span style="color: white; font-family: Comic Sans MS; font-size: 18px; float: left; margin-left: 10px;">
                                                             <b>#{notificationView.selectedNotification.event.retrieveNameCondition()}</b>
                                                         <br />

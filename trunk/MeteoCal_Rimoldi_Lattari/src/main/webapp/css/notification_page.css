@@ -76,6 +76,8 @@
 	margin-left:auto;
         margin-right: auto;
 	width: 800px;
+        height: 600px;
+        overflow-y: auto;
         text-align: center;
 }
 

@@ -20,7 +20,7 @@
             <div id="info">
                 <p style="padding-top:110px;">Meteocal is a new weather based online calendar for helping people scheduling their personal events avoiding bad weather conditions in case of outdoor 		                activities.</p>
                 <h2>Not yet registered?</h2>
-                <p:link outcome="/registration.xhtml" value="Register now"/>
+                <p:link outcome="/registration.xhtml" value="Register now" disabled="#{!loginBean.logged}"/>
             </div>
             <div id="login_area">
                 <div id="login_container">
