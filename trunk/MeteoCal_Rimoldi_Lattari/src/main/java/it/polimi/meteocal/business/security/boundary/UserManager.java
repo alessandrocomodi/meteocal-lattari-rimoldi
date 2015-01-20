@@ -47,10 +47,10 @@ public class UserManager {
     
     byte[] bytes;
     
-    public void loadDefaultProfileImage() throws IOException {
+    public void loadDefaultProfileImage(InputStream is) throws IOException {
         BufferedImage img = null;
         try {
-            img = ImageIO.read(new File("C:/Users/Alessandro/Documents/NetBeansProjects/MeteoCal_Rimoldi_Lattari/src/main/webapp/images/icon-user-default.png"));
+            img = ImageIO.read(is);
         } catch (IOException e) {
             System.out.println("Non l'ho letto!");
         }
@@ -59,7 +59,7 @@ public class UserManager {
         bytes = baos.toByteArray();
     }
 
-    public void save(User user) throws IOException {
+    public void save(User user, InputStream is) throws IOException {
         user.setCalendar(new Calendar(user.getPrivacy()));
         List<Event> eventOrganized = new ArrayList<Event>();
         //al momento generano eccezioni, ma andranno messi prima o poi questi comandi
@@ -70,7 +70,7 @@ public class UserManager {
 //        user.setNotificationCollection1(notificationCollection1);
 //        user.setEventCollection(eventCollection);
         user.setEventOrganized(eventOrganized);
-        this.loadDefaultProfileImage();
+        this.loadDefaultProfileImage(is);
         user.setAvatar(bytes);
         user.setGroupName(Group.USERS);
         user.getCalendar().setUser(user);
