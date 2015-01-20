@@ -241,4 +241,11 @@ public class ScheduleView implements Serializable{
         return event.getOwner().getEmail().equals(u.getEmail());
     }
     
+    public String retrieveCorrectUrl(Event event3) {
+        if (event3 == null || event3.getWeatherinfo().equals("No weather conditions available")) {
+            return "./../images/Lol_question_mark.png";
+        }
+        return "http://openweathermap.org/img/w/" + event3.retriveWeatherIconNumber();
+    }
+    
 }

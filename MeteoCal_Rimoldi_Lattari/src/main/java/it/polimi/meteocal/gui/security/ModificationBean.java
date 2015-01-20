@@ -16,6 +16,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -27,11 +29,18 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.imageio.ImageIO;
 import javax.inject.Named;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.CroppedImage;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 /**
  *
@@ -143,7 +152,8 @@ public class ModificationBean implements Serializable{
         return "user_home3?faces-redirect=true";
     }
     
-    public String updateEvent(List<User> invitedUsers){
+    public String updateEvent(List<User> invitedUsers) throws ParserConfigurationException{
+        event.setWeatherinfo(this.getWeatherConditionsForEventDay());
         em.update(em.find(Integer.parseInt(parameter)),this.event);
         if(invitedUsers != null){
             boolean duplicate = false;
@@ -200,5 +210,105 @@ public class ModificationBean implements Serializable{
     
     public User getCurrentUser(){
         return um.getLoggedUser();
+    }
+
+    private String getWeatherConditionsForEventDay() throws ParserConfigurationException {
+        String eventDate = this.getFormattedTime();
+        String latitudine = event.getLat();
+        String longitudine = event.getLon();
+        List<String> iterateMe = this.retriveWeatherForecast(latitudine, longitudine);
+        for (String s : iterateMe) {
+            if (s.contains(eventDate)) {
+                return s;
+            }
+        }
+        return "No weather conditions available";
+    }
+
+    private String getFormattedTime() {
+        //istruzioni per settare il meteo
+        String year = "20" + (event.getStarttime().getYear() - 100);
+        String month;
+        int mon = event.getStarttime().getMonth() + 1;
+        if (mon < 10) {
+            month = "0" + mon;
+        } else {
+            month = "" + mon;
+        }
+        String day;
+        if (event.getStarttime().getDate() < 10) {
+            day = "0" + event.getStarttime().getDate();
+        } else {
+            day = "" + event.getStarttime().getDate();
+        }
+        String toBeCompared = year + "-" + month + "-" + day;
+        return toBeCompared;
+    }
+
+    private List<String> retriveWeatherForecast(String latitudine, String longitudine) throws ParserConfigurationException {
+         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        DocumentBuilder db = dbf.newDocumentBuilder();
+
+        URL oracle2;
+        Document doc;
+        
+        try {
+            oracle2 = new URL("http://api.openweathermap.org/data/2.5/forecast/daily?lat=" + latitudine + "&lon=" + longitudine + "&mode=xml&units=metric&cnt=16&APPID=717e3c2ca6c7dfd9a18b4b25d27555af");
+            doc = db.parse(oracle2.openStream());
+            doc.getDocumentElement().normalize();
+        } catch (Exception ex) {
+            List<String> failReturn = new ArrayList();
+            failReturn.add("No weather conditions available");
+            return failReturn;
+        }
+
+        //liste di nodi contenenti gli elementi di interesse
+        NodeList dataNodeList = doc.getElementsByTagName("time");
+        NodeList weatherNodeList = doc.getElementsByTagName("symbol");
+        NodeList tempNodeList = doc.getElementsByTagName("temperature");
+        
+        //Lista che conterrà tutti i dati, per ogni cella ci sarà una sequenza day code name min max separati da $
+        List<String> weatherForecast2 = new ArrayList();
+        String day = "";
+        String code = "";
+        String name = "";
+        String min = "";
+        String max = "";
+        
+        //tanto la lunghezza delle liste di nodi è sempre la stessa: 16
+        for (int i = 0; i < dataNodeList.getLength(); i++) {
+            
+            
+            //prima la data
+            Node nNode1 = dataNodeList.item(i);
+            if (nNode1.getNodeType() == Node.ELEMENT_NODE) {
+                Element element = (Element) nNode1;
+                //salvo il dato
+                day = element.getAttribute("day");
+            }
+            
+            //poi il meteo
+            Node nNode2 = weatherNodeList.item(i);
+            if (nNode2.getNodeType() == Node.ELEMENT_NODE) {
+                Element element = (Element) nNode2;
+                //salvo i dati
+                code = element.getAttribute("number");
+                name = element.getAttribute("name");
+            }
+            
+            //infine la temperatura
+            Node nNode3 = tempNodeList.item(i);
+            
+            if (nNode3.getNodeType() == Node.ELEMENT_NODE) {
+                Element element = (Element) nNode3;
+                //salvo i dati
+                min = element.getAttribute("min");
+                max = element.getAttribute("max");
+            }
+            
+            //lista dei dati
+            weatherForecast2.add(day + ":" + code + ":" + name + ":" + min + ":" + max);
+        }
+        return weatherForecast2;
     }
 }

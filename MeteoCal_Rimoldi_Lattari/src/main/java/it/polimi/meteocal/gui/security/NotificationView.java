@@ -7,6 +7,7 @@ package it.polimi.meteocal.gui.security;
 
 import it.polimi.meteocal.business.security.boundary.UserManager;
 import it.polimi.meteocal.business.security.entity.User;
+import it.polimi.meteocal.entities.Event;
 import it.polimi.meteocal.entities.Notification;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -92,5 +93,12 @@ public class NotificationView implements Serializable{
     
     public boolean showEventDeletedDetails() {
         return selectedNotification.getEvent() != null;
+    }
+    
+    public String retrieveCorrectUrl(Event event3) {
+        if (event3 == null || event3.getWeatherinfo().equals("No weather conditions available")) {
+            return "./../images/Lol_question_mark.png";
+        }
+        return "http://openweathermap.org/img/w/" + event3.retriveWeatherIconNumber();
     }
 }
