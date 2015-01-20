@@ -17,6 +17,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.inject.Named;
@@ -34,7 +35,7 @@ import org.xml.sax.SAXException;
  * @author Alessandro
  */
 @ManagedBean
-@SessionScoped
+@RequestScoped
 @Named("eb")
 public class EventBean {
     
@@ -115,8 +116,7 @@ public class EventBean {
     
     public String createEvent(User user, List<User> invitedUsers) throws ParserConfigurationException, SAXException, IOException {
         Integer id = 0;
-        
-        System.out.println(this.getWeatherConditionsForEventDay());
+        event.setWeatherinfo(this.getWeatherConditionsForEventDay());
         em.createEvent(event, user);
         List<Event> result = em.getEventOrganized(user.getEmail());
         for (Event e : result) {
@@ -154,17 +154,17 @@ public class EventBean {
     }
     
     private String getWeatherConditionsForEventDay() throws ParserConfigurationException, SAXException, IOException {
-        String[] parts = new String[5];
         String eventDate = this.getFormattedTime();
-        for (String s : this.retriveWeatherForecast(event.getLat(), event.getLon())) {
+        String latitudine = event.getLat();
+        String longitudine = event.getLon();
+        List<String> iterateMe = this.retriveWeatherForecast(latitudine, longitudine);
+        for (String s : iterateMe) {
             if (s.contains(eventDate)) {
-                parts = s.split("$");
-            } else {
-                parts[1]= "No weather conditions available";
+                String [] parts = s.split(":");
+                return parts[1];
             }
         }
-        
-        return parts[1];
+        return "No weather conditions available";
     }
     
     
@@ -310,7 +310,7 @@ public class EventBean {
             }
             
             //lista dei dati
-            weatherForecast2.add(day + "$" + code + "$" + name + "$" + min + "$" + max);
+            weatherForecast2.add(day + ":" + code + ":" + name + ":" + min + ":" + max);
         }
         return weatherForecast2;
         
