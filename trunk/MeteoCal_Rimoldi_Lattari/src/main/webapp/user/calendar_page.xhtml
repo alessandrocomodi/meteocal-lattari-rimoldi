@@ -79,7 +79,16 @@
                                                     <p >#{scheduleView.selectedEvent.description}</p>
                                                 </div>
                                                 <b>Weather:</b>
-                                                    <p:graphicImage id="weatherIcon" value="http://openweathermap.org/img/w/#{scheduleView.selectedEvent.retriveWeatherIconNumber()}" style="float: left;"/>
+                                                    <p:graphicImage id="weatherIcon" value="http://openweathermap.org/img/w/#{scheduleView.selectedEvent.retriveWeatherIconNumber()}" style="float: left; margin-left: 20px;"/>
+                                                    <span style="color: white; font-family: Comic Sans MS; font-size: 18px; float: left; margin-left: 10px;">
+                                                    <b>#{scheduleView.selectedEvent.retrieveNameCondition()}</b>
+                                                    <br />
+                                                    <b>Min. Temperature:</b>
+                                                    #{scheduleView.selectedEvent.retrieveMinTemp()}
+                                                    <br />
+                                                    <b>Max. Temperature:</b>
+                                                    #{scheduleView.selectedEvent.retrieveMaxTemp()}
+                                                    </span>
                                             </span>
                                         </div>
                                     </h:panelGrid>
@@ -110,7 +119,7 @@
                                                 <h:outputText value="#{scheduleView.selectedEvent.owner.phone}" />
                                             </p:panelGrid>
                                         </div>
-                                        <p:panel id="toggleable" header="Participants" toggleable="true" collapsed="true;" closable="false" toggleSpeed="500" closeSpeed="500" widgetVar="panel">
+                                        <p:panel id="toggleable" header="Participants" toggleable="true" collapsed="true" closable="false" toggleSpeed="500" closeSpeed="500" widgetVar="panel">
                                             <h:panelGrid columns="1" >
                                                 <p:panel style="height: 100px; overflow-y: auto;">
                                                     <ui:repeat value="#{scheduleView.selectedEvent.userCollection}" var="user">
