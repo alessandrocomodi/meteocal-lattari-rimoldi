@@ -16,6 +16,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.bean.ManagedBean;
@@ -255,15 +257,22 @@ public class EventBean {
         }
     }
     
-    private List<String> retriveWeatherForecast(String lat, String lon) throws ParserConfigurationException, MalformedURLException, SAXException, IOException {
+    private List<String> retriveWeatherForecast(String lat, String lon) throws ParserConfigurationException {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder db = dbf.newDocumentBuilder();
 
-        URL oracle2 = new URL("http://api.openweathermap.org/data/2.5/forecast/daily?lat=" + lat + "&lon=" + lon + "&mode=xml&units=metric&cnt=16&APPID=717e3c2ca6c7dfd9a18b4b25d27555af");
-
-        Document doc = db.parse(oracle2.openStream());
-
-        doc.getDocumentElement().normalize();
+        URL oracle2;
+        Document doc;
+        
+        try {
+            oracle2 = new URL("http://api.openweathermap.org/data/2.5/forecast/daily?lat=" + lat + "&lon=" + lon + "&mode=xml&units=metric&cnt=16&APPID=717e3c2ca6c7dfd9a18b4b25d27555af");
+            doc = db.parse(oracle2.openStream());
+            doc.getDocumentElement().normalize();
+        } catch (Exception ex) {
+            List<String> failReturn = new ArrayList();
+            failReturn.add("No weather conditions available");
+            return failReturn;
+        }
 
         //liste di nodi contenenti gli elementi di interesse
         NodeList dataNodeList = doc.getElementsByTagName("time");
