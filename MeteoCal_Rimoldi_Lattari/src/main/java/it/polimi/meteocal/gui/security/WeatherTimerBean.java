@@ -48,7 +48,7 @@ public class WeatherTimerBean {
         logger.log(Level.INFO, "WeatherChecker created");
     }
 
-    @Schedule(minute = "0,3,5,10,20", hour = "16,17", persistent = false)
+    @Schedule(minute = "0,5,10,15,20,25,30,35,40,45,50,55", hour = "0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23", persistent = false)
     public void checkWeatherAutoTimer() throws ParserConfigurationException {
         List<Event> eventsToCheck = em.findAllEvents();
         if (eventsToCheck != null && !eventsToCheck.isEmpty()) {
@@ -71,11 +71,7 @@ public class WeatherTimerBean {
                     logger.log(Level.INFO, e.getName() + e.getWeatherinfo(), new Date());
                 }
             }
-            
         }
-        
-        
-        System.out.println("prova");
     }
     
     private String getFormattedTime(Event event) {
