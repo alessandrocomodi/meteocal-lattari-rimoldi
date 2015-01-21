@@ -6,9 +6,11 @@
 package it.polimi.meteocal.gui.security;
 
 import it.polimi.meteocal.business.security.boundary.EventManager;
+import it.polimi.meteocal.business.security.boundary.NotificationManager;
 import it.polimi.meteocal.entities.Event;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -40,6 +42,9 @@ public class WeatherTimerBean {
     @EJB
     private EventManager em;
     
+    @EJB
+    private NotificationManager nm;
+    
     @Resource
     private TimerService timerService;
     
@@ -61,6 +66,7 @@ public class WeatherTimerBean {
                     if (s.contains(eventDate)) {
                         e.setWeatherinfo(s);
                         em.updateWeatherInfo(e);
+                        this.generateWeatherNotification(e, s, weatherForecast16Days);
                         flag = true;
                         logger.log(Level.INFO, e.getName() + e.getWeatherinfo(), new Date());
                     }
@@ -72,6 +78,32 @@ public class WeatherTimerBean {
                 }
             }
         }
+    }
+    
+    private int retrieveDaysLeft(Event event) {
+        Calendar cal = Calendar.getInstance();
+        Date currentTime = cal.getTime();
+        Date eventTime = event.getStarttime();
+        long millisDiff = eventTime.getTime() - currentTime.getTime();
+        int days = (int)(millisDiff / 86400000);
+        System.out.println(days);
+        return days;
+    }
+    
+    private void generateWeatherNotification(Event e, String conditions, List<String> conditions16days) {
+        String [] parts = conditions.split(":");
+        int code = Integer.parseInt(parts[1]);
+        if (code >= 200 && code <= 781 || code >= 900) {
+            if (retrieveDaysLeft(e) >= 0 && retrieveDaysLeft(e) <= 3) {
+                nm.createWeatherNotificationForOwner(e);
+                String suggestion = this.retrieveBestSunnyDay(conditions16days, conditions);
+                suggestion += e.getName();
+                nm.createSuggestionNotification(suggestion, e);
+            }
+            if (retrieveDaysLeft(e) >= 0 && retrieveDaysLeft(e) <= 1) {
+                nm.createWeatherNotificationForParticipants(e);
+            }
+        } 
     }
     
     private String getFormattedTime(Event event) {
@@ -160,6 +192,26 @@ public class WeatherTimerBean {
         }
         return weatherForecast2;
         
+    }
+
+    private String retrieveBestSunnyDay(List<String> conditions16days, String s) {
+        int position;
+        position = conditions16days.indexOf(s);
+        int min = 805;
+        String date = "";
+        for (int i = position; i < conditions16days.size(); i++) {
+            String [] parts = conditions16days.get(i).split(":");
+            int code = Integer.parseInt(parts[1]);
+            if (code >= 800 && code <= 804 && code < min) {
+                min = code;
+                String [] parts2 = conditions16days.get(i).split(":");
+                date = parts2[0];
+            }
+        }
+        if (min == 805) {
+            return "No suggestion about weather available for the event: ";
+        }
+        return "Good weather on " + date + " for the event: ";
     }
     
     

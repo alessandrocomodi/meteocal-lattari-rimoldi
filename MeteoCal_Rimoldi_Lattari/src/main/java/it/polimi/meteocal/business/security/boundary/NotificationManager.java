@@ -112,4 +112,46 @@ public class NotificationManager {
         notification.setUserCollection(participants);
         em.persist(notification);
     }
+    
+
+    public void createWeatherNotificationForParticipants(Event e) {
+        if (!e.getUserCollection().isEmpty()) {
+            Notification notification = new Notification();
+            notification.setEvent(e);
+            notification.setSender(e.getOwner());
+            notification.setText("Bad weather conditions for one of your joined events");
+            notification.setType("WEATHERALERTFORALL");
+            Calendar cal = Calendar.getInstance();
+            notification.setTimestamp(cal.getTime());
+            notification.setUserCollection(e.getUserCollection());
+            em.persist(notification);  
+        }
+         
+    }
+
+    public void createWeatherNotificationForOwner(Event e) {
+        Notification notification = new Notification();
+        notification.setEvent(e);
+        notification.setSender(e.getOwner());
+        notification.setText("Bad weather conditions for one of your organized events");
+        notification.setType("WEATHERALERTFOROWNER");
+        Calendar cal = Calendar.getInstance();
+        notification.setTimestamp(cal.getTime());
+        List<User> owner = new ArrayList<>();
+        owner.add(e.getOwner());
+        notification.setUserCollection(owner);
+        em.persist(notification);
+    }
+
+    public void createSuggestionNotification(String suggestion, Event e) {
+        Notification notification = new Notification();
+        notification.setText(suggestion);
+        Calendar cal = Calendar.getInstance();
+        notification.setTimestamp(cal.getTime());
+        notification.setType("SUGGESTION");
+        List<User> owner = new ArrayList<>();
+        owner.add(e.getOwner());
+        notification.setUserCollection(owner);
+        em.persist(notification);
+    }
 }
