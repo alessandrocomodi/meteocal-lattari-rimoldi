@@ -142,11 +142,20 @@ public class ScheduleView implements Serializable{
         return cal.getTime();
     }
     
+    private boolean checkParticipantsEmail(Event event, String email) {
+        for (User u : event.getUserCollection()) {
+            if (u.getEmail().equals(email)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
     public void onEventSelect(SelectEvent selectEvent) {
         event = (ScheduleEvent) selectEvent.getObject();
         System.out.println(event.getData().getClass().toString());
         this.selectedEvent = em.find(event.getData());
-        if (selectedEvent.getPrivate1() && !selectedEvent.getOwner().getEmail().equals(um.getLoggedUser().getEmail())) {
+        if (selectedEvent.getPrivate1() &&  (!selectedEvent.getOwner().getEmail().equals(um.getLoggedUser().getEmail()) && !this.checkParticipantsEmail(selectedEvent, um.getLoggedUser().getEmail()))) {
             selectedEvent.setName("---");
             selectedEvent.setDescription("---");
             selectedEvent.setPlace("---");
