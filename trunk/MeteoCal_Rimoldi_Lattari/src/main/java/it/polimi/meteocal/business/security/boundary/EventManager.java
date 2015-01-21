@@ -92,4 +92,14 @@ public class EventManager {
             em.remove(e);
         }
     }
+
+    public void clearParticipantsList(Event event, List<User> participants) {
+        List<User> participants2 = new ArrayList();
+        event.setUserCollection(participants2);
+        em.merge(event);
+        for (User u : participants) {
+            u.getEventCollection().remove(event);
+            em.merge(u);
+        }
+    }
 }
