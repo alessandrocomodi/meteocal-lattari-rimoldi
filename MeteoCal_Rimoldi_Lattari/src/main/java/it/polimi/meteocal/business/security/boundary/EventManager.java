@@ -32,7 +32,9 @@ public class EventManager {
         em.persist(event);
     }
     
-    
+    public void updateWeatherInfo(Event event) {
+        em.merge(event);
+    }
     
     public void update(Event selectedEvent, Event event){
         selectedEvent.setName(event.getName());
@@ -49,6 +51,13 @@ public class EventManager {
     
     public Event find(Object id) {
         return em.find(Event.class, id);
+    }
+    
+    public List<Event> findAllEvents() {
+        Query query = em.createNamedQuery("Event.findAll");
+        List<Event> results = new ArrayList<>();
+        results.addAll(query.getResultList());
+        return results;
     }
     
     public List<Event> getEventOrganized(String email) {
