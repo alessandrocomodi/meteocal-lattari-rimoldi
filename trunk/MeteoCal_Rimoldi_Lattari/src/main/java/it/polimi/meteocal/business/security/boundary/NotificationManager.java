@@ -99,4 +99,17 @@ public class NotificationManager {
             this.remove(n);
         }
     }
+
+    public void createEventModifiedNotification(List<User> participants, Integer idevent) {
+        Notification notification = new Notification();
+        Event event2 = em.find(Event.class, idevent);
+        notification.setEvent(event2);
+        notification.setSender(event2.getOwner());
+        notification.setType("MODIFICATION");
+        Calendar cal = Calendar.getInstance();
+        notification.setTimestamp(cal.getTime());
+        notification.setText("The details of an event have been changed");
+        notification.setUserCollection(participants);
+        em.persist(notification);
+    }
 }

@@ -183,6 +183,27 @@ public class ModificationBean implements Serializable{
                 um.updateUserNotificationList(u);
             }
         }
+        //da qui inizio la gestione delle notifiche per la modifica evento
+        List<User> participants = event.getUserCollection();
+        if (participants != null && !participants.isEmpty()) {
+            nm.createEventModifiedNotification(participants, this.event.getIdevent());
+            Integer id3 = 0;
+            List<Notification> result3 = nm.getLastInvitation(this.event.getIdevent());
+            for (Notification n : result3) {
+                if (n.getIdnotification() > id3 && n.getType().equals("MODIFICATION")) {
+                    id3 = n.getIdnotification();
+                }
+            }
+            for (User u : participants) {
+                u.getNotificationCollection().add(nm.find(id3));
+                um.updateUserNotificationList(u);
+            }
+            for (User u : participants) {
+                em.removeParticipant(this.event, u);
+            }
+        }
+        
+        
         return "calendar_page?faces-redirect=true";
     }
     
