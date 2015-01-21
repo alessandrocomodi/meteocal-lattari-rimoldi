@@ -198,9 +198,7 @@ public class ModificationBean implements Serializable{
                 u.getNotificationCollection().add(nm.find(id3));
                 um.updateUserNotificationList(u);
             }
-            for (User u : participants) {
-                em.removeParticipant(this.event, u);
-            }
+            em.clearParticipantsList(this.event, participants);
         }
         
         
