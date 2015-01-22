@@ -102,8 +102,7 @@ public class Event implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "lon")
     private String lon;
-    @ManyToMany(mappedBy = "eventCollection")
-    private Collection<Calendar> calendarCollection;
+    
     @JoinTable(name = "participants", joinColumns = {
         @JoinColumn(name = "event", referencedColumnName = "idevent")}, inverseJoinColumns = {
         @JoinColumn(name = "user", referencedColumnName = "email")})
@@ -236,15 +235,6 @@ public class Event implements Serializable {
 
     public void setPlace(String place) {
         this.place = place;
-    }
-
-    @XmlTransient
-    public Collection<Calendar> getCalendarCollection() {
-        return calendarCollection;
-    }
-
-    public void setCalendarCollection(Collection<Calendar> calendarCollection) {
-        this.calendarCollection = calendarCollection;
     }
 
     @XmlTransient
