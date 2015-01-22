@@ -53,7 +53,9 @@
                             #{ub.getCalendarPrivacyFromUser(ub.userEmail)}
                             <br /><br />
                         </span>
-                        <img src="./../images/icon-user-default.png" style="width: 250px; height: 250px; margin-left: 150px; margin-top: 30px;"></img>
+                        <p:graphicImage id="avatarImg" value="#{ub.genericUserAvatar}" cache="false" style="width:250px; height:250px; margin-top: 30px; margin-left: 150px;">
+                            <f:param name="id" value="#{ub.userEmail}" />
+                        </p:graphicImage>
                     </h:panelGrid>
                 </div>
             </div>
