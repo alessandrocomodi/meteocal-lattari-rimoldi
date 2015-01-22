@@ -54,11 +54,16 @@ public class EventManager {
     }
     
     public List<Event> findAllOutdoorEvents() {
-        Query query = em.createNamedQuery("Event.findByIndoor");
-        query.setParameter("indoor", false);
+        Query query = em.createNamedQuery("Event.findAll");
         List<Event> results = new ArrayList<>();
         results.addAll(query.getResultList());
-        return results;
+        List<Event> resultsToBeReturned = new ArrayList<>();
+        for (Event e : results) {
+            if (e.getIndoor() == false) {
+                resultsToBeReturned.add(e);
+            }
+        }
+        return resultsToBeReturned;
     }
     
     public List<Event> getEventOrganized(String email) {
