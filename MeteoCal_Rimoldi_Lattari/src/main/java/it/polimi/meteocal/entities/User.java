@@ -6,7 +6,6 @@
 package it.polimi.meteocal.entities;
 
 import it.polimi.meteocal.utilities.PasswordEncrypter;
-import it.polimi.meteocal.entities.Calendar;
 import it.polimi.meteocal.entities.Event;
 import it.polimi.meteocal.entities.Notification;
 import java.io.Serializable;
@@ -85,11 +84,6 @@ public class User implements Serializable {
     private List<Event> eventOrganized;
     @OneToMany(mappedBy = "sender")
     private List<Notification> notificationCollection1;
-    @JoinColumn(name = "calendar", referencedColumnName = "idcalendar")
-    @ManyToOne(optional = false)
-    private Calendar calendar;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private List<Calendar> calendarCollection;
     @NotNull(message = "May not be empty")
     private String groupName;
     
@@ -213,22 +207,6 @@ public class User implements Serializable {
         this.notificationCollection1 = notificationCollection1;
     }
 
-    public Calendar getCalendar() {
-        return calendar;
-    }
-
-    public void setCalendar(Calendar calendar) {
-        this.calendar = calendar;
-    }
-
-    @XmlTransient
-    public Collection<Calendar> getCalendarCollection() {
-        return calendarCollection;
-    }
-
-    public void setCalendarCollection(List<Calendar> calendarCollection) {
-        this.calendarCollection = calendarCollection;
-    }
 
     @Override
     public int hashCode() {
