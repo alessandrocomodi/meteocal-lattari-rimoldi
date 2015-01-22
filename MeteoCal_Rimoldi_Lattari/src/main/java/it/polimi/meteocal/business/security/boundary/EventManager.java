@@ -53,8 +53,9 @@ public class EventManager {
         return em.find(Event.class, id);
     }
     
-    public List<Event> findAllEvents() {
-        Query query = em.createNamedQuery("Event.findAll");
+    public List<Event> findAllOutdoorEvents() {
+        Query query = em.createNamedQuery("Event.findByIndoor");
+        query.setParameter("indoor", false);
         List<Event> results = new ArrayList<>();
         results.addAll(query.getResultList());
         return results;

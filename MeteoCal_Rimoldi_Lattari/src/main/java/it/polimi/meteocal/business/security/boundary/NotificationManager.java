@@ -124,7 +124,11 @@ public class NotificationManager {
             Calendar cal = Calendar.getInstance();
             notification.setTimestamp(cal.getTime());
             notification.setUserCollection(e.getUserCollection());
-            em.persist(notification);  
+            em.persist(notification);
+            for (User u : e.getUserCollection()) {
+                u.getNotificationCollection().add(notification);
+                em.merge(u);
+            }
         }
          
     }
@@ -141,6 +145,9 @@ public class NotificationManager {
         owner.add(e.getOwner());
         notification.setUserCollection(owner);
         em.persist(notification);
+        User temp = e.getOwner();
+        temp.getNotificationCollection().add(notification);
+        em.merge(temp);
     }
 
     public void createSuggestionNotification(String suggestion, Event e) {
@@ -153,5 +160,8 @@ public class NotificationManager {
         owner.add(e.getOwner());
         notification.setUserCollection(owner);
         em.persist(notification);
+        User temp = e.getOwner();
+        temp.getNotificationCollection().add(notification);
+        em.merge(temp);
     }
 }
