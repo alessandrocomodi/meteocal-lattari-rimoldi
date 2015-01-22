@@ -5,7 +5,7 @@
     <class>it.polimi.meteocal.entities.Calendar</class>
     <class>it.polimi.meteocal.entities.Event</class>
     <class>it.polimi.meteocal.entities.Notification</class>
-    <class>it.polimi.meteocal.business.security.entity.User</class>
+    <class>it.polimi.meteocal.entities.User</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
     </properties>

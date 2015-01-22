@@ -5,7 +5,6 @@
  */
 package it.polimi.meteocal.entities;
 
-import it.polimi.meteocal.business.security.entity.User;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
