@@ -12,6 +12,7 @@ import it.polimi.meteocal.entities.Notification;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -36,7 +37,10 @@ public class NotificationView implements Serializable{
     private List<Notification> myNotifications;
 
     public List<Notification> getMyNotifications() {
-        return myNotifications;
+        List<Notification> revertedNotifications;
+        revertedNotifications = myNotifications;
+        Collections.reverse(revertedNotifications);
+        return revertedNotifications;
     }
 
     public void setMyNotifications(List<Notification> myNotifications) {
