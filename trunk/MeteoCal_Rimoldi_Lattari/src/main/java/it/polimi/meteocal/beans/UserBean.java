@@ -13,9 +13,11 @@ import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseId;
 import javax.inject.Named;
@@ -27,9 +29,9 @@ import org.primefaces.model.StreamedContent;
  *
  * @author Alessandro
  */
-@RequestScoped
+@SessionScoped
 @Named("ub")
-public class UserBean{
+public class UserBean implements Serializable{
 
     @EJB
     private UserManager um;
@@ -41,19 +43,8 @@ public class UserBean{
     private StreamedContent genericUserAvatar;
 
     public StreamedContent getGenericUserAvatar() {
-        return this.genericUserAvatar;
-    }
-    
-    //eventualmente da rivedere
-    public StreamedContent retriveGenericUserAvatar(String email) {
-        if (email == null) {
-            return genericUserAvatar = new DefaultStreamedContent();
-        }
-        do {
-            User u = getUserFromEmail(email);
-            InputStream is = new ByteArrayInputStream(u.getAvatar());
-            genericUserAvatar = new DefaultStreamedContent(is, "image/png");
-        } while ( genericUserAvatar == null );
+        InputStream is = new ByteArrayInputStream(getUserFromEmail(userEmail).getAvatar());
+        genericUserAvatar = new DefaultStreamedContent(is, "image/png");
         return genericUserAvatar; 
     }
 
