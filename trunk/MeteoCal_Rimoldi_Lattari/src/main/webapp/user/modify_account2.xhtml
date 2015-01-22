@@ -26,14 +26,11 @@
         </div>
         <div id="central">
             <div id="image_div">
-                <h2 style="padding-top: 20px;">Your profile image</h2>
-                
-                <h:form id="imageForm">
+                <h2 style="padding-top: 20px;">Your profile image (.png file)</h2>
+                <h:form id="imageForm" >
                     <p:graphicImage id="avatarImg" value="#{modificationBean.userAvatar}" cache="false" style="width:250px; height:250px;"/>
-                    <p:fileUpload fileUploadListener="#{modificationBean.uploadListener}" mode="advanced" dragDropSupport="false"
+                    <p:fileUpload  fileUploadListener="#{modificationBean.uploadListener}" mode="advanced" dragDropSupport="false"
                                   update="imageForm" fileLimit="1" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" styleClass="fileUploadClass" style="font-size: 18px; margin-left: 20px; margin-right: auto;" />
-
-                    <p:growl id="messages" showDetail="true" />
                 </h:form>
                 
             </div> 

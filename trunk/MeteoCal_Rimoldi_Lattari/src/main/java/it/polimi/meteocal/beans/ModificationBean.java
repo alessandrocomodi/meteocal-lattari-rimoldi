@@ -148,7 +148,13 @@ public class ModificationBean implements Serializable{
     }
     
     public String update() throws IOException {
-        um.update(this.getCurrentUser(),user,file.getInputstream());
+        InputStream is;
+        if (file == null) {
+            is = new ByteArrayInputStream(getCurrentUser().getAvatar());
+        } else {
+            is = file.getInputstream();
+        }
+        um.update(this.getCurrentUser(),user,is);
         return "user_home3?faces-redirect=true";
     }
     
