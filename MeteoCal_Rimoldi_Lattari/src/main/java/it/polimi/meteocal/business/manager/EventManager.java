@@ -22,7 +22,7 @@ import javax.persistence.Query;
 public class EventManager {
 
     @PersistenceContext
-    private EntityManager em;
+    EntityManager em;
 
     public void createEvent(Event event, User user) {
         event.setOwner(user);
@@ -45,6 +45,8 @@ public class EventManager {
         selectedEvent.setStarttime(event.getStarttime());
         selectedEvent.setEndtime(event.getEndtime());
         selectedEvent.setWeatherinfo(event.getWeatherinfo());
+        selectedEvent.setLat(event.getLat());
+        selectedEvent.setLon(event.getLon());
         em.merge(selectedEvent);
               
     }
