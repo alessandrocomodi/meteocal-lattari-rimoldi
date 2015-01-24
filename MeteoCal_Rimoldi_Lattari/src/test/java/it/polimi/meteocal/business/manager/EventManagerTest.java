@@ -30,8 +30,6 @@ import static org.mockito.Mockito.when;
  */
 public class EventManagerTest {
     
-    private UserManager um;
-    
     private EventManager eventManager;
     
     private User user;

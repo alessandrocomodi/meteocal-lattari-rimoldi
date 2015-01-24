@@ -243,4 +243,12 @@ public class ScheduleView implements Serializable{
         return "http://openweathermap.org/img/w/" + event3.retriveWeatherIconNumber();
     }
     
+    public String retrieveCorrectOutcome(String email){
+        if(getCurrentUser().getEmail().equals(email)){
+            return "user_home3?faces-redirect-true";
+        } else { 
+            return "user";
+        }
+    }
+    
 }

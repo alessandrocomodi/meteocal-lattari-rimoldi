@@ -24,7 +24,7 @@ import javax.persistence.Query;
 public class NotificationManager {
 
     @PersistenceContext
-    private EntityManager em;
+    EntityManager em;
     
     
     public void create(Notification entity) {
