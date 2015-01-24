@@ -12,6 +12,7 @@ import java.io.InputStream;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
@@ -45,7 +46,14 @@ public class RegistrationBean {
 
     public String register() throws IOException {
         InputStream iStream = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/images/icon-user-default.png");
-        um.save(user, iStream);
+        User u = um.getUserFromEmail(user.getEmail());
+        if(u==null){
+            um.save(user, iStream);
+        } else {
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Address already in use", null));
+            return "registration?faces-redirect-true";
+        }
         return "home?faces-redirect=true";
     }
 

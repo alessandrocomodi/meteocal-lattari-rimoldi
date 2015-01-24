@@ -24,7 +24,8 @@
                         <h1>Registration form</h1>
                     </div>
                     <h:form id="registrationform" style="font-family: Comic Sans MS; color: #ffffff; font-size: 20px">
-                            <h:panelGrid columns="1" id="regGrid">
+                        <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />    
+                        <h:panelGrid columns="1" id="regGrid">
                                 <h:outputLabel style="margin-left: 20px;" for="name">Name:</h:outputLabel>
                                 <p:inputText id="name"  value="#{registrationBean.user.name}" 
                                              style="width:360px; float:left; margin-right: 10px; margin-left: 20px;">

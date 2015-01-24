@@ -80,8 +80,9 @@ public class NotificationManager {
         notification.setUserCollection(userCollection);
         em.persist(notification);
         for(User u : userCollection){
-            u.getNotificationCollection().add(notification);
-            em.merge(u);
+            User u2 = em.find(User.class, u.getEmail());
+            u2.getNotificationCollection().add(notification);
+            em.merge(u2);
         }
     }
 
