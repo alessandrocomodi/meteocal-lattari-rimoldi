@@ -6,8 +6,6 @@
 package it.polimi.meteocal.entities;
 
 import it.polimi.meteocal.utilities.PasswordEncrypter;
-import it.polimi.meteocal.entities.Event;
-import it.polimi.meteocal.entities.Notification;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
@@ -20,7 +18,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;

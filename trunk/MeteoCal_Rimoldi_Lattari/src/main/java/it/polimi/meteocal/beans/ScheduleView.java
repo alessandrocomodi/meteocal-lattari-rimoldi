@@ -15,15 +15,11 @@ import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.TimeZone;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
-import javax.enterprise.context.Dependent;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DefaultScheduleEvent;
 import org.primefaces.model.DefaultScheduleModel;
@@ -52,39 +48,22 @@ public class ScheduleView implements Serializable{
     
     private Event selectedEvent;
    
-
-    
-
-    /**
-     * Get the value of selectedEvent
-     *
-     * @return the value of selectedEvent
-     */
     public Event getSelectedEvent() {
         return selectedEvent;
     }
 
-    /**
-     * Set the value of selectedEvent
-     *
-     * @param selectedEvent new value of selectedEvent
-     */
     public void setSelectedEvent(Event selectedEvent) {
         this.selectedEvent = selectedEvent;
     }
-
-
     
     public ScheduleEvent getEvent() {
         return event;
     }
 
-    
     public void setEvent(ScheduleEvent event) {
         this.event = event;
     }
  
-     
     @PostConstruct
     public void init() {
         eventModel = new DefaultScheduleModel();
@@ -181,21 +160,10 @@ public class ScheduleView implements Serializable{
         }
     }
     
-    /**
-     * 
-     * Get the value of eventModel
-     *
-     * @return the value of eventModel
-     */
     public ScheduleModel getEventModel() {
         return eventModel;
     }
 
-    /**
-     * Set the value of eventModel
-     *
-     * @param eventModel new value of eventModel
-     */
     public void setEventModel(ScheduleModel eventModel) {
         this.eventModel = eventModel;
     }
