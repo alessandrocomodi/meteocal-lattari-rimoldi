@@ -75,7 +75,7 @@ public class UserManagerIT {
         newUser.setName("Marco");
         newUser.setSurname("Miglierina");
         newUser.setPassword(password);
-        BufferedImage img = ImageIO.read(new File("C:/Users/Francesco/Documents/NetBeansProjects/se2projectdef/MeteoCal_Rimoldi_Lattari/src/main/webapp/images/icon-user-default.png"));
+        BufferedImage img = ImageIO.read(new File("C:/Users/Alessandro/Documents/NetBeansProjects/MeteoCal_Rimoldi_Lattari/src/main/webapp/images/icon-user-default.png"));
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ImageIO.write(img, "png", baos);
         byte[] bytes = baos.toByteArray();
