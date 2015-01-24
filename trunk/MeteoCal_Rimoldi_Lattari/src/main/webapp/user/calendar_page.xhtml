@@ -124,7 +124,7 @@
                                                 <p:panel style="height: 100px; overflow-y: auto;">
                                                     <ui:repeat value="#{scheduleView.selectedEvent.userCollection}" var="user">
                                                             <li style=" font-family: Comic Sans MS; color: black;">
-                                                                <h:link value="#{user.name} #{user.surname} (#{user.email})" outcome="user" style="list-style: none; color: black; font-family: Comic Sans MS; font-size: 18px;" >
+                                                                <h:link value="#{user.name} #{user.surname} (#{user.email})" outcome="#{scheduleView.retrieveCorrectOutcome(user.email)}" style="list-style: none; color: black; font-family: Comic Sans MS; font-size: 18px;" >
                                                                     <f:param name="user" value="#{user.email}" />
                                                                 </h:link>
                                                             </li>
