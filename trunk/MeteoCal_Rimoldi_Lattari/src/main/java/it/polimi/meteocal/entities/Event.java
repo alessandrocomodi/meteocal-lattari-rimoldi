@@ -105,7 +105,7 @@ public class Event implements Serializable {
     
     @JoinTable(name = "participants", joinColumns = {
         @JoinColumn(name = "event", referencedColumnName = "idevent")}, inverseJoinColumns = {
-        @JoinColumn(name = "user", referencedColumnName = "email")})
+        @JoinColumn(name = "users", referencedColumnName = "email")})
     @ManyToMany
     private List<User> userCollection;
     @JoinColumn(name = "owner", referencedColumnName = "email")

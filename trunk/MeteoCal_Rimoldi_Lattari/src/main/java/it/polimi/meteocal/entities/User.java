@@ -71,7 +71,7 @@ public class User implements Serializable {
     @Column(name = "phone")
     private String phone;
     @JoinTable(name = "addressees", joinColumns = {
-        @JoinColumn(name = "user", referencedColumnName = "email")}, inverseJoinColumns = {
+        @JoinColumn(name = "users", referencedColumnName = "email")}, inverseJoinColumns = {
         @JoinColumn(name = "notification", referencedColumnName = "idnotification")})
     @ManyToMany
     private List<Notification> notificationCollection;
