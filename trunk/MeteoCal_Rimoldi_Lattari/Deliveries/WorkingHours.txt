@@ -1,3 +1,39 @@
 RASD
-Alessandro Rimoldi : 35 hours
-Francesco Lattari : 30 hours
+    Alessandro Rimoldi : 35 hours
+    Francesco Lattari : 30 hours
+
+DD
+    Alessandro Rimoldi : 25 hours
+    Francesco Lattari : 25 hours
+
+Rettifications to RASD and DD
+    Alessandro Rimoldi : 3 hours
+    Francesco Lattari : 0 hours
+
+Testing Document
+    Alessandro Rimoldi : 0 hours
+    Francesco Lattari : 8 hours
+
+Installation Manual
+    Alessandro Rimoldi : 3 hours
+    Francesco Lattari : 0 hours
+
+User Manual
+    Alessandro Rimoldi : 3 hours
+    Francesco Lattari : 0 hours
+
+Acceptance Testing Document
+    Alessandro Rimoldi : 4 hours
+    Francesco Lattari : 0 hours
+
+Project Reporting
+    Alessandro Rimoldi : 2 hours
+    Francesco Lattari : 0 hours
+
+Development of the application
+    Alessandro Rimoldi : 0 hours
+    Francesco Lattari : 8 hours
+
+Application Tests
+    Alessandro Rimoldi : 110 hours
+    Francesco Lattari : 140 hours
