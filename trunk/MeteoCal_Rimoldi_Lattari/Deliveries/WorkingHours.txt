@@ -30,10 +30,10 @@ Project Reporting
     Alessandro Rimoldi : 2 hours
     Francesco Lattari : 0 hours
 
-Development of the application
+Application Tests
     Alessandro Rimoldi : 0 hours
     Francesco Lattari : 8 hours
 
-Application Tests
+Development of the application
     Alessandro Rimoldi : 110 hours
     Francesco Lattari : 140 hours
